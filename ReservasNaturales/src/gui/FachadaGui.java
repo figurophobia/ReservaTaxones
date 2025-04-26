@@ -39,6 +39,16 @@ public class FachadaGui {
        va.setVisible(true);
     }
 
+    public void nuevaEspecie() {
+        VEspecies ve;
+        ve = new VEspecies(vp, true, fa);
+        ve.setVisible(true);
+    }
+
+    public void nuevaArea() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
    
 }

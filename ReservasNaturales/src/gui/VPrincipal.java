@@ -38,8 +38,13 @@ public class VPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         btnSalir = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTextFieldNombre = new javax.swing.JTextField();
+        jButtonBuscar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaEspecies = new javax.swing.JTable();
+        jButtonNuevo = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuPrincipal = new javax.swing.JMenu();
         menuItemTrabajadores = new javax.swing.JMenuItem();
@@ -59,9 +64,27 @@ public class VPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("NESTA VENTANA PTRINCIPAL METEREMOS O DE ESPECIAS E TAL COMO SE FOSE O DA BIBLIOTECA COS LIBROS");
+        jLabel3.setText("Nombre Científico");
 
-        jLabel2.setText("DESPOIS DENTRO ESTARÁN OS TAXÓNS DO CARALLO, REVISIÓNS DOS ANIMALES. ALIMENTOS ETC...");
+        jButtonBuscar.setText("Buscar");
+        jButtonBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBuscarActionPerformed(evt);
+            }
+        });
+
+        tablaEspecies.setModel(new ModeloTablaEspecies());
+        jScrollPane1.setViewportView(tablaEspecies);
+
+        jButtonNuevo.setText("Nuevo");
+        jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNuevoActionPerformed(evt);
+            }
+        });
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.setEnabled(false);
 
         menuPrincipal.setLabel("Administración");
 
@@ -101,28 +124,42 @@ public class VPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir))
+                        .addComponent(jButtonNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEditar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir)
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(0, 12, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(jButtonBuscar)
+                        .addGap(62, 62, 62))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addGap(246, 246, 246)
-                .addComponent(btnSalir)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalir)
+                    .addComponent(jButtonNuevo)
+                    .addComponent(jButtonEditar))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getAccessibleContext().setAccessibleName("Biblioteca Informática");
@@ -151,21 +188,52 @@ public class VPrincipal extends javax.swing.JFrame {
         vm.setVisible(true);
     }//GEN-LAST:event_menuItemMisionesActionPerformed
 
+    private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
+        buscarEspecies();
+        
+    }//GEN-LAST:event_jButtonBuscarActionPerformed
+
+    private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        // TODO add your handling code here:
+        fa.nuevaEspecie();
+    }//GEN-LAST:event_jButtonNuevoActionPerformed
+
     /**
     * @param args the command line arguments
     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton jButtonBuscar;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonNuevo;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JMenuItem menuItemAlimentos;
     private javax.swing.JMenuItem menuItemAreaGeo;
     private javax.swing.JMenuItem menuItemMisiones;
     private javax.swing.JMenuItem menuItemTrabajadores;
     private javax.swing.JMenu menuPrincipal;
+    private javax.swing.JTable tablaEspecies;
     // End of variables declaration//GEN-END:variables
+
+    public void buscarEspecies() {
+        ModeloTablaEspecies m;
+
+        m = (ModeloTablaEspecies) tablaEspecies.getModel();
+        m.setFilas(fa.obtenerEspecies(jTextFieldNombre.getText()));
+
+        if (m.getRowCount() > 0) {
+            tablaEspecies.setRowSelectionInterval(0, 0);
+            jButtonEditar.setEnabled(true);
+        } else {
+            jButtonEditar.setEnabled(false);
+        }
+
+
+    }
 
    
 }

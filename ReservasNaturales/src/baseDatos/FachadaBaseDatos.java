@@ -6,7 +6,10 @@
 package baseDatos;
 
 
+import aplicacion.Area;
+import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
+import aplicacion.Taxon;
 import aplicacion.Usuario;
 import java.sql.*;
 import java.io.FileInputStream;
@@ -23,6 +26,9 @@ public class FachadaBaseDatos {
     private FachadaAplicacion fa;
     private Connection conexion;
     private DAOUsuarios daoUsuarios;
+    private DAOEspecies daoEspecies;
+    private DAOAreas daoAreas;
+    private DAOTaxones daoTaxones;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -57,6 +63,9 @@ public class FachadaBaseDatos {
                     usuario);
             
             daoUsuarios = new DAOUsuarios(conexion, fa);
+            daoEspecies = new DAOEspecies(conexion, fa);
+            daoAreas = new DAOAreas(conexion, fa);
+            daoTaxones = new DAOTaxones(conexion, fa);
           
 
 
@@ -104,6 +113,18 @@ public class FachadaBaseDatos {
 
     public boolean eliminarTrabajador(String dni) {
         return daoUsuarios.eliminarTrabajador(dni);
+    }
+
+    public List<Especie> obtenerEspecies(String nombreCientifico) {
+        return daoEspecies.obtenerEspecies(nombreCientifico);
+    }
+
+    public List<Area> obtenerAreas() {
+        return daoAreas.obtenerAreas();
+    }
+
+    public List<Taxon> obtenerTaxones() {
+        return daoTaxones.obtenerTaxones();
     }
 
 }
