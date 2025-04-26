@@ -81,6 +81,201 @@ INSERT INTO taxones (nombre, tipo, taxon_superior) VALUES
 ('Deltaproteobacteria', 'Clase', 'Proteobacteria'),
 ('Bacilli', 'Clase', 'Firmicutes'),
 ('Clostridia', 'Clase', 'Firmicutes');
+('Primates', 'Orden', 'Mammalia'),
+('Carnivora', 'Orden', 'Mammalia'),
+('Artiodactyla', 'Orden', 'Mammalia'),
+('Perissodactyla', 'Orden', 'Mammalia'),
+('Proboscidea', 'Orden', 'Mammalia'),
+('Rodentia', 'Orden', 'Mammalia'),
+('Cetacea', 'Orden', 'Mammalia'),
+('Galliformes', 'Orden', 'Aves'),
+('Accipitriformes', 'Orden', 'Aves'),
+('Sphenisciformes', 'Orden', 'Aves'),
+('Columbiformes', 'Orden', 'Aves'),
+('Psittaciformes', 'Orden', 'Aves'),
+('Crocodilia', 'Orden', 'Reptilia'),
+('Squamata', 'Orden', 'Reptilia'),
+('Testudines', 'Orden', 'Reptilia'),
+('Anura', 'Orden', 'Amphibia'),
+('Caudata', 'Orden', 'Amphibia'),
+('Salmoniformes', 'Orden', 'Actinopterygii'),
+('Perciformes', 'Orden', 'Actinopterygii'),
+('Lepidoptera', 'Orden', 'Insecta'),
+('Hymenoptera', 'Orden', 'Insecta'),
+('Hominidae', 'Familia', 'Primates'),
+('Canidae', 'Familia', 'Carnivora'),
+('Felidae', 'Familia', 'Carnivora'),
+('Ursidae', 'Familia', 'Carnivora'),
+('Bovidae', 'Familia', 'Artiodactyla'),
+('Suidae', 'Familia', 'Artiodactyla'),
+('Equidae', 'Familia', 'Perissodactyla'),
+-- Familias de Proboscidea
+('Elephantidae', 'Familia', 'Proboscidea'),
+-- Familias de Rodentia
+('Muridae', 'Familia', 'Rodentia'),
+('Sciuridae', 'Familia', 'Rodentia'),
+-- Familias de Cetacea
+('Delphinidae', 'Familia', 'Cetacea'),
+-- Familias de Galliformes
+('Phasianidae', 'Familia', 'Galliformes'),
+-- Familias de Accipitriformes
+('Accipitridae', 'Familia', 'Accipitriformes'),
+-- Familias de Sphenisciformes
+('Spheniscidae', 'Familia', 'Sphenisciformes'),
+-- Familias de Columbiformes
+('Columbidae', 'Familia', 'Columbiformes'),
+-- Familias de Psittaciformes
+('Psittacidae', 'Familia', 'Psittaciformes'),
+-- Familias de Crocodilia
+('Crocodylidae', 'Familia', 'Crocodilia'),
+-- Familias de Squamata
+('Pythonidae', 'Familia', 'Squamata'),
+('Colubridae', 'Familia', 'Squamata'),
+-- Familias de Testudines
+('Cheloniidae', 'Familia', 'Testudines'),
+-- Familias de Anura
+('Ranidae', 'Familia', 'Anura'),
+-- Familias de Caudata
+('Ambystomatidae', 'Familia', 'Caudata'),
+-- Familias de Salmoniformes
+('Salmonidae', 'Familia', 'Salmoniformes'),
+-- Familias de Perciformes
+('Scombridae', 'Familia', 'Perciformes'),
+-- Familias de Lepidoptera
+('Nymphalidae', 'Familia', 'Lepidoptera'),
+-- Familias de Hymenoptera
+('Apidae', 'Familia', 'Hymenoptera'),
+('Formicidae', 'Familia', 'Hymenoptera'),
+-- Géneros de Hominidae
+('Homo', 'Género', 'Hominidae'),
+-- Géneros de Canidae
+('Canis', 'Género', 'Canidae'),
+('Vulpes', 'Género', 'Canidae'),
+-- Géneros de Felidae
+('Felis', 'Género', 'Felidae'),
+('Panthera', 'Género', 'Felidae'),
+-- Géneros de Ursidae
+('Ursus', 'Género', 'Ursidae'),
+-- Géneros de Bovidae
+('Bos', 'Género', 'Bovidae'),
+('Ovis', 'Género', 'Bovidae'),
+-- Géneros de Suidae
+('Sus', 'Género', 'Suidae'),
+-- Géneros de Equidae
+('Equus', 'Género', 'Equidae'),
+-- Géneros de Elephantidae
+('Loxodonta', 'Género', 'Elephantidae'),
+('Elephas', 'Género', 'Elephantidae'),
+-- Géneros de Muridae
+('Mus', 'Género', 'Muridae'),
+('Rattus', 'Género', 'Muridae'),
+-- Géneros de Sciuridae
+('Sciurus', 'Género', 'Sciuridae'),
+-- Géneros de Delphinidae
+('Tursiops', 'Género', 'Delphinidae'),
+('Delphinus', 'Género', 'Delphinidae'),
+-- Géneros de Phasianidae
+('Gallus', 'Género', 'Phasianidae'),
+-- Géneros de Accipitridae
+('Haliaeetus', 'Género', 'Accipitridae'),
+-- Géneros de Spheniscidae
+('Spheniscus', 'Género', 'Spheniscidae'),
+-- Géneros de Columbidae
+('Columba', 'Género', 'Columbidae'),
+-- Géneros de Psittacidae
+('Psittacus', 'Género', 'Psittacidae'),
+-- Géneros de Crocodylidae
+('Crocodylus', 'Género', 'Crocodylidae'),
+-- Géneros de Pythonidae
+('Python', 'Género', 'Pythonidae'),
+-- Géneros de Cheloniidae
+('Chelonia', 'Género', 'Cheloniidae'),
+-- Géneros de Ranidae
+('Lithobates', 'Género', 'Ranidae'),
+-- Géneros de Ambystomatidae
+('Ambystoma', 'Género', 'Ambystomatidae'),
+-- Géneros de Salmonidae
+('Salmo', 'Género', 'Salmonidae'),
+-- Géneros de Scombridae
+('Thunnus', 'Género', 'Scombridae'),
+-- Géneros de Nymphalidae
+('Danaus', 'Género', 'Nymphalidae'),
+-- Géneros de Apidae
+('Apis', 'Género', 'Apidae'),
+-- Géneros de Formicidae
+('Formica', 'Género', 'Formicidae'),
+-- Especies de Homo
+('Homo sapiens', 'Especie', 'Homo'),
+-- Especies de Canis
+('Canis lupus familiaris', 'Especie', 'Canis'),
+('Canis lupus', 'Especie', 'Canis'),
+-- Especies de Vulpes
+('Vulpes vulpes', 'Especie', 'Vulpes'),
+-- Especies de Felis
+('Felis catus', 'Especie', 'Felis'),
+-- Especies de Panthera
+('Panthera leo', 'Especie', 'Panthera'),
+('Panthera tigris', 'Especie', 'Panthera'),
+('Panthera onca', 'Especie', 'Panthera'),
+-- Especies de Ursus
+('Ursus arctos', 'Especie', 'Ursus'),
+('Ursus maritimus', 'Especie', 'Ursus'),
+-- Especies de Bos
+('Bos taurus', 'Especie', 'Bos'),
+-- Especies de Ovis
+('Ovis aries', 'Especie', 'Ovis'),
+-- Especies de Sus
+('Sus scrofa domesticus', 'Especie', 'Sus'),
+-- Especies de Equus
+('Equus caballus', 'Especie', 'Equus'),
+('Equus asinus', 'Especie', 'Equus'),
+-- Especies de Loxodonta
+('Loxodonta africana', 'Especie', 'Loxodonta'),
+-- Especies de Elephas
+('Elephas maximus', 'Especie', 'Elephas'),
+-- Especies de Mus
+('Mus musculus', 'Especie', 'Mus'),
+-- Especies de Rattus
+('Rattus norvegicus', 'Especie', 'Rattus'),
+-- Especies de Sciurus
+('Sciurus vulgaris', 'Especie', 'Sciurus'),
+-- Especies de Tursiops
+('Tursiops truncatus', 'Especie', 'Tursiops'),
+-- Especies de Delphinus
+('Delphinus delphis', 'Especie', 'Delphinus'),
+-- Especies de Gallus
+('Gallus gallus domesticus', 'Especie', 'Gallus'),
+-- Especies de Haliaeetus
+('Haliaeetus leucocephalus', 'Especie', 'Haliaeetus'),
+-- Especies de Spheniscus
+('Spheniscus demersus', 'Especie', 'Spheniscus'),
+-- Especies de Columba
+('Columba livia', 'Especie', 'Columba'),
+-- Especies de Psittacus
+('Psittacus erithacus', 'Especie', 'Psittacus'),
+-- Especies de Crocodylus
+('Crocodylus niloticus', 'Especie', 'Crocodylus'),
+('Crocodylus porosus', 'Especie', 'Crocodylus'),
+-- Especies de Python
+('Python regius', 'Especie', 'Python'),
+('Python molurus', 'Especie', 'Python'),
+-- Especies de Chelonia
+('Chelonia mydas', 'Especie', 'Chelonia'),
+-- Especies de Lithobates
+('Lithobates catesbeianus', 'Especie', 'Lithobates'),
+-- Especies de Ambystoma
+('Ambystoma tigrinum', 'Especie', 'Ambystoma'),
+-- Especies de Salmo
+('Salmo salar', 'Especie', 'Salmo'),
+('Salmo trutta', 'Especie', 'Salmo'),
+-- Especies de Thunnus
+('Thunnus thynnus', 'Especie', 'Thunnus'),
+-- Especies de Danaus
+('Danaus plexippus', 'Especie', 'Danaus'),
+-- Especies de Apis
+('Apis mellifera', 'Especie', 'Apis'),
+-- Especies de Formica
+('Formica rufa', 'Especie', 'Formica');
 
 -- Insertando especies
 INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, area_geografica, nombre_taxon) VALUES 
