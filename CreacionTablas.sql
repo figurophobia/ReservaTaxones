@@ -86,3 +86,39 @@ CREATE TABLE trabajadores_misiones (
         REFERENCES misiones(dni_trabajador, nombre_cientifico_especie, fecha_inicio)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
+
+
+CREATE TABLE alimento (
+    id INTEGER PRIMARY KEY,
+    tipo VARCHAR(50),
+    nombre VARCHAR(50)
+);
+
+CREATE TABLE consumirAlimentos (
+	nombre_especie VARCHAR(150),
+	id_alimento INTEGER,
+	cantidad INTEGER,
+	frecuencia DECIMAL(2,2),
+	PRIMARY KEY (nombre_especie, id_alimento),
+	FOREIGN KEY (nombre_especie) REFERENCES ejemplar(nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (id_alimento) REFERENCES alimento(id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE clinica_medica (
+    nombre VARCHAR(100) PRIMARY KEY,
+    ubicacion VARCHAR(100),
+    num_empleados INTEGER
+);
+
+CREATE TABLE revisar (
+	clinica VARCHAR(100),
+	ejemplar INTEGER,
+	especie_asociada VARCHAR(150),
+	fecha_revision DATE,
+	informe VARCHAR(200),
+	
+	PRIMARY KEY (clinica, ejemplar, especie_asociada),
+	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (ejemplar) REFERENCES ejemplar(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREING KEY (especie_asociada) REFERENCES ejemplar(nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT
+);
