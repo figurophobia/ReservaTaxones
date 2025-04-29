@@ -42,4 +42,12 @@ public class GestionEspecies {
     void anhadirEspecie(Especie e) {
         fbd.anhadirEspecie(e);
     }
+
+    void actualizarEspecie(Especie e, Especie eNueva) {
+        fbd.actualizarEspecie(e,eNueva);
+    }
+
+    void borrarEspecie(Especie e) {
+        fbd.borrarEspecie(e);
+    }
 }

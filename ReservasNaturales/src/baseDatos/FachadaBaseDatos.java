@@ -131,4 +131,12 @@ public class FachadaBaseDatos {
         daoEspecies.anhadirEspecie(e);
     }
 
+    public void actualizarEspecie(Especie e, Especie eNueva) {
+        daoEspecies.actualizarEspecie(e,eNueva);
+    }
+
+    public void borrarEspecie(Especie e) {
+        daoEspecies.borrarEspecie(e);
+    }
+
 }

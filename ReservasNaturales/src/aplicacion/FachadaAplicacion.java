@@ -97,4 +97,12 @@ public class FachadaAplicacion {
     public void anhadirEspecie(Especie e) {
         ge.anhadirEspecie(e);
     }
+
+    public void actualizarEspecie(Especie e, Especie eNueva) {
+        ge.actualizarEspecie(e,eNueva);
+    }
+
+    public void borrarEspecie(Especie e) {
+        ge.borrarEspecie(e);
+    }
 }

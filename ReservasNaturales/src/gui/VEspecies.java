@@ -24,6 +24,7 @@ public class VEspecies extends javax.swing.JDialog {
     private VPrincipal padre;
     boolean nuevo=false;
     boolean editar=false;
+    private Especie e;
 
     public VEspecies(java.awt.Frame parent, boolean modal, FachadaAplicacion fa) {
         super(parent, modal);
@@ -33,6 +34,9 @@ public class VEspecies extends javax.swing.JDialog {
         cargarAreas();
         cargarTaxones();
         nuevo=true;
+        ActualizarButton.setEnabled(false);
+        BorrarButton.setEnabled(false);
+        
 
     }
     
@@ -47,6 +51,8 @@ public class VEspecies extends javax.swing.JDialog {
         cargarAreas(e);
         cargarTaxones(e);
         editar=true;
+        this.e=e;
+        AnadirButton.setEnabled(false);
 
     }
 
@@ -115,8 +121,18 @@ public class VEspecies extends javax.swing.JDialog {
         });
 
         ActualizarButton.setText("Actualizar");
+        ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ActualizarButtonActionPerformed(evt);
+            }
+        });
 
         BorrarButton.setText("Borrar");
+        BorrarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BorrarButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelEspeciesLayout = new javax.swing.GroupLayout(panelEspecies);
         panelEspecies.setLayout(panelEspeciesLayout);
@@ -244,11 +260,37 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AreaComboBoxActionPerformed
 
     private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(),0.0 ,null);
-        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(),null,null);
-        Especie e = new Especie(NombreCientificoText.getText(),NombreComunText.getText(),DescripcionText.getText(), a, t);
-        fa.anhadirEspecie(e);
+        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, null);
+        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
+        Especie eNueva = new Especie(
+            NombreCientificoText.getText(),
+            NombreComunText.getText(),
+            DescripcionText.getText(),
+            a,
+            t
+        );
+        fa.anhadirEspecie(eNueva);
+        this.e=eNueva;
     }//GEN-LAST:event_AnadirButtonActionPerformed
+
+    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
+        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, null);
+        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
+        Especie eNueva = new Especie(
+            NombreCientificoText.getText(),
+            NombreComunText.getText(),
+            DescripcionText.getText(),
+            a,
+            t
+        );
+        fa.actualizarEspecie(e,eNueva);
+        this.e=eNueva;
+        refreshVentana();
+    }//GEN-LAST:event_ActualizarButtonActionPerformed
+
+    private void BorrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarButtonActionPerformed
+        fa.borrarEspecie(e);
+    }//GEN-LAST:event_BorrarButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
@@ -320,6 +362,14 @@ public class VEspecies extends javax.swing.JDialog {
 
         TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
         TaxonComboBox.setSelectedItem(e.getTaxon().getNombre());
+    }
+
+    private void refreshVentana() {
+        NombreCientificoText.setText(e.getNombreCientifico());
+        NombreComunText.setText(e.getNombreComun());
+        DescripcionText.setText(e.getDescripcion());
+        cargarAreas(e);
+        cargarTaxones(e);
     }
 
 }

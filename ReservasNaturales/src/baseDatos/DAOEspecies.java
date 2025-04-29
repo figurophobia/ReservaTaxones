@@ -72,8 +72,92 @@ public class DAOEspecies extends AbstractDAO {
         return resultado;
     }
 
-    void anhadirEspecie(Especie e) {
-        //TODO:
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void anhadirEspecie(Especie e) {
+        Connection con = this.getConexion();
+        PreparedStatement stmEspecie = null;
+
+        try {
+            String consulta = "INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, area_geografica, nombre_taxon) VALUES (?, ?, ?, ?, ?)";
+
+            stmEspecie = con.prepareStatement(consulta);
+            stmEspecie.setString(1, e.getNombreCientifico());
+            stmEspecie.setString(2, e.getNombreComun());
+            stmEspecie.setString(3, e.getDescripcion());
+            stmEspecie.setString(4, e.getArea().getNombreReserva()); // Suponiendo que Area usa nombre_reserva como PK
+            stmEspecie.setString(5, e.getTaxon().getNombre());        // Suponiendo que Taxon usa nombre como PK
+
+            stmEspecie.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Error al insertar especie: " + ex.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al insertar especie: " + ex.getMessage());
+        } finally {
+            try {
+                if (stmEspecie != null) stmEspecie.close();
+            } catch (SQLException ex) {
+                System.out.println("Imposible cerrar cursores: " + ex.getMessage());
+            }
+        }
     }
+
+    public void actualizarEspecie(Especie e, Especie eNueva) {
+        Connection con = this.getConexion();
+        PreparedStatement stmEspecie = null;
+
+        try {
+            String consulta = "UPDATE especies SET nombre_cientifico = ?, nombre_comun = ?, descripcion = ?, area_geografica = ?, nombre_taxon = ? WHERE nombre_cientifico = ?";
+
+            stmEspecie = con.prepareStatement(consulta);
+            stmEspecie.setString(1, eNueva.getNombreCientifico());
+            stmEspecie.setString(2, eNueva.getNombreComun());
+            stmEspecie.setString(3, eNueva.getDescripcion());
+            stmEspecie.setString(4, eNueva.getArea().getNombreReserva());
+            stmEspecie.setString(5, eNueva.getTaxon().getNombre());
+            stmEspecie.setString(6, e.getNombreCientifico()); // condición WHERE
+
+            stmEspecie.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Error al actualizar especie: " + ex.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar especie: " + ex.getMessage());
+        } finally {
+            try {
+                if (stmEspecie != null) stmEspecie.close();
+            } catch (SQLException ex) {
+                System.out.println("Imposible cerrar cursores: " + ex.getMessage());
+            }
+        }
+    }
+
+    public void borrarEspecie(Especie e) {
+        Connection con = this.getConexion();
+        PreparedStatement stmEspecie = null;
+
+        try {
+            String consulta = "DELETE FROM especies WHERE nombre_cientifico = ?";
+
+            stmEspecie = con.prepareStatement(consulta);
+            stmEspecie.setString(1, e.getNombreCientifico());
+
+            int filasAfectadas = stmEspecie.executeUpdate();
+            if (filasAfectadas > 0) {
+                System.out.println("Especie borrada correctamente.");
+            } else {
+                System.out.println("No se encontró la especie a borrar.");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Error al borrar especie: " + ex.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al borrar especie");
+        } finally {
+            try {
+                if (stmEspecie != null) stmEspecie.close();
+            } catch (SQLException ex) {
+                System.out.println("Imposible cerrar cursores: " + ex.getMessage());
+            }
+        }
+    }
+
+
+
 }
