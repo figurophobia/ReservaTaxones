@@ -123,6 +123,12 @@ public class FachadaBaseDatos {
         return daoAreas.obtenerAreas();
     }
 
+    public List<Area> buscarAreas(String textoBusqueda){ return daoAreas.buscarAreas(textoBusqueda); }
+
+    public boolean actualizarArea(Area area) { return daoAreas.actualizarArea(area); }
+
+    public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
+
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }

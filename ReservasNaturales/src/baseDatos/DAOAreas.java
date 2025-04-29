@@ -67,53 +67,53 @@ public class DAOAreas extends AbstractDAO {
     }
     
     public List<Area> buscarAreas(String textoBusqueda) {
-    List<Area> resultado = new ArrayList<>();
-    Connection con = this.getConexion();
-    PreparedStatement stmArea = null;
-    ResultSet rsArea;
+        List<Area> resultado = new ArrayList<>();
+        Connection con = this.getConexion();
+        PreparedStatement stmArea = null;
+        ResultSet rsArea;
 
-    try {
-        String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
-                          "FROM area_geografica " +
-                          "WHERE nombre_reserva ILIKE ?";
-        stmArea = con.prepareStatement(consulta);
-        stmArea.setString(1, "%" + textoBusqueda + "%"); // Búsqueda parcial
-        rsArea = stmArea.executeQuery();
+        try {
+            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
+                              "FROM area_geografica " +
+                              "WHERE nombre_reserva ILIKE ?";
+            stmArea = con.prepareStatement(consulta);
+            stmArea.setString(1, "%" + textoBusqueda + "%"); // Búsqueda parcial
+            rsArea = stmArea.executeQuery();
 
-        while (rsArea.next()) {
-            String nombreReserva = rsArea.getString("nombre_reserva");
-            double extension = rsArea.getDouble("extension");
-            Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : null;
-            Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : null;
-            Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : null;
-            boolean esAcuatica = rsArea.getBoolean("esacuatica");
-            boolean esTerrestre = rsArea.getBoolean("esterrestre");
+            while (rsArea.next()) {
+                String nombreReserva = rsArea.getString("nombre_reserva");
+                double extension = rsArea.getDouble("extension");
+                Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : null;
+                Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : null;
+                Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : null;
+                boolean esAcuatica = rsArea.getBoolean("esacuatica");
+                boolean esTerrestre = rsArea.getBoolean("esterrestre");
 
-            Area area;
+                Area area;
 
-            if (esAcuatica) {
-                area = new Area(nombreReserva, extension, profundidad);
-            } else if (esTerrestre) {
-                area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);
-            } else {
-                area = new Area(nombreReserva, extension, false, false);
+                if (esAcuatica) {
+                    area = new Area(nombreReserva, extension, profundidad);
+                } else if (esTerrestre) {
+                    area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);
+                } else {
+                    area = new Area(nombreReserva, extension, false, false);
+                }
+
+                resultado.add(area);
             }
 
-            resultado.add(area);
-        }
-
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    } finally {
-        try {
-            if (stmArea != null) stmArea.close();
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmArea != null) stmArea.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
         }
-    }
 
-    return resultado;
+        return resultado;
     }
 
     public boolean actualizarArea(Area area) {

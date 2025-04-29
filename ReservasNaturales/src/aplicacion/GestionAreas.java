@@ -26,4 +26,10 @@ public class GestionAreas {
         return fbd.obtenerAreas();
     }
 
+    public List<Area> buscarAreas(String textoBusqueda){ return fbd.buscarAreas(textoBusqueda); }
+
+    public boolean actualizarArea(Area area) { return fbd.actualizarArea(area); }
+
+    public boolean eliminarArea(String nombreReserva) { return fbd.eliminarArea(nombreReserva); }
+
 }

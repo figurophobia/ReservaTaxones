@@ -3,19 +3,49 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package gui;
+import aplicacion.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author jaime
  */
 public class VAreasGeograficas extends javax.swing.JDialog {
+    
+    FachadaAplicacion fa;
+    private VPrincipal padre;
+    
+    private Area selectedArea;
 
     /**
      * Creates new form VAreasGeograficas
      */
-    public VAreasGeograficas(java.awt.Frame parent, boolean modal) {
+    public VAreasGeograficas(java.awt.Frame parent, boolean modal, FachadaAplicacion fa) {
         super(parent, modal);
+        this.fa = fa;
         initComponents();
+        padre = (VPrincipal) parent;
+        bEditar.setEnabled(false);
+        bBorrar.setEnabled(false);
+
+        tablaAreas.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {  // This ensures we only handle the final event
+                int selectedRow = tablaAreas.getSelectedRow();
+                if (selectedRow >= 0) {
+                    ModeloTablaAreas modelo = (ModeloTablaAreas) tablaAreas.getModel();
+                    selectedArea = modelo.getFila(selectedRow);
+                    bEditar.setEnabled(true);
+                    bBorrar.setEnabled(true);
+                } else {
+                    selectedArea = null;
+                    bEditar.setEnabled(false);
+                    bBorrar.setEnabled(false);
+                }
+            }
+        });
+
     }
 
     /**
@@ -53,17 +83,7 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             }
         });
 
-        tablaAreas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        tablaAreas.setModel(new ModeloTablaAreas());
         jScrollPane1.setViewportView(tablaAreas);
 
         bNuevo.setText("Nuevo");
@@ -74,9 +94,19 @@ public class VAreasGeograficas extends javax.swing.JDialog {
 
         bBorrar.setText("Borrar");
         bBorrar.setToolTipText("Eliminar el área seleccionada");
+        bBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBorrarActionPerformed(evt);
+            }
+        });
 
         bSalir.setText("Salir");
         bSalir.setToolTipText("Cerrar esta ventana");
+        bSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,9 +118,8 @@ public class VAreasGeograficas extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addComponent(bBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bNuevo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -105,10 +134,10 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bBuscar))
-                .addGap(18, 18, 18)
+                    .addComponent(bBuscar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -123,54 +152,41 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoBuscarActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_textoBuscarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
-        // TODO add your handling code here:
+        buscarAreas();
     }//GEN-LAST:event_bBuscarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VAreasGeograficas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VAreasGeograficas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VAreasGeograficas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VAreasGeograficas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_bSalirActionPerformed
 
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                VAreasGeograficas dialog = new VAreasGeograficas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        borrarArea();
+    }//GEN-LAST:event_bBorrarActionPerformed
+
+    private void buscarAreas() {
+        String textoBusqueda = textoBuscar.getText();
+        ArrayList<Area> areas = (ArrayList<Area>) fa.buscarAreas(textoBusqueda);
+        ModeloTablaAreas modeloTablaAreas = (ModeloTablaAreas) tablaAreas.getModel();
+        modeloTablaAreas.setFilas(areas);
+
+        if (modeloTablaAreas.getRowCount() > 0) {
+            tablaAreas.setRowSelectionInterval(0, 0);
+            bEditar.setEnabled(true);
+            bBorrar.setEnabled(true);
+        } else {
+            bEditar.setEnabled(false);
+            bBorrar.setEnabled(false);
+        }
     }
+
+    private void borrarArea() {
+     fa.eliminarArea(selectedArea.getNombreReserva());
+    }
+
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBorrar;

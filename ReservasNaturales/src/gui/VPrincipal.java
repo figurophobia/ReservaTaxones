@@ -111,6 +111,11 @@ public class VPrincipal extends javax.swing.JFrame {
         menuPrincipal.add(menuItemMisiones);
 
         menuItemAreaGeo.setText("Áreas Geográficas");
+        menuItemAreaGeo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAreaGeoActionPerformed(evt);
+            }
+        });
         menuPrincipal.add(menuItemAreaGeo);
 
         menuItemAlimentos.setLabel("Alimentos");
@@ -209,6 +214,12 @@ public class VPrincipal extends javax.swing.JFrame {
         Especie e = mte.obtenerEspecie(tablaEspecies.getSelectedRow());
         fa.editarEspecie(e);
     }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void menuItemAreaGeoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAreaGeoActionPerformed
+        // TODO add your handling code here:
+        VAreasGeograficas vag = new VAreasGeograficas(this, true, fa);
+        vag.setVisible(true);
+    }//GEN-LAST:event_menuItemAreaGeoActionPerformed
 
     /**
     * @param args the command line arguments

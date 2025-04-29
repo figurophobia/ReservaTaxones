@@ -86,6 +86,12 @@ public class FachadaAplicacion {
         return ga.obtenerAreas();
     }
 
+    public List<Area> buscarAreas(String textoBusqueda){ return ga.buscarAreas(textoBusqueda); }
+
+    public boolean actualizarArea(Area area) { return ga.actualizarArea(area); }
+
+    public boolean eliminarArea(String nombreReserva) { return ga.eliminarArea(nombreReserva); }
+
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }
