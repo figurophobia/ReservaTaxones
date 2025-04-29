@@ -260,7 +260,7 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AreaComboBoxActionPerformed
 
     private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, null);
+        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
@@ -274,7 +274,7 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AnadirButtonActionPerformed
 
     private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, null);
+        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
