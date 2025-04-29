@@ -199,8 +199,7 @@ public class VTrabajadores extends javax.swing.JDialog {
 
     mt.anhadeFila(nuevoUsuario);
 
-    int lastRow = mt.getRowCount() - 1;
-    TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
+    int lastRow = mt.getRowCount() - 1;    TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
 
     TablaTrabajadores.editCellAt(lastRow, 0);
 
@@ -350,16 +349,5 @@ private void buscarUsuarios(){
         va.setVisible(true);
         
     }
-    
-    
-
-
-
-
-
 }
-
-
-
-
 }

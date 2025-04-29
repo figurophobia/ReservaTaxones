@@ -46,7 +46,7 @@ public class DAOAreas extends AbstractDAO {
                     area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);  // Áreas terrestres
                 } else {
                     // Si no es acuática ni terrestre, tratamos de devolverlo de forma general
-                    area = new Area(nombreReserva, extension, "Desconocido");
+                    area = new Area(nombreReserva, extension, false, false);
                 }
 
                 resultado.add(area);
@@ -64,5 +64,115 @@ public class DAOAreas extends AbstractDAO {
         }
 
         return resultado;
+    }
+    
+    public List<Area> buscarAreas(String textoBusqueda) {
+    List<Area> resultado = new ArrayList<>();
+    Connection con = this.getConexion();
+    PreparedStatement stmArea = null;
+    ResultSet rsArea;
+
+    try {
+        String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
+                          "FROM area_geografica " +
+                          "WHERE nombre_reserva ILIKE ?";
+        stmArea = con.prepareStatement(consulta);
+        stmArea.setString(1, "%" + textoBusqueda + "%"); // Búsqueda parcial
+        rsArea = stmArea.executeQuery();
+
+        while (rsArea.next()) {
+            String nombreReserva = rsArea.getString("nombre_reserva");
+            double extension = rsArea.getDouble("extension");
+            Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : null;
+            Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : null;
+            Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : null;
+            boolean esAcuatica = rsArea.getBoolean("esacuatica");
+            boolean esTerrestre = rsArea.getBoolean("esterrestre");
+
+            Area area;
+
+            if (esAcuatica) {
+                area = new Area(nombreReserva, extension, profundidad);
+            } else if (esTerrestre) {
+                area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);
+            } else {
+                area = new Area(nombreReserva, extension, false, false);
+            }
+
+            resultado.add(area);
+        }
+
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+    } finally {
+        try {
+            if (stmArea != null) stmArea.close();
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
+        }
+    }
+
+    return resultado;
+    }
+
+    public boolean actualizarArea(Area area) {
+        Connection con = this.getConexion();
+        PreparedStatement stmArea = null;
+        boolean actualizado = false;
+
+        try {
+            String consulta = "UPDATE area_geografica " +
+                              "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? " +
+                              "WHERE nombre_reserva = ?";
+            stmArea = con.prepareStatement(consulta);
+            stmArea.setDouble(1, area.getExtension());
+            stmArea.setObject(2, area.getAltitudBaja());
+            stmArea.setObject(3, area.getAltitudAlta());
+            stmArea.setObject(4, area.getProfundidad());
+            stmArea.setBoolean(5, area.isAcuatica());
+            stmArea.setBoolean(6, area.isTerrestre());
+            stmArea.setString(7, area.getNombreReserva());
+
+            actualizado = stmArea.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmArea != null) stmArea.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return actualizado;
+    }
+
+    public boolean eliminarArea(String nombreReserva) {
+        Connection con = this.getConexion();
+        PreparedStatement stmArea = null;
+        boolean eliminado = false;
+
+        try {
+            String consulta = "DELETE FROM area_geografica WHERE nombre_reserva = ?";
+            stmArea = con.prepareStatement(consulta);
+            stmArea.setString(1, nombreReserva);
+
+            eliminado = stmArea.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmArea != null) stmArea.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return eliminado;
     }
 }

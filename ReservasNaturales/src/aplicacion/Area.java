@@ -11,7 +11,8 @@ package aplicacion;
 public class Area {
     private String nombreReserva;
     private double extension;
-    private String tipo; // "Acuática" o "Terrestre"
+    private boolean acuatica;
+    private boolean terrestre;
 
     //Clase Double para admitir null y no trbajar con 0
     private Double profundidad;   // Solo si es acuática
@@ -24,17 +25,18 @@ public class Area {
     }
 
     // Constructor general 
-    public Area(String nombreReserva, double extension, String tipo) {
+    public Area(String nombreReserva, double extension, boolean terrestre, boolean acuatica) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.tipo = tipo;
+        this.terrestre = terrestre;
+        this.acuatica = acuatica;
     }
 
     // Constructor para áreas acuáticas
     public Area(String nombreReserva, double extension, double profundidad) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.tipo = "Acuática";
+        this.acuatica = true;
         this.profundidad = profundidad;
     }
 
@@ -42,7 +44,7 @@ public class Area {
     public Area(String nombreReserva, double extension, double altitudBaja, double altitudAlta) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.tipo = "Terrestre";
+        this.terrestre = true;
         this.altitudBaja = altitudBaja;
         this.altitudAlta = altitudAlta;
     }
@@ -64,12 +66,20 @@ public class Area {
         this.extension = extension;
     }
 
-    public String getTipo() {
-        return tipo;
+    public boolean isAcuatica() {
+        return acuatica;
     }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    
+    public void setAcuatica(boolean acuatica) {
+        this.acuatica = acuatica;
+    }
+    
+    public boolean isTerrestre() {
+        return terrestre;
+    }
+    
+    public void setTerrestre(boolean terrestre){
+        this.terrestre = terrestre;
     }
 
     public Double getProfundidad() {
