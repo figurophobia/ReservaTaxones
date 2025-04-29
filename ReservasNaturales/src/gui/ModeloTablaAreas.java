@@ -60,12 +60,12 @@ public class ModeloTablaAreas extends AbstractTableModel{
         Area a = areas.get(row);
         switch (col) {
             case 0: return a.getNombreReserva();
-            case 1: return a.getExtension();
-            case 2: return a.getAltitudBaja();
-            case 3: return a.getAltitudAlta();
-            case 4: return a.getProfundidad();
-            case 5: return a.isAcuatica();
-            case 6: return a.isTerrestre();
+            case 1: return (int)a.getExtension() + " km²";
+            case 2: return a.getAltitudBaja().intValue() + " m";
+            case 3: return a.getAltitudAlta().intValue() + " m";
+            case 4: return a.getProfundidad().intValue() + " m";
+            case 5: return a.isAcuatica() ? "Sí" : "No";
+            case 6: return a.isTerrestre() ? "Sí" : "No";
             default: return null;
         }
     }
