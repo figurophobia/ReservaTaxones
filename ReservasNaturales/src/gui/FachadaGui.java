@@ -4,6 +4,7 @@
  */
 package gui;
 
+import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 
 
@@ -47,6 +48,12 @@ public class FachadaGui {
 
     public void nuevaArea() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public void editarEspecie(Especie e) {
+        VEspecies ve;
+        ve = new VEspecies(vp, true, fa, e);
+        ve.setVisible(true);
     }
 
     

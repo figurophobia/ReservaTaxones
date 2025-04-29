@@ -4,6 +4,7 @@
  */
 package gui;
 import aplicacion.Area;
+import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.util.List;
@@ -21,6 +22,8 @@ public class VEspecies extends javax.swing.JDialog {
      */
     FachadaAplicacion fa;
     private VPrincipal padre;
+    boolean nuevo=false;
+    boolean editar=false;
 
     public VEspecies(java.awt.Frame parent, boolean modal, FachadaAplicacion fa) {
         super(parent, modal);
@@ -29,6 +32,21 @@ public class VEspecies extends javax.swing.JDialog {
         padre=(VPrincipal) parent;
         cargarAreas();
         cargarTaxones();
+        nuevo=true;
+
+    }
+    
+    public VEspecies(java.awt.Frame parent, boolean modal, FachadaAplicacion fa, Especie e) {
+        super(parent, modal);
+        this.fa=fa;
+        initComponents();
+        padre=(VPrincipal) parent;
+        NombreCientificoText.setText(e.getNombreCientifico());
+        NombreComunText.setText(e.getNombreComun());
+        DescripcionText.setText(e.getDescripcion());
+        cargarAreas(e);
+        cargarTaxones(e);
+        editar=true;
 
     }
 
@@ -90,6 +108,11 @@ public class VEspecies extends javax.swing.JDialog {
         jLabel5.setText("Taxón");
 
         AnadirButton.setText("Añadir");
+        AnadirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AnadirButtonActionPerformed(evt);
+            }
+        });
 
         ActualizarButton.setText("Actualizar");
 
@@ -220,6 +243,13 @@ public class VEspecies extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_AreaComboBoxActionPerformed
 
+    private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
+        Area a = new Area((String)AreaComboBox.getSelectedItem(),0.0 ,null);
+        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(),null,null);
+        Especie e = new Especie(NombreCientificoText.getText(),NombreComunText.getText(),DescripcionText.getText(), a, t);
+        fa.anhadirEspecie(e);
+    }//GEN-LAST:event_AnadirButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
@@ -263,6 +293,33 @@ public class VEspecies extends javax.swing.JDialog {
         }
 
         TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
+    }
+    private void cargarAreas(Especie e) {
+        
+        List<Area> areas = fa.obtenerAreas(); // obtener la lista de áreas
+
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+
+        for (Area area : areas) {
+            modelo.addElement(area.getNombreReserva()); // suponiendo que el área tiene un método getNombre()
+        }
+
+        AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
+        //Meter que haga aqui lo de que default este el area de la especie
+        AreaComboBox.setSelectedItem(e.getArea().getNombreReserva());
+    }
+    
+    private void cargarTaxones(Especie e) {
+        List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
+
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+
+        for (Taxon taxon : taxones) {
+            modelo.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
+        }
+
+        TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
+        TaxonComboBox.setSelectedItem(e.getTaxon().getNombre());
     }
 
 }
