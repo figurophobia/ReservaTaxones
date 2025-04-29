@@ -95,12 +95,13 @@ CREATE TABLE alimento (
 );
 
 CREATE TABLE consumirAlimentos (
+	id_especie INTEGER,
 	nombre_especie VARCHAR(150),
 	id_alimento INTEGER,
 	cantidad INTEGER,
-	frecuencia DECIMAL(2,2),
-	PRIMARY KEY (nombre_especie, id_alimento),
-	FOREIGN KEY (nombre_especie) REFERENCES ejemplar(nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT,
+	frecuencia INTEGER,
+	PRIMARY KEY (id_especie , nombre_especie, id_alimento),
+	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY (id_alimento) REFERENCES alimento(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -119,6 +120,5 @@ CREATE TABLE revisar (
 	
 	PRIMARY KEY (clinica, ejemplar, especie_asociada),
 	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre) ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (ejemplar) REFERENCES ejemplar(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREING KEY (especie_asociada) REFERENCES ejemplar(nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT
+	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT
 );
