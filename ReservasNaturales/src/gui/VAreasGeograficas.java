@@ -7,6 +7,7 @@ import aplicacion.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -16,7 +17,6 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     
     FachadaAplicacion fa;
     private VPrincipal padre;
-    
     private Area selectedArea;
 
     /**
@@ -29,6 +29,10 @@ public class VAreasGeograficas extends javax.swing.JDialog {
         padre = (VPrincipal) parent;
         bEditar.setEnabled(false);
         bBorrar.setEnabled(false);
+        
+        TableColumnModel columnModel = tablaAreas.getColumnModel();
+
+        columnModel.getColumn(0).setPreferredWidth(300); 
 
         tablaAreas.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {  // This ensures we only handle the final event
@@ -84,6 +88,7 @@ public class VAreasGeograficas extends javax.swing.JDialog {
         });
 
         tablaAreas.setModel(new ModeloTablaAreas());
+        tablaAreas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(tablaAreas);
 
         bNuevo.setText("Nuevo");
@@ -91,6 +96,11 @@ public class VAreasGeograficas extends javax.swing.JDialog {
 
         bEditar.setText("Editar");
         bEditar.setToolTipText("Editar el área seleccionada");
+        bEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bEditarActionPerformed(evt);
+            }
+        });
 
         bBorrar.setText("Borrar");
         bBorrar.setToolTipText("Eliminar el área seleccionada");
@@ -115,10 +125,10 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(bBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bNuevo)
@@ -166,6 +176,11 @@ public class VAreasGeograficas extends javax.swing.JDialog {
         borrarArea();
     }//GEN-LAST:event_bBorrarActionPerformed
 
+    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+        new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
+        buscarAreas();
+    }//GEN-LAST:event_bEditarActionPerformed
+
     private void buscarAreas() {
         String textoBusqueda = textoBuscar.getText();
         ArrayList<Area> areas = (ArrayList<Area>) fa.buscarAreas(textoBusqueda);
@@ -185,8 +200,6 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     private void borrarArea() {
      fa.eliminarArea(selectedArea.getNombreReserva());
     }
-
-   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bBorrar;

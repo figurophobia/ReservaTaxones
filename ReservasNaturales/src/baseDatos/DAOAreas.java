@@ -83,15 +83,16 @@ public class DAOAreas extends AbstractDAO {
             while (rsArea.next()) {
                 String nombreReserva = rsArea.getString("nombre_reserva");
                 double extension = rsArea.getDouble("extension");
-                Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : null;
-                Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : null;
-                Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : null;
+                Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : 0.0;
+                Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : 0.0;
+                Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : 0.0;
                 boolean esAcuatica = rsArea.getBoolean("esacuatica");
                 boolean esTerrestre = rsArea.getBoolean("esterrestre");
 
                 Area area;
-
-                if (esAcuatica) {
+                if (esAcuatica && esTerrestre) {
+                    area = new Area(nombreReserva, extension, profundidad, altitudAlta, altitudBaja, true, true);
+                } else if (esAcuatica) {
                     area = new Area(nombreReserva, extension, profundidad);
                 } else if (esTerrestre) {
                     area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);
@@ -120,7 +121,6 @@ public class DAOAreas extends AbstractDAO {
         Connection con = this.getConexion();
         PreparedStatement stmArea = null;
         boolean actualizado = false;
-
         try {
             String consulta = "UPDATE area_geografica " +
                               "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? " +
@@ -136,12 +136,15 @@ public class DAOAreas extends AbstractDAO {
 
             actualizado = stmArea.executeUpdate() > 0;
 
+            System.out.println("Area actualizada correctamente.");
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
                 if (stmArea != null) stmArea.close();
+                System.out.println("hola");
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }

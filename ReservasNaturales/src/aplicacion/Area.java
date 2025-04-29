@@ -15,10 +15,10 @@ public class Area {
     private boolean terrestre;
 
     //Clase Double para admitir null y no trbajar con 0
-    private Double profundidad;   // Solo si es acuática
+    private double profundidad;   // Solo si es acuática
 
-    private Double altitudBaja;    // Solo si es terrestre
-    private Double altitudAlta;    // Solo si es terrestre
+    private double altitudBaja;
+    private double altitudAlta;
 
     // Constructor vacío
     public Area() {
@@ -30,6 +30,16 @@ public class Area {
         this.extension = extension;
         this.terrestre = terrestre;
         this.acuatica = acuatica;
+    }
+    
+    public Area(String nombreReserva, double extension, double profundidad, double altitudBaja, double altitudAlta, boolean acuatica, boolean terrestre){
+        this.nombreReserva = nombreReserva;
+        this.extension = extension;
+        this.acuatica = acuatica;
+        this.terrestre = terrestre;
+        this.profundidad = profundidad;
+        this.altitudBaja = altitudBaja;
+        this.altitudAlta = altitudAlta;
     }
 
     // Constructor para áreas acuáticas
