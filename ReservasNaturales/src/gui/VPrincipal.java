@@ -11,6 +11,7 @@
 
 package gui;
 
+import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 
 
@@ -85,6 +86,11 @@ public class VPrincipal extends javax.swing.JFrame {
 
         jButtonEditar.setText("Editar");
         jButtonEditar.setEnabled(false);
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
 
         menuPrincipal.setLabel("Administración");
 
@@ -197,6 +203,12 @@ public class VPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         fa.nuevaEspecie();
     }//GEN-LAST:event_jButtonNuevoActionPerformed
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        ModeloTablaEspecies mte = (ModeloTablaEspecies) tablaEspecies.getModel();
+        Especie e = mte.obtenerEspecie(tablaEspecies.getSelectedRow());
+        fa.editarEspecie(e);
+    }//GEN-LAST:event_jButtonEditarActionPerformed
 
     /**
     * @param args the command line arguments

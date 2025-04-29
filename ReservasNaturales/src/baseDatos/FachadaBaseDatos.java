@@ -127,4 +127,16 @@ public class FachadaBaseDatos {
         return daoTaxones.obtenerTaxones();
     }
 
+    public void anhadirEspecie(Especie e) {
+        daoEspecies.anhadirEspecie(e);
+    }
+
+    public void actualizarEspecie(Especie e, Especie eNueva) {
+        daoEspecies.actualizarEspecie(e,eNueva);
+    }
+
+    public void borrarEspecie(Especie e) {
+        daoEspecies.borrarEspecie(e);
+    }
+
 }

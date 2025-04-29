@@ -34,4 +34,20 @@ public class GestionEspecies {
     void nuevaEspecie() {
         fgui.nuevaEspecie();
     }
+
+    void editarEspecie(Especie e) {
+        fgui.editarEspecie(e);
+    }
+
+    void anhadirEspecie(Especie e) {
+        fbd.anhadirEspecie(e);
+    }
+
+    void actualizarEspecie(Especie e, Especie eNueva) {
+        fbd.actualizarEspecie(e,eNueva);
+    }
+
+    void borrarEspecie(Especie e) {
+        fbd.borrarEspecie(e);
+    }
 }

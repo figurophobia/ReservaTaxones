@@ -89,4 +89,20 @@ public class FachadaAplicacion {
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }
+
+    public void editarEspecie(Especie e) {
+        ge.editarEspecie(e);
+    }
+
+    public void anhadirEspecie(Especie e) {
+        ge.anhadirEspecie(e);
+    }
+
+    public void actualizarEspecie(Especie e, Especie eNueva) {
+        ge.actualizarEspecie(e,eNueva);
+    }
+
+    public void borrarEspecie(Especie e) {
+        ge.borrarEspecie(e);
+    }
 }
