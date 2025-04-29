@@ -129,6 +129,8 @@ public class FachadaBaseDatos {
 
     public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
 
+    public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
+
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }

@@ -93,6 +93,11 @@ public class VAreasGeograficas extends javax.swing.JDialog {
 
         bNuevo.setText("Nuevo");
         bNuevo.setToolTipText("Crear nueva área geográfica");
+        bNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bNuevoActionPerformed(evt);
+            }
+        });
 
         bEditar.setText("Editar");
         bEditar.setToolTipText("Editar el área seleccionada");
@@ -174,12 +179,23 @@ public class VAreasGeograficas extends javax.swing.JDialog {
 
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         borrarArea();
+        buscarAreas();
+        bEditar.setEnabled(false);
+        bBorrar.setEnabled(false);
+        if (tablaAreas.getRowCount() != 0) {
+            tablaAreas.setRowSelectionInterval(0, 0);
+        }
     }//GEN-LAST:event_bBorrarActionPerformed
 
     private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
         new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
         buscarAreas();
     }//GEN-LAST:event_bEditarActionPerformed
+
+    private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed
+        new VAreasNuevo(this.padre, true, fa).setVisible(true);
+        buscarAreas();
+    }//GEN-LAST:event_bNuevoActionPerformed
 
     private void buscarAreas() {
         String textoBusqueda = textoBuscar.getText();

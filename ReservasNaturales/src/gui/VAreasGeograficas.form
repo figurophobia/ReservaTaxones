@@ -108,6 +108,9 @@
         <Property name="text" type="java.lang.String" value="Nuevo"/>
         <Property name="toolTipText" type="java.lang.String" value="Crear nueva &#xe1;rea geogr&#xe1;fica"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNuevoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bEditar">
       <Properties>

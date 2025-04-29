@@ -178,4 +178,57 @@ public class DAOAreas extends AbstractDAO {
 
         return eliminado;
     }
+
+    public boolean crearArea(Area area) {
+        Connection con = this.getConexion();
+        PreparedStatement stmArea = null;
+        boolean creado = false;
+
+        try {
+            String consulta = "INSERT INTO area_geografica " +
+                    "(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            stmArea = con.prepareStatement(consulta);
+            stmArea.setString(1, area.getNombreReserva());
+            stmArea.setDouble(2, area.getExtension());
+
+            // Establecer valores de altitud solo si son relevantes (área terrestre)
+            if (area.isTerrestre()) {
+                stmArea.setObject(3, area.getAltitudBaja());
+                stmArea.setObject(4, area.getAltitudAlta());
+            } else {
+                stmArea.setNull(3, java.sql.Types.DOUBLE);
+                stmArea.setNull(4, java.sql.Types.DOUBLE);
+            }
+
+            // Establecer profundidad solo si es relevante (área acuática)
+            if (area.isAcuatica()) {
+                stmArea.setObject(5, area.getProfundidad());
+            } else {
+                stmArea.setNull(5, java.sql.Types.DOUBLE);
+            }
+
+            stmArea.setBoolean(6, area.isAcuatica());
+            stmArea.setBoolean(7, area.isTerrestre());
+
+            creado = stmArea.executeUpdate() > 0;
+
+            if (creado) {
+                System.out.println("Área creada correctamente: " + area.getNombreReserva());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al crear área: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmArea != null) stmArea.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return creado;
+    }
 }

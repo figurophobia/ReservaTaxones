@@ -32,4 +32,5 @@ public class GestionAreas {
 
     public boolean eliminarArea(String nombreReserva) { return fbd.eliminarArea(nombreReserva); }
 
+    public boolean crearArea(Area area) { return fbd.crearArea(area); }
 }
