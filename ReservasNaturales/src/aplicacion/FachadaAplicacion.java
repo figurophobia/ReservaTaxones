@@ -21,6 +21,8 @@ public class FachadaAplicacion {
     GestionEspecies ge;
     GestionAreas ga;
     GestionTaxones gt;
+    GestionRevision gr;
+    GestionClinicas gc;
 
     public FachadaAplicacion() {
         fgui = new FachadaGui(this);
@@ -29,6 +31,8 @@ public class FachadaAplicacion {
         ge = new GestionEspecies(fgui,fbd);
         ga = new GestionAreas(fgui, fbd);
         gt = new GestionTaxones(fbd, fgui);
+        gr = new GestionRevision(fbd,fgui);
+        gc = new GestionClinicas(fbd,fgui);
     }
 
     public static void main(String args[]) {
@@ -112,5 +116,16 @@ public class FachadaAplicacion {
 
     public void borrarEspecie(Especie e) {
         ge.borrarEspecie(e);
+    }
+    public void crearRevision(ClinicaMedica clinicaSeleccionada,Ejemplar ejemplar) {
+       fgui.crearRevision(clinicaSeleccionada,ejemplar);
+    }
+
+    public List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return gr.obtenerRevisiones(nClinica, Id);
+    }
+
+    public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+          return gc.obtenerClinicas(textoBusqueda);
     }
 }
