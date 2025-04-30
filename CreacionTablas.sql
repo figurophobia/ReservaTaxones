@@ -79,11 +79,19 @@ CREATE TABLE misiones (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
+CREATE TABLE empresa_distribuidora (
+    nombre VARCHAR(100) PRIMARY KEY,
+    pais_nombre VARCHAR(100),
+    pais_area VARCHAR(100),
+    FOREIGN KEY (pais_nombre, pais_area) REFERENCES pais(nombre, area)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
 
 CREATE TABLE alimento (
     id INTEGER PRIMARY KEY,
     tipo VARCHAR(50),
-    nombre VARCHAR(50)
+    nombre VARCHAR(50),
     distribuidor VARCHAR(100),
     FOREIGN KEY (distribuidor) REFERENCES empresa_distribuidora(nombre)
         ON UPDATE CASCADE ON DELETE RESTRICT
@@ -96,9 +104,9 @@ CREATE TABLE consumirAlimentos (
 	cantidad INTEGER,
 	frecuencia INTEGER,
 	PRIMARY KEY (id_especie , nombre_especie, id_alimento),
-	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie) 
+	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (id_alimento) REFERENCES alimento(id) 
+	FOREIGN KEY (id_alimento) REFERENCES alimento(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -114,17 +122,12 @@ CREATE TABLE revisar (
 	especie_asociada VARCHAR(150),
 	fecha_revision DATE,
 	informe VARCHAR(200),
-	
+
 	PRIMARY KEY (clinica, ejemplar, especie_asociada, fecha_revision),
-	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre) 
+	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre)
         ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie) 
+	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE empresa_distribuidora (
-    nombre VARCHAR(100) PRIMARY KEY,
-    pais VARCHAR(100),
-    FOREIGN KEY (pais) REFERENCES pais(nombre)
-        ON UPDATE CASCADE ON DELETE RESTRICT
-);
+

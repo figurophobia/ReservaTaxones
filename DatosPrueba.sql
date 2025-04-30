@@ -228,19 +228,19 @@ INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, f
 ('11111111A', 'Capra pyrenaica', '2024-06-01', NULL, 'Censo de cabra montés en Sierra Nevada');
 
 
-INSERT INTO trabajadores_misiones (trabajador, nombre_cientifico_especie, fecha_inicio) VALUES 
-('11111111A', 'Lynx pardinus', '2024-03-15'),
-('11111111A', 'Capra pyrenaica', '2024-06-01');
+INSERT INTO empresa_distribuidora(nombre, pais_nombre, pais_area) VALUES
+('Alimentos Naturales S.A.', 'España', 'Parque Nacional Doñana'),
+('Distribuciones Globales S.L.', 'España', 'Reserva Marina Cabo de Palos');
 
-INSERT INTO alimento (id, tipo, nombre) VALUES
-(1, 'Carne', 'Carne de res'),
-(2, 'Vegetal', 'Zanahorias'),
-(3, 'Pienso', 'Pienso para carnívoros');
+INSERT INTO alimento (id, tipo, nombre,distribuidor) VALUES
+(1, 'Carne', 'Carne de res', 'Alimentos Naturales S.A.'),
+(2, 'Vegetal', 'Zanahorias', 'Distribuciones Globales S.L.'),
+(3, 'Pienso', 'Pienso para carnívoros', 'Alimentos Naturales S.A.');
 
 INSERT INTO consumirAlimentos (id_especie, nombre_especie, id_alimento, cantidad, frecuencia) VALUES
-(1, 'Homo sapiens', 2, 300, 3),
-(2, 'Canis lupus', 1, 500, 2),
-(3, 'Panthera leo', 3, 600, 2);
+(1, 'Lynx pardinus', 2, 300, 3),
+(2, 'Lynx pardinus', 1, 500, 2),
+(1, 'Aquila adalberti', 3, 600, 2);
 
 INSERT INTO clinica_medica (nombre, ubicacion, num_empleados) VALUES
 ('Centro Veterinario Doñana', 'Parque Nacional Doñana', 5),
@@ -248,12 +248,9 @@ INSERT INTO clinica_medica (nombre, ubicacion, num_empleados) VALUES
 ('Islas Atlánticas Salud Animal', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas', 4);
 
 INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) VALUES
-('Centro Veterinario Doñana', 1, 'Homo sapiens', '2024-01-10', 'Buen estado de salud.'),
-('Clínica Sierra Vet', 2, 'Canis lupus', '2024-02-20', 'Leve deshidratación tratada.'),
-('Islas Atlánticas Salud Animal', 3, 'Panthera leo', '2024-03-15', 'Lesión en la pata, en recuperación.');
+('Centro Veterinario Doñana', 1, 'Lynx pardinus', '2024-01-10', 'Buen estado de salud.'),
+('Clínica Sierra Vet', 2, 'Lynx pardinus', '2024-02-20', 'Leve deshidratación tratada.'),
+('Islas Atlánticas Salud Animal', 2, 'Capra pyrenaica', '2024-03-15', 'Lesión en la pata, en recuperación.');
 
 
-INSERT INTO empresa_distribuidora(nombre, pais) VALUES
-('Alimentos Naturales S.A.', 'España'),
-('Distribuciones Globales S.L.', 'España');
 
