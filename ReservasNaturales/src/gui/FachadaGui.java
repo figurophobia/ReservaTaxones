@@ -6,6 +6,8 @@ package gui;
 
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
+import aplicacion.ClinicaMedica;
+import aplicacion.Ejemplar;
 
 
 /**
@@ -54,6 +56,20 @@ public class FachadaGui {
         VEspecies ve;
         ve = new VEspecies(vp, true, fa, e);
         ve.setVisible(true);
+    }
+    
+    public void crearRevision(ClinicaMedica clinicaSeleccionada,Ejemplar ejemplar) {
+        VRevisiones vr;
+        
+        vr = new VRevisiones(vp, true ,fa, ejemplar, clinicaSeleccionada);
+        vr.setVisible(true);
+        
+    }
+    public void crearVClinicas(Ejemplar selecionado){
+        VClinicas vc;
+        vc = new VClinicas(vp,true,fa,selecionado);
+        vc.setVisible(true);
+        
     }
 
     
