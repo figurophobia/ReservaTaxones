@@ -167,6 +167,7 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoBuscarActionPerformed
+        buscarAreas();
     }//GEN-LAST:event_textoBuscarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
