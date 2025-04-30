@@ -211,12 +211,12 @@ INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, area_geograf
 ('Posidonia oceanica', 'Posidonia', 'Planta acuática endémica del Mediterráneo', 'Reserva Marina Cabo de Palos', 'Liliopsida');
 
 
-INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, edad) VALUES 
-(1, 'Lynx pardinus', 'Félix', 5),
-(2, 'Lynx pardinus', 'Luna', 3),
-(1, 'Aquila adalberti', 'Reina', 8),
-(1, 'Capra pyrenaica', 'Montés', 6),
-(2, 'Capra pyrenaica', 'Sierra', 4);
+INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac) VALUES 
+(1, 'Lynx pardinus', 'Félix', '2018-03-15'),
+(2, 'Lynx pardinus', 'Luna', '2020-07-22'),
+(1, 'Aquila adalberti', 'Reina', '2015-05-10'),
+(1, 'Capra pyrenaica', 'Montés', '2017-09-30'),
+(2, 'Capra pyrenaica', 'Sierra', '2019-12-12');
 
 
 INSERT INTO trabajadores (dni, nombre, sueldo, horas,nombre_reserva) VALUES 
@@ -228,9 +228,9 @@ INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, f
 ('11111111A', 'Capra pyrenaica', '2024-06-01', NULL, 'Censo de cabra montés en Sierra Nevada');
 
 
-INSERT INTO empresa_distribuidora(nombre, pais_nombre, pais_area) VALUES
-('Alimentos Naturales S.A.', 'España', 'Parque Nacional Doñana'),
-('Distribuciones Globales S.L.', 'España', 'Reserva Marina Cabo de Palos');
+INSERT INTO empresa_distribuidora(nombre) VALUES
+('Alimentos Naturales S.A.'),
+('Distribuciones Globales S.L.');
 
 INSERT INTO alimento (id, tipo, nombre,distribuidor) VALUES
 (1, 'Carne', 'Carne de res', 'Alimentos Naturales S.A.'),

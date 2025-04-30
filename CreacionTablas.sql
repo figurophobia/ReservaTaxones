@@ -47,7 +47,7 @@ CREATE TABLE ejemplar (
     id INTEGER,
     nombre_cientifico_especie VARCHAR(150),
     mote VARCHAR(100),
-    edad INTEGER,
+    fec_nac DATE,
     PRIMARY KEY (id, nombre_cientifico_especie),
     FOREIGN KEY (nombre_cientifico_especie) REFERENCES especies(nombre_cientifico)
         ON UPDATE CASCADE ON DELETE RESTRICT
@@ -80,11 +80,7 @@ CREATE TABLE misiones (
 );
 
 CREATE TABLE empresa_distribuidora (
-    nombre VARCHAR(100) PRIMARY KEY,
-    pais_nombre VARCHAR(100),
-    pais_area VARCHAR(100),
-    FOREIGN KEY (pais_nombre, pais_area) REFERENCES pais(nombre, area)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+    nombre VARCHAR(100) PRIMARY KEY
 );
 
 
