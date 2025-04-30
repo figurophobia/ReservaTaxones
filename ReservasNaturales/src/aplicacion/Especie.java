@@ -1,8 +1,7 @@
     /*
      * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
      * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-     */
-package aplicacion;
+     */package aplicacion;
 
 /**
  *
@@ -12,19 +11,17 @@ public class Especie {
     private String nombreCientifico;
     private String nombreComun;
     private String descripcion;
-    private Area area;        // Clase Area que deberías tener creada
-    private Taxon taxon;      // Taxon al que pertenece la especie
+    private Taxon taxon;  // Taxon al que pertenece la especie
 
     // Constructor vacío
     public Especie() {
     }
 
     // Constructor con parámetros
-    public Especie(String nombreCientifico, String nombreComun, String descripcion, Area area, Taxon taxon) {
+    public Especie(String nombreCientifico, String nombreComun, String descripcion, Taxon taxon) {
         this.nombreCientifico = nombreCientifico;
         this.nombreComun = nombreComun;
         this.descripcion = descripcion;
-        this.area = area;
         this.taxon = taxon;
     }
 
@@ -51,14 +48,6 @@ public class Especie {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Area getArea() {
-        return area;
-    }
-
-    public void setArea(Area area) {
-        this.area = area;
     }
 
     public Taxon getTaxon() {

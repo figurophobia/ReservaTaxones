@@ -31,7 +31,6 @@ public class VEspecies extends javax.swing.JDialog {
         this.fa=fa;
         initComponents();
         padre=(VPrincipal) parent;
-        cargarAreas();
         cargarTaxones();
         nuevo=true;
         ActualizarButton.setEnabled(false);
@@ -48,7 +47,6 @@ public class VEspecies extends javax.swing.JDialog {
         NombreCientificoText.setText(e.getNombreCientifico());
         NombreComunText.setText(e.getNombreComun());
         DescripcionText.setText(e.getDescripcion());
-        cargarAreas(e);
         cargarTaxones(e);
         editar=true;
         this.e=e;
@@ -73,8 +71,6 @@ public class VEspecies extends javax.swing.JDialog {
         NombreComunText = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         DescripcionText = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        AreaComboBox = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         TaxonComboBox = new javax.swing.JComboBox<>();
         AnadirButton = new javax.swing.JButton();
@@ -102,14 +98,6 @@ public class VEspecies extends javax.swing.JDialog {
         });
 
         jLabel3.setText("Descripción");
-
-        jLabel4.setText("Área");
-
-        AreaComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AreaComboBoxActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Taxón");
 
@@ -149,13 +137,11 @@ public class VEspecies extends javax.swing.JDialog {
                         .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jLabel4)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
                         .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(NombreComunText)
                             .addComponent(DescripcionText)
-                            .addComponent(AreaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(TaxonComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(panelEspeciesLayout.createSequentialGroup()
                         .addComponent(AnadirButton)
@@ -181,15 +167,11 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(DescripcionText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(43, 43, 43)
                 .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TaxonComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 143, Short.MAX_VALUE)
                 .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AnadirButton)
                     .addComponent(ActualizarButton)
@@ -255,18 +237,12 @@ public class VEspecies extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_NombreComunTextActionPerformed
 
-    private void AreaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AreaComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_AreaComboBoxActionPerformed
-
     private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
             NombreComunText.getText(),
             DescripcionText.getText(),
-            a,
             t
         );
         fa.anhadirEspecie(eNueva);
@@ -274,13 +250,11 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AnadirButtonActionPerformed
 
     private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
             NombreComunText.getText(),
             DescripcionText.getText(),
-            a,
             t
         );
         fa.actualizarEspecie(e,eNueva);
@@ -295,7 +269,6 @@ public class VEspecies extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
-    private javax.swing.JComboBox<String> AreaComboBox;
     private javax.swing.JButton BorrarButton;
     private javax.swing.JTextField DescripcionText;
     private javax.swing.JTextField NombreCientificoText;
@@ -305,25 +278,12 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel panelEjemplares;
     private javax.swing.JPanel panelEspecies;
     private javax.swing.JTabbedPane panelGeneral;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarAreas() {
-        
-        List<Area> areas = fa.obtenerAreas(); // obtener la lista de áreas
-
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-
-        for (Area area : areas) {
-            modelo.addElement(area.getNombreReserva()); // suponiendo que el área tiene un método getNombre()
-        }
-
-        AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
-    }
     
     private void cargarTaxones() {
         List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
@@ -336,21 +296,7 @@ public class VEspecies extends javax.swing.JDialog {
 
         TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
     }
-    private void cargarAreas(Especie e) {
-        
-        List<Area> areas = fa.obtenerAreas(); // obtener la lista de áreas
 
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-
-        for (Area area : areas) {
-            modelo.addElement(area.getNombreReserva()); // suponiendo que el área tiene un método getNombre()
-        }
-
-        AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
-        //Meter que haga aqui lo de que default este el area de la especie
-        AreaComboBox.setSelectedItem(e.getArea().getNombreReserva());
-    }
-    
     private void cargarTaxones(Especie e) {
         List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
 
@@ -368,7 +314,6 @@ public class VEspecies extends javax.swing.JDialog {
         NombreCientificoText.setText(e.getNombreCientifico());
         NombreComunText.setText(e.getNombreComun());
         DescripcionText.setText(e.getDescripcion());
-        cargarAreas(e);
         cargarTaxones(e);
     }
 

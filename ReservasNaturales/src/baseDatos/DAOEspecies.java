@@ -26,7 +26,7 @@ public class DAOEspecies extends AbstractDAO {
         ResultSet rsEspecie;
 
         try {
-            String consulta = "SELECT nombre_cientifico, nombre_comun, descripcion, area_geografica, nombre_taxon FROM especies";
+            String consulta = "SELECT nombre_cientifico, nombre_comun, descripcion, nombre_taxon FROM especies";
             if (nombreCientifico != null && !nombreCientifico.isEmpty()) {
                 consulta += " WHERE nombre_cientifico LIKE ?";
             }
@@ -40,10 +40,6 @@ public class DAOEspecies extends AbstractDAO {
             rsEspecie = stmEspecie.executeQuery();
 
             while (rsEspecie.next()) {
-                // Crear Area y Taxon solo con nombre, ya que no hay más columnas
-                Area area = new Area();
-                area.setNombreReserva(rsEspecie.getString("area_geografica"));
-
                 Taxon taxon = new Taxon();
                 taxon.setNombre(rsEspecie.getString("nombre_taxon"));
 
@@ -51,7 +47,6 @@ public class DAOEspecies extends AbstractDAO {
                     rsEspecie.getString("nombre_cientifico"),
                     rsEspecie.getString("nombre_comun"),
                     rsEspecie.getString("descripcion"),
-                    area,
                     taxon
                 );
 
@@ -77,14 +72,13 @@ public class DAOEspecies extends AbstractDAO {
         PreparedStatement stmEspecie = null;
 
         try {
-            String consulta = "INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, area_geografica, nombre_taxon) VALUES (?, ?, ?, ?, ?)";
+            String consulta = "INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, nombre_taxon) VALUES (?, ?, ?, ?)";
 
             stmEspecie = con.prepareStatement(consulta);
             stmEspecie.setString(1, e.getNombreCientifico());
             stmEspecie.setString(2, e.getNombreComun());
             stmEspecie.setString(3, e.getDescripcion());
-            stmEspecie.setString(4, e.getArea().getNombreReserva()); // Suponiendo que Area usa nombre_reserva como PK
-            stmEspecie.setString(5, e.getTaxon().getNombre());        // Suponiendo que Taxon usa nombre como PK
+            stmEspecie.setString(4, e.getTaxon().getNombre());        // Suponiendo que Taxon usa nombre como PK
 
             stmEspecie.executeUpdate();
 
@@ -105,15 +99,14 @@ public class DAOEspecies extends AbstractDAO {
         PreparedStatement stmEspecie = null;
 
         try {
-            String consulta = "UPDATE especies SET nombre_cientifico = ?, nombre_comun = ?, descripcion = ?, area_geografica = ?, nombre_taxon = ? WHERE nombre_cientifico = ?";
+            String consulta = "UPDATE especies SET nombre_cientifico = ?, nombre_comun = ?, descripcion = ?, nombre_taxon = ? WHERE nombre_cientifico = ?";
 
             stmEspecie = con.prepareStatement(consulta);
             stmEspecie.setString(1, eNueva.getNombreCientifico());
             stmEspecie.setString(2, eNueva.getNombreComun());
             stmEspecie.setString(3, eNueva.getDescripcion());
-            stmEspecie.setString(4, eNueva.getArea().getNombreReserva());
-            stmEspecie.setString(5, eNueva.getTaxon().getNombre());
-            stmEspecie.setString(6, e.getNombreCientifico()); // condición WHERE
+            stmEspecie.setString(4, eNueva.getTaxon().getNombre());
+            stmEspecie.setString(5, e.getNombreCientifico()); // condición WHERE
 
             stmEspecie.executeUpdate();
 

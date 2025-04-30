@@ -19,7 +19,7 @@ public class ModeloTablaEspecies extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 5; // Nombre científico, nombre común, descripción, área, taxón
+        return 4; // Nombre científico, nombre común, descripción, taxón
     }
 
     @Override
@@ -28,8 +28,7 @@ public class ModeloTablaEspecies extends AbstractTableModel {
             case 0: return "Nombre Científico";
             case 1: return "Nombre Común";
             case 2: return "Descripción";
-            case 3: return "Área";
-            case 4: return "Taxón";
+            case 3: return "Taxón";
             default: return "";
         }
     }
@@ -51,8 +50,7 @@ public class ModeloTablaEspecies extends AbstractTableModel {
             case 0: return e.getNombreCientifico();
             case 1: return e.getNombreComun();
             case 2: return e.getDescripcion();
-            case 3: return (e.getArea() != null) ? e.getArea().getNombreReserva() : "";
-            case 4: return e.getTaxon().getNombre();
+            case 3: return e.getTaxon().getNombre();
             default: return null;
         }
     }
