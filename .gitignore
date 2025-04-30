@@ -1,3 +1,6 @@
 ReservasNaturales/baseDatos.properties
 /ReservasNaturales/dist/
 ReservasNaturales/build
+*.class
+*.xml
+*.properties
