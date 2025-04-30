@@ -84,6 +84,9 @@ CREATE TABLE alimento (
     id INTEGER PRIMARY KEY,
     tipo VARCHAR(50),
     nombre VARCHAR(50)
+    distribuidor VARCHAR(100),
+    FOREIGN KEY (distribuidor) REFERENCES empresa_distribuidora(nombre)
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE consumirAlimentos (
@@ -119,13 +122,9 @@ CREATE TABLE revisar (
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-CREATE TABLE contener(
-    area_geografica VARCHAR(100),
-    nombre_cientifico VARCHAR(150),
-    numero_especies INTEGER,
-    PRIMARY KEY (area_geografica, nombre_cientifico),
-    FOREIGN KEY (area_geografica) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (nombre_cientifico) REFERENCES especies(nombre_cientifico)
+CREATE TABLE empresa_distribuidora (
+    nombre VARCHAR(100) PRIMARY KEY,
+    pais VARCHAR(100),
+    FOREIGN KEY (pais) REFERENCES pais(nombre)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );

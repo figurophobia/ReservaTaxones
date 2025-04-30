@@ -80,7 +80,7 @@ INSERT INTO taxones (nombre, tipo, taxon_superior) VALUES
 ('Gammaproteobacteria', 'Clase', 'Proteobacteria'),
 ('Deltaproteobacteria', 'Clase', 'Proteobacteria'),
 ('Bacilli', 'Clase', 'Firmicutes'),
-('Clostridia', 'Clase', 'Firmicutes');
+('Clostridia', 'Clase', 'Firmicutes'),
 ('Primates', 'Orden', 'Mammalia'),
 ('Carnivora', 'Orden', 'Mammalia'),
 ('Artiodactyla', 'Orden', 'Mammalia'),
@@ -219,8 +219,8 @@ INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, edad) VALUES
 (2, 'Capra pyrenaica', 'Sierra', 4);
 
 
-INSERT INTO trabajadores (dni, nombre, sueldo, horas) VALUES 
-('11111111A', 'Pepe', 1250.00, 40);
+INSERT INTO trabajadores (dni, nombre, sueldo, horas,nombre_reserva) VALUES 
+('11111111A', 'Pepe', 1250.00, 40,'Parque Nacional Doñana');
 
 
 INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, fecha_fin, descripcion) VALUES 
@@ -231,3 +231,29 @@ INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, f
 INSERT INTO trabajadores_misiones (trabajador, nombre_cientifico_especie, fecha_inicio) VALUES 
 ('11111111A', 'Lynx pardinus', '2024-03-15'),
 ('11111111A', 'Capra pyrenaica', '2024-06-01');
+
+INSERT INTO alimento (id, tipo, nombre) VALUES
+(1, 'Carne', 'Carne de res'),
+(2, 'Vegetal', 'Zanahorias'),
+(3, 'Pienso', 'Pienso para carnívoros');
+
+INSERT INTO consumirAlimentos (id_especie, nombre_especie, id_alimento, cantidad, frecuencia) VALUES
+(1, 'Homo sapiens', 2, 300, 3),
+(2, 'Canis lupus', 1, 500, 2),
+(3, 'Panthera leo', 3, 600, 2);
+
+INSERT INTO clinica_medica (nombre, ubicacion, num_empleados) VALUES
+('Centro Veterinario Doñana', 'Parque Nacional Doñana', 5),
+('Clínica Sierra Vet', 'Parque Nacional Sierra Nevada', 3),
+('Islas Atlánticas Salud Animal', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas', 4);
+
+INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) VALUES
+('Centro Veterinario Doñana', 1, 'Homo sapiens', '2024-01-10', 'Buen estado de salud.'),
+('Clínica Sierra Vet', 2, 'Canis lupus', '2024-02-20', 'Leve deshidratación tratada.'),
+('Islas Atlánticas Salud Animal', 3, 'Panthera leo', '2024-03-15', 'Lesión en la pata, en recuperación.');
+
+
+INSERT INTO empresa_distribuidora(nombre, pais) VALUES
+('Alimentos Naturales S.A.', 'España'),
+('Distribuciones Globales S.L.', 'España');
+
