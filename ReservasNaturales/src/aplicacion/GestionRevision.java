@@ -4,26 +4,26 @@
  */
 package aplicacion;
 
-import gui.FachadaGui;
 import baseDatos.FachadaBaseDatos;
+import gui.FachadaGui;
 import java.util.List;
 
 /**
  *
- * @author davidavirn
+ * @author alumnogreibd
  */
-public class GestionAreas {
-     
+
+public class GestionRevision {
     private FachadaGui fgui;
     private FachadaBaseDatos fbd;
+
+    public GestionRevision(FachadaBaseDatos fbd, FachadaGui fgui) {
+        this.fgui=fgui;
+        this.fbd=fbd;
+    }
+
+    List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return fbd.obtenerRevisiones(nClinica, Id);
+    }
     
-    public GestionAreas(FachadaGui fgui, FachadaBaseDatos fbd) {
-        this.fgui = fgui;
-        this.fbd = fbd;
-    }
-
-    public List<Area> obtenerAreas() {
-        return fbd.obtenerAreas();
-    }
-
 }

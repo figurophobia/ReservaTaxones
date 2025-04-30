@@ -36,6 +36,7 @@ public class ModeloTablaEspecies extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int col) {
+        
         return String.class; // Todas las columnas las tratamos como String
     }
 

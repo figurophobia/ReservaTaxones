@@ -7,8 +7,10 @@ package baseDatos;
 
 
 import aplicacion.Area;
+import aplicacion.ClinicaMedica;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
+import aplicacion.Revision;
 import aplicacion.Taxon;
 import aplicacion.Usuario;
 import java.sql.*;
@@ -29,6 +31,8 @@ public class FachadaBaseDatos {
     private DAOEspecies daoEspecies;
     private DAOAreas daoAreas;
     private DAOTaxones daoTaxones;
+    private DAORevisiones daoRevisiones;
+    private DAOClinicas daoClinicas;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -66,6 +70,8 @@ public class FachadaBaseDatos {
             daoEspecies = new DAOEspecies(conexion, fa);
             daoAreas = new DAOAreas(conexion, fa);
             daoTaxones = new DAOTaxones(conexion, fa);
+            daoRevisiones = new DAORevisiones(conexion,fa);
+            daoClinicas = new DaoClinicas(conexion,fa);
           
 
 
@@ -123,28 +129,16 @@ public class FachadaBaseDatos {
         return daoAreas.obtenerAreas();
     }
 
-    public List<Area> buscarAreas(String textoBusqueda){ return daoAreas.buscarAreas(textoBusqueda); }
-
-    public boolean actualizarArea(Area area) { return daoAreas.actualizarArea(area); }
-
-    public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
-
-    public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
-
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }
 
-    public void anhadirEspecie(Especie e) {
-        daoEspecies.anhadirEspecie(e);
+    public List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return daoRevisiones.obtenerRevisiones(nClinica,Id);
     }
 
-    public void actualizarEspecie(Especie e, Especie eNueva) {
-        daoEspecies.actualizarEspecie(e,eNueva);
-    }
-
-    public void borrarEspecie(Especie e) {
-        daoEspecies.borrarEspecie(e);
+    public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+        return daoClinicas.obtenerClinicas(textoBusqueda);
     }
 
 }

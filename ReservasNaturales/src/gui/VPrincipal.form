@@ -29,9 +29,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xc1;reas Geogr&#xe1;ficas"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemAreaGeoActionPerformed"/>
-              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemAlimentos">
               <Properties>
@@ -174,9 +171,6 @@
         <Property name="text" type="java.lang.String" value="Editar"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

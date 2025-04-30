@@ -4,26 +4,25 @@
  */
 package aplicacion;
 
-import gui.FachadaGui;
 import baseDatos.FachadaBaseDatos;
+import gui.FachadaGui;
 import java.util.List;
 
 /**
  *
- * @author davidavirn
+ * @author alumnogreibd
  */
-public class GestionAreas {
-     
-    private FachadaGui fgui;
+public class GestionClinicas {
     private FachadaBaseDatos fbd;
+    private FachadaGui fgui;
     
-    public GestionAreas(FachadaGui fgui, FachadaBaseDatos fbd) {
-        this.fgui = fgui;
+    public GestionClinicas(FachadaBaseDatos fbd, FachadaGui fgui) {
         this.fbd = fbd;
+        this.fgui = fgui;
     }
 
-    public List<Area> obtenerAreas() {
-        return fbd.obtenerAreas();
+    List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+        return fbd.obtenerClinicas(textoBusqueda);
     }
-
+    
 }

@@ -6,7 +6,6 @@ CREATE TABLE taxones (
     tipo VARCHAR(100),
     taxon_superior VARCHAR(100),
     FOREIGN KEY (taxon_superior) REFERENCES taxones(nombre)
-        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 -- Tabla unificada de áreas geográficas
@@ -39,7 +38,7 @@ CREATE TABLE especies (
     FOREIGN KEY (area_geografica) REFERENCES area_geografica(nombre_reserva)
         ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (nombre_taxon) REFERENCES taxones(nombre)
-        ON UPDATE CASCADE ON DELETE SET NULL
+        ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 -- Tabla de ejemplares de cada especie
@@ -58,11 +57,7 @@ CREATE TABLE trabajadores (
     dni VARCHAR(20) PRIMARY KEY,
     nombre VARCHAR(100),
     sueldo NUMERIC(10,2),
-    horas INTEGER,
-    nombre_reserva VARCHAR(100),
-    FOREIGN KEY (nombre_reserva) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT
-
+    horas INTEGER
 );
 
 -- Tabla de misiones
@@ -76,6 +71,19 @@ CREATE TABLE misiones (
     FOREIGN KEY (dni_trabajador) REFERENCES trabajadores(dni)
         ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (nombre_cientifico_especie) REFERENCES especies(nombre_cientifico)
+        ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+-- Tabla de relación trabajadores-misiones
+CREATE TABLE trabajadores_misiones (
+    trabajador VARCHAR(20),
+    nombre_cientifico_especie VARCHAR(150),
+    fecha_inicio DATE,
+    PRIMARY KEY (trabajador, nombre_cientifico_especie, fecha_inicio),
+    FOREIGN KEY (trabajador) REFERENCES trabajadores(dni)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (trabajador, nombre_cientifico_especie, fecha_inicio) 
+        REFERENCES misiones(dni_trabajador, nombre_cientifico_especie, fecha_inicio)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -93,10 +101,8 @@ CREATE TABLE consumirAlimentos (
 	cantidad INTEGER,
 	frecuencia INTEGER,
 	PRIMARY KEY (id_especie , nombre_especie, id_alimento),
-	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie) 
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (id_alimento) REFERENCES alimento(id) 
-        ON UPDATE CASCADE ON DELETE RESTRICT
+	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (id_alimento) REFERENCES alimento(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE clinica_medica (
@@ -112,20 +118,7 @@ CREATE TABLE revisar (
 	fecha_revision DATE,
 	informe VARCHAR(200),
 	
-	PRIMARY KEY (clinica, ejemplar, especie_asociada, fecha_revision),
-	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre) 
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie) 
-        ON UPDATE CASCADE ON DELETE RESTRICT
-);
-
-CREATE TABLE contener(
-    area_geografica VARCHAR(100),
-    nombre_cientifico VARCHAR(150),
-    numero_especies INTEGER,
-    PRIMARY KEY (area_geografica, nombre_cientifico),
-    FOREIGN KEY (area_geografica) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (nombre_cientifico) REFERENCES especies(nombre_cientifico)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+	PRIMARY KEY (clinica, ejemplar, especie_asociada),
+	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie) ON UPDATE CASCADE ON DELETE RESTRICT
 );

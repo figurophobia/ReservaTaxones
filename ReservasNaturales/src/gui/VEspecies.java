@@ -4,7 +4,6 @@
  */
 package gui;
 import aplicacion.Area;
-import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.util.List;
@@ -22,9 +21,6 @@ public class VEspecies extends javax.swing.JDialog {
      */
     FachadaAplicacion fa;
     private VPrincipal padre;
-    boolean nuevo=false;
-    boolean editar=false;
-    private Especie e;
 
     public VEspecies(java.awt.Frame parent, boolean modal, FachadaAplicacion fa) {
         super(parent, modal);
@@ -33,26 +29,6 @@ public class VEspecies extends javax.swing.JDialog {
         padre=(VPrincipal) parent;
         cargarAreas();
         cargarTaxones();
-        nuevo=true;
-        ActualizarButton.setEnabled(false);
-        BorrarButton.setEnabled(false);
-        
-
-    }
-    
-    public VEspecies(java.awt.Frame parent, boolean modal, FachadaAplicacion fa, Especie e) {
-        super(parent, modal);
-        this.fa=fa;
-        initComponents();
-        padre=(VPrincipal) parent;
-        NombreCientificoText.setText(e.getNombreCientifico());
-        NombreComunText.setText(e.getNombreComun());
-        DescripcionText.setText(e.getDescripcion());
-        cargarAreas(e);
-        cargarTaxones(e);
-        editar=true;
-        this.e=e;
-        AnadirButton.setEnabled(false);
 
     }
 
@@ -81,6 +57,14 @@ public class VEspecies extends javax.swing.JDialog {
         ActualizarButton = new javax.swing.JButton();
         BorrarButton = new javax.swing.JButton();
         panelEjemplares = new javax.swing.JPanel();
+        DiaComboBox = new javax.swing.JComboBox<>();
+        MesComboBox = new javax.swing.JComboBox<>();
+        AñoComboBox = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        RevisionesBoton = new javax.swing.JButton();
+        jLabel12 = new javax.swing.JLabel();
         buttonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -114,25 +98,10 @@ public class VEspecies extends javax.swing.JDialog {
         jLabel5.setText("Taxón");
 
         AnadirButton.setText("Añadir");
-        AnadirButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AnadirButtonActionPerformed(evt);
-            }
-        });
 
         ActualizarButton.setText("Actualizar");
-        ActualizarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ActualizarButtonActionPerformed(evt);
-            }
-        });
 
         BorrarButton.setText("Borrar");
-        BorrarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BorrarButtonActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelEspeciesLayout = new javax.swing.GroupLayout(panelEspecies);
         panelEspecies.setLayout(panelEspeciesLayout);
@@ -198,15 +167,71 @@ public class VEspecies extends javax.swing.JDialog {
 
         panelGeneral.addTab("Especies", panelEspecies);
 
+        DiaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        DiaComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DiaComboBoxActionPerformed(evt);
+            }
+        });
+
+        MesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "910", "11", "12" }));
+        MesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MesComboBoxActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setText("dia");
+
+        jLabel10.setText("mes");
+
+        jLabel11.setText("año");
+
+        RevisionesBoton.setText("Revisiones");
+
+        jLabel12.setText("Fecha nacimiento");
+
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
         panelEjemplares.setLayout(panelEjemplaresLayout);
         panelEjemplaresLayout.setHorizontalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 535, Short.MAX_VALUE)
+            .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(RevisionesBoton)
+                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DiaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(27, 27, 27)
+                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(MesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))
+                        .addGap(26, 26, 26)
+                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(AñoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel12))
+                .addContainerGap(236, Short.MAX_VALUE))
         );
         panelEjemplaresLayout.setVerticalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 426, Short.MAX_VALUE)
+            .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                .addGap(441, 441, 441)
+                .addComponent(jLabel12)
+                .addGap(10, 10, 10)
+                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addGap(18, 18, 18)
+                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(DiaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AñoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(RevisionesBoton)
+                .addGap(46, 46, 46))
         );
 
         panelGeneral.addTab("Ejemplares", panelEjemplares);
@@ -259,54 +284,37 @@ public class VEspecies extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_AreaComboBoxActionPerformed
 
-    private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
-        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
-        Especie eNueva = new Especie(
-            NombreCientificoText.getText(),
-            NombreComunText.getText(),
-            DescripcionText.getText(),
-            a,
-            t
-        );
-        fa.anhadirEspecie(eNueva);
-        this.e=eNueva;
-    }//GEN-LAST:event_AnadirButtonActionPerformed
+    private void DiaComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DiaComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_DiaComboBoxActionPerformed
 
-    private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
-        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
-        Especie eNueva = new Especie(
-            NombreCientificoText.getText(),
-            NombreComunText.getText(),
-            DescripcionText.getText(),
-            a,
-            t
-        );
-        fa.actualizarEspecie(e,eNueva);
-        this.e=eNueva;
-        refreshVentana();
-    }//GEN-LAST:event_ActualizarButtonActionPerformed
-
-    private void BorrarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarButtonActionPerformed
-        fa.borrarEspecie(e);
-    }//GEN-LAST:event_BorrarButtonActionPerformed
+    private void MesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MesComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MesComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
     private javax.swing.JComboBox<String> AreaComboBox;
+    private javax.swing.JComboBox<String> AñoComboBox;
     private javax.swing.JButton BorrarButton;
     private javax.swing.JTextField DescripcionText;
+    private javax.swing.JComboBox<String> DiaComboBox;
+    private javax.swing.JComboBox<Integers> MesComboBox;
     private javax.swing.JTextField NombreCientificoText;
     private javax.swing.JTextField NombreComunText;
+    private javax.swing.JButton RevisionesBoton;
     private javax.swing.JComboBox<String> TaxonComboBox;
     private javax.swing.JButton buttonSalir;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel panelEjemplares;
     private javax.swing.JPanel panelEspecies;
     private javax.swing.JTabbedPane panelGeneral;
@@ -335,41 +343,6 @@ public class VEspecies extends javax.swing.JDialog {
         }
 
         TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
-    }
-    private void cargarAreas(Especie e) {
-        
-        List<Area> areas = fa.obtenerAreas(); // obtener la lista de áreas
-
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-
-        for (Area area : areas) {
-            modelo.addElement(area.getNombreReserva()); // suponiendo que el área tiene un método getNombre()
-        }
-
-        AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
-        //Meter que haga aqui lo de que default este el area de la especie
-        AreaComboBox.setSelectedItem(e.getArea().getNombreReserva());
-    }
-    
-    private void cargarTaxones(Especie e) {
-        List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
-
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-
-        for (Taxon taxon : taxones) {
-            modelo.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
-        }
-
-        TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
-        TaxonComboBox.setSelectedItem(e.getTaxon().getNombre());
-    }
-
-    private void refreshVentana() {
-        NombreCientificoText.setText(e.getNombreCientifico());
-        NombreComunText.setText(e.getNombreComun());
-        DescripcionText.setText(e.getDescripcion());
-        cargarAreas(e);
-        cargarTaxones(e);
     }
 
 }

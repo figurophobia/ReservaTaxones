@@ -11,42 +11,30 @@ package aplicacion;
 public class Area {
     private String nombreReserva;
     private double extension;
-    private boolean acuatica;
-    private boolean terrestre;
+    private String tipo; // "Acuática" o "Terrestre"
 
     //Clase Double para admitir null y no trbajar con 0
-    private double profundidad;   // Solo si es acuática
+    private Double profundidad;   // Solo si es acuática
 
-    private double altitudBaja;
-    private double altitudAlta;
+    private Double altitudBaja;    // Solo si es terrestre
+    private Double altitudAlta;    // Solo si es terrestre
 
     // Constructor vacío
     public Area() {
     }
 
     // Constructor general 
-    public Area(String nombreReserva, double extension, boolean terrestre, boolean acuatica) {
+    public Area(String nombreReserva, double extension, String tipo) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.terrestre = terrestre;
-        this.acuatica = acuatica;
-    }
-    
-    public Area(String nombreReserva, double extension, double profundidad, double altitudBaja, double altitudAlta, boolean acuatica, boolean terrestre){
-        this.nombreReserva = nombreReserva;
-        this.extension = extension;
-        this.acuatica = acuatica;
-        this.terrestre = terrestre;
-        this.profundidad = profundidad;
-        this.altitudBaja = altitudBaja;
-        this.altitudAlta = altitudAlta;
+        this.tipo = tipo;
     }
 
     // Constructor para áreas acuáticas
     public Area(String nombreReserva, double extension, double profundidad) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.acuatica = true;
+        this.tipo = "Acuática";
         this.profundidad = profundidad;
     }
 
@@ -54,7 +42,7 @@ public class Area {
     public Area(String nombreReserva, double extension, double altitudBaja, double altitudAlta) {
         this.nombreReserva = nombreReserva;
         this.extension = extension;
-        this.terrestre = true;
+        this.tipo = "Terrestre";
         this.altitudBaja = altitudBaja;
         this.altitudAlta = altitudAlta;
     }
@@ -76,20 +64,12 @@ public class Area {
         this.extension = extension;
     }
 
-    public boolean isAcuatica() {
-        return acuatica;
+    public String getTipo() {
+        return tipo;
     }
-    
-    public void setAcuatica(boolean acuatica) {
-        this.acuatica = acuatica;
-    }
-    
-    public boolean isTerrestre() {
-        return terrestre;
-    }
-    
-    public void setTerrestre(boolean terrestre){
-        this.terrestre = terrestre;
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public Double getProfundidad() {

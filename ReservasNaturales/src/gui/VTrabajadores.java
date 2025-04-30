@@ -78,6 +78,11 @@ public class VTrabajadores extends javax.swing.JDialog {
         ScrollPaneTrabajadores.setViewportView(TablaTrabajadores);
 
         btnMisiones.setText("Misiones");
+        btnMisiones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMisionesActionPerformed(evt);
+            }
+        });
 
         bntNuevo.setText("Nuevo");
         bntNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -199,7 +204,8 @@ public class VTrabajadores extends javax.swing.JDialog {
 
     mt.anhadeFila(nuevoUsuario);
 
-    int lastRow = mt.getRowCount() - 1;    TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
+    int lastRow = mt.getRowCount() - 1;
+    TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
 
     TablaTrabajadores.editCellAt(lastRow, 0);
 
@@ -305,6 +311,10 @@ public class VTrabajadores extends javax.swing.JDialog {
             }   
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnMisionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMisionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnMisionesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -334,7 +344,7 @@ private void buscarUsuarios(){
     dniCheck.setVisible(true);
     if (textoBusqueda.isEmpty()) {
         
-     mt.setFilas(fa.obtenerTodosLosTrabajadores());
+    mt.setFilas(fa.obtenerTodosLosTrabajadores());
     }
     else if (dniCheck.isSelected()) {
         mt.setFilas(fa.obtenerTrabajadoresDni(textoBusqueda));
@@ -349,5 +359,16 @@ private void buscarUsuarios(){
         va.setVisible(true);
         
     }
+    
+    
+
+
+
+
+
 }
+
+
+
+
 }
