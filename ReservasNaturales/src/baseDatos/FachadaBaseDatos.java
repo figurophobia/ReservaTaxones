@@ -11,12 +11,14 @@ import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import aplicacion.Usuario;
+import aplicacion.ClinicaMedica;
 import java.sql.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
+import aplicacion.Revision;
 
 /**
  *
@@ -29,6 +31,9 @@ public class FachadaBaseDatos {
     private DAOEspecies daoEspecies;
     private DAOAreas daoAreas;
     private DAOTaxones daoTaxones;
+    private DAORevisiones daoRevisiones;
+    private DAOClinicas daoClinicas;
+    
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -66,6 +71,8 @@ public class FachadaBaseDatos {
             daoEspecies = new DAOEspecies(conexion, fa);
             daoAreas = new DAOAreas(conexion, fa);
             daoTaxones = new DAOTaxones(conexion, fa);
+            daoRevisiones = new DAORevisiones(conexion,fa);
+            daoClinicas = new DaoClinicas(conexion,fa);
           
 
 
@@ -145,6 +152,14 @@ public class FachadaBaseDatos {
 
     public void borrarEspecie(Especie e) {
         daoEspecies.borrarEspecie(e);
+    }
+    
+    public List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return daoRevisiones.obtenerRevisiones(nClinica,Id);
+    }
+
+    public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+        return daoClinicas.obtenerClinicas(textoBusqueda);
     }
 
 }
