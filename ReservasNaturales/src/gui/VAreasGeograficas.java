@@ -190,7 +190,7 @@ public class VAreasGeograficas extends javax.swing.JDialog {
 
     private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
         new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
-        buscarAreas();
+        buscarAreas();  
     }//GEN-LAST:event_bEditarActionPerformed
 
     private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed

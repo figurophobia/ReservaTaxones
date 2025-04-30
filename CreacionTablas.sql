@@ -34,10 +34,7 @@ CREATE TABLE especies (
     nombre_cientifico VARCHAR(150) PRIMARY KEY,
     nombre_comun VARCHAR(150),
     descripcion TEXT,
-    area_geografica VARCHAR(100),
     nombre_taxon VARCHAR(100),
-    FOREIGN KEY (area_geografica) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
     FOREIGN KEY (nombre_taxon) REFERENCES taxones(nombre)
         ON UPDATE CASCADE ON DELETE SET NULL
 );
@@ -48,8 +45,11 @@ CREATE TABLE ejemplar (
     nombre_cientifico_especie VARCHAR(150),
     mote VARCHAR(100),
     fec_nac DATE,
+    area_geografica VARCHAR(100),
     PRIMARY KEY (id, nombre_cientifico_especie),
     FOREIGN KEY (nombre_cientifico_especie) REFERENCES especies(nombre_cientifico)
+        ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (area_geografica) REFERENCES area_geografica(nombre_reserva)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
 

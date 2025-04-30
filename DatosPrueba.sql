@@ -1,6 +1,3 @@
-
-
-
 INSERT INTO area_geografica (nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esAcuatica, esTerrestre) VALUES 
 ('Parque Nacional Doñana', 54252, 0, 40, NULL, FALSE, TRUE),
 ('Reserva Marina Cabo de Palos', 1898, NULL, NULL, 68, TRUE, FALSE),
@@ -203,20 +200,21 @@ INSERT INTO taxones (nombre, tipo, taxon_superior) VALUES
 ('Formica rufa', 'Especie', 'Formica');
 
 
-INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, area_geografica, nombre_taxon) VALUES 
-('Lynx pardinus', 'Lince ibérico', 'Felino en peligro de extinción endémico de la península ibérica', 'Parque Nacional Doñana', 'Mammalia'),
-('Aquila adalberti', 'Águila imperial ibérica', 'Ave rapaz endémica de la península ibérica', 'Parque Nacional Doñana', 'Aves'),
-('Muraena helena', 'Morena', 'Pez anguiliforme del Mediterráneo', 'Reserva Marina Cabo de Palos', 'Actinopterygii'),
-('Capra pyrenaica', 'Cabra montés', 'Ungulado endémico de la península ibérica', 'Parque Nacional Sierra Nevada', 'Mammalia'),
-('Posidonia oceanica', 'Posidonia', 'Planta acuática endémica del Mediterráneo', 'Reserva Marina Cabo de Palos', 'Liliopsida');
+INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, nombre_taxon) VALUES 
+('Lynx pardinus', 'Lince ibérico', 'Felino en peligro de extinción endémico de la península ibérica', 'Mammalia'),
+('Aquila adalberti', 'Águila imperial ibérica', 'Ave rapaz endémica de la península ibérica', 'Aves'),
+('Muraena helena', 'Morena', 'Pez anguiliforme del Mediterráneo', 'Actinopterygii'),
+('Capra pyrenaica', 'Cabra montés', 'Ungulado endémico de la península ibérica','Mammalia'),
+('Posidonia oceanica', 'Posidonia', 'Planta acuática endémica del Mediterráneo','Liliopsida');
 
 
-INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac) VALUES 
-(1, 'Lynx pardinus', 'Félix', '2018-03-15'),
-(2, 'Lynx pardinus', 'Luna', '2020-07-22'),
-(1, 'Aquila adalberti', 'Reina', '2015-05-10'),
-(1, 'Capra pyrenaica', 'Montés', '2017-09-30'),
-(2, 'Capra pyrenaica', 'Sierra', '2019-12-12');
+INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac, area_geografica) VALUES 
+(1, 'Lynx pardinus', 'Félix', '2018-03-15', 'Parque Nacional Doñana'),
+(2, 'Lynx pardinus', 'Luna', '2020-07-22', 'Parque Nacional Doñana'),
+(1, 'Aquila adalberti', 'Reina', '2015-05-10', 'Reserva Marina Cabo de Palos'),
+(1, 'Capra pyrenaica', 'Montés', '2017-09-30', 'Parque Nacional Sierra Nevada'),
+(2, 'Capra pyrenaica', 'Sierra', '2019-12-12', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas');
+
 
 
 INSERT INTO trabajadores (dni, nombre, sueldo, horas,nombre_reserva) VALUES 
