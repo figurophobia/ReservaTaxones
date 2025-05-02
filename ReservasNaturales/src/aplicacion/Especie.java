@@ -26,6 +26,10 @@ public class Especie {
         this.taxon = taxon;
     }
 
+    public Especie(String nombreCientifico) {
+        this.nombreCientifico = nombreCientifico;
+    }
+
     // Getters y Setters
     public String getNombreCientifico() {
         return nombreCientifico;
