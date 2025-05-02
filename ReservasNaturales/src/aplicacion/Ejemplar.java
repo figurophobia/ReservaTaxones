@@ -36,6 +36,11 @@ public class Ejemplar {
         this.area = area;
     }
 
+    public Ejemplar(int id, Especie especie) {
+        this.id = id;
+        this.especie = especie;
+    }
+
     public int getId() {
         return id;
     }

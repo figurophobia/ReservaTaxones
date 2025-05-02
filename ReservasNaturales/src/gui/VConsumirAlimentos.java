@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package gui;
+
 import aplicacion.Alimento;
 import aplicacion.ConsumirAlimento;
 import aplicacion.Ejemplar;
@@ -16,22 +17,25 @@ import java.util.List;
  * @author alumnogreibd
  */
 public class VConsumirAlimentos extends javax.swing.JDialog {
+
     aplicacion.FachadaAplicacion fa;
     /**
      * Creates new form VALimentos
      */
     Alimento alimento;
-    
-    public VConsumirAlimentos(java.awt.Frame parent, boolean modal,aplicacion.FachadaAplicacion fa, Alimento alimento) {
+
+    public VConsumirAlimentos(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa, Alimento alimento) {
         super(parent, modal);
-        this.fa=fa;
+        this.fa = fa;
         this.alimento = alimento;
         initComponents();
         setTitle("Gestión Consumir-Alimentos");
         tf_idAlimento.setText(String.valueOf(alimento.getId()));
+        
         obterEjemplares();
-        obterConsumirAlimentos();
+        obterConsumirAlimentos(alimento.getId());
         listenerEjemplares();
+        listenerConsumirAlimentos();
     }
 
     /**
@@ -215,18 +219,33 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_borrarConsAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarConsAlimentoActionPerformed
+
         
+        if (fa.borrarConsumirAlimento(Integer.parseInt(tf_idEjemplar.getText()), tf_nomCientificoEjemplar.getText(), Integer.parseInt(tf_idAlimento.getText())) != -1) {
+            obterConsumirAlimentos( Integer.parseInt(tf_idEjemplar.getText()));
+            
+            tf_idEjemplar.setText("");
+            tf_nomCientificoEjemplar.setText("");
+            tf_cantidad.setText("");
+            tf_frecuencia.setText("");
+        }
+
+
     }//GEN-LAST:event_btn_borrarConsAlimentoActionPerformed
 
     private void btn_anadirConsAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anadirConsAlimentoActionPerformed
-         //if (!tf_cantidad.getText().isEmpty() && !tf_frecuencia.getText().isEmpty()) {
-            
-            //Ejemplar ej = new Ejemplar(Integer.parseInt(tf_idEjemplar.getText()), new Especie(tf_nomCientificoEjemplar.getText()), new Alimento(Integer.parseInt(tf_idAlimento.getText()));
-            //if (fa.anadirConsumirAlimentos(new ConsumirAlimento(new Ejemplar(), Integer.parseInt(tf_cantidad.getText()), Integer.parseInt(tf_frecuencia.getText()))) != -1) {
-            //    obterConsumirAlimentos();
-            //}
-            
-        //}
+        if (!tf_cantidad.getText().isEmpty() && !tf_frecuencia.getText().isEmpty()) {
+
+            Ejemplar ej = new Ejemplar(Integer.parseInt(tf_idEjemplar.getText()),
+                    new Especie(tf_nomCientificoEjemplar.getText())
+            );
+            Alimento al = new Alimento(Integer.parseInt(tf_idAlimento.getText()));
+
+            if (fa.anadirConsumirAlimentos(new ConsumirAlimento(ej, al, Integer.parseInt(tf_cantidad.getText()), Integer.parseInt(tf_frecuencia.getText()))) != -1) {
+                obterConsumirAlimentos(al.getId());
+            }
+
+        }
 
     }//GEN-LAST:event_btn_anadirConsAlimentoActionPerformed
 
@@ -237,7 +256,6 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_anadirConsAlimento;
@@ -262,18 +280,24 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void obterConsumirAlimentos() {
-        /*
         ModeloTablaConsumirAlimentos mtca;
-        
-        mtca =(ModeloTablaConsumirAlimentos) tabla_consAlimentos.getModel();
+
+        mtca = (ModeloTablaConsumirAlimentos) tabla_consAlimentos.getModel();
         mtca.setFilas(fa.obterConsumirAlimentos());
-        */
+    }
+    
+    //Solo buscamos os consumidos de un certo alimento
+     private void obterConsumirAlimentos(int idAlimento) {
+        ModeloTablaConsumirAlimentos mtca;
+
+        mtca = (ModeloTablaConsumirAlimentos) tabla_consAlimentos.getModel();
+        mtca.setFilas(fa.obterConsumirAlimentos(idAlimento));
     }
 
     private void obterEjemplares() {
         ModeloTablaEjemplares mte;
-        
-        mte =(ModeloTablaEjemplares) tabla_ejemplares.getModel();
+
+        mte = (ModeloTablaEjemplares) tabla_ejemplares.getModel();
         mte.setFilas(fa.obterEjemplares());
     }
 
@@ -292,30 +316,73 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
 
             @Override
             public void mousePressed(MouseEvent me) {
-               
+
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-               
+
             }
 
             @Override
             public void mouseEntered(MouseEvent me) {
-                
+
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-               
+
             }
 
-   
         }
         );
-    
-    
+
     }
-   
     
+    
+    private void listenerConsumirAlimentos() {
+        tabla_consAlimentos.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                int fila = tabla_consAlimentos.getSelectedRow();
+                if (fila != -1) {
+                    String idEjemplar = tabla_consAlimentos.getValueAt(fila, 0).toString();
+                    String nomeCientifico = tabla_consAlimentos.getValueAt(fila, 1).toString();
+                    String idAlimento = tabla_consAlimentos.getValueAt(fila, 2).toString();
+                    String cant = tabla_consAlimentos.getValueAt(fila, 3).toString();
+                    String frec = tabla_consAlimentos.getValueAt(fila, 4).toString();
+                    
+                    tf_idEjemplar.setText(idEjemplar);
+                    tf_nomCientificoEjemplar.setText(nomeCientifico);
+                    tf_idAlimento.setText(idAlimento);
+                    tf_cantidad.setText(cant);
+                    tf_frecuencia.setText(frec);
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+
+            }
+
+        }
+        );
+
+    }
+
 }

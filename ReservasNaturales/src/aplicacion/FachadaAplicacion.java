@@ -142,14 +142,20 @@ public class FachadaAplicacion {
     public int borrarEjemplar(int id, String nom_cient) {
         return gej.borrarEjemplar(id, nom_cient);
     }
-    
-    /*
+
     public List<ConsumirAlimento> obterConsumirAlimentos() {
-        return gca.obterConsumirAlimentos();
+        return gca.obterConsumirAlmentos();
     }
 
     public int anadirConsumirAlimentos(ConsumirAlimento consumirAlimento) {
         return gca.anadirConsumirAlimentos(consumirAlimento);
     }
-    */
+
+    public int borrarConsumirAlimento(int idEjemplar, String nombreCientifico, int idAlimento) {
+        return gca.borrarConsumirAlimento(idEjemplar, nombreCientifico, idAlimento);
+    }
+
+    public List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
+        return gca.obterConsumirAlimentos(idAlimento);
+    }
 }

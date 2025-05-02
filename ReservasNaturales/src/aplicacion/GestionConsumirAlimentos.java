@@ -20,14 +20,21 @@ public class GestionConsumirAlimentos {
         this.fgui = fgui;
         this.fbd = fbd;
     }
-    /*
-    List<ConsumirAlimento> obterConsumirAlimentos() {
+
+    List<ConsumirAlimento> obterConsumirAlmentos() {
         return fbd.obterConsumirAlimentos();
     }
 
     int anadirConsumirAlimentos(ConsumirAlimento consumirAlimento) {
         return fbd.anadirConsumirAlimentos(consumirAlimento);
     }
-    */
+
+    int borrarConsumirAlimento(int idEjemplar, String nombreCientifico, int idAlimento) {
+        return fbd.borrarConsumirAlimento(idEjemplar, nombreCientifico, idAlimento);
+    }
+
+    List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
+        return fbd.obterConsumirAlimentos(idAlimento);
+    }
     
 }

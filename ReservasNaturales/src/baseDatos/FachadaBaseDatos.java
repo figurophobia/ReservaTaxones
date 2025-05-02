@@ -76,7 +76,7 @@ public class FachadaBaseDatos {
             daoTaxones = new DAOTaxones(conexion, fa);
             daoAlimentos = new DAOAlimentos(conexion, fa);
             daoEjemplares = new DAOEjemplares(conexion, fa);
-            //daoConsumirAlimentos = new DAOConsumirAlimentos(conexion, fa);
+            daoConsumirAlimentos = new DAOConsumirAlimentos(conexion, fa);
           
 
 
@@ -183,13 +183,20 @@ public class FachadaBaseDatos {
     public int borrarEjemplar(int id, String nom_cient) {
         return daoEjemplares.borrarEjemplar(id, nom_cient);
     }
-    /*
+
     public List<ConsumirAlimento> obterConsumirAlimentos() {
-        return daoConsumirAlimentos.obtenerConsumirAlimentos();
+        return daoConsumirAlimentos.obterConsumirAlimentos();
     }
 
     public int anadirConsumirAlimentos(ConsumirAlimento consumirAlimento) {
         return daoConsumirAlimentos.anadirConsumirAlimento(consumirAlimento);
     }
-    */
+
+    public int borrarConsumirAlimento(int idEjemplar, String nombreCientifico, int idAlimento) {
+        return daoConsumirAlimentos.borrarConsumirAlimento(idEjemplar, nombreCientifico, idAlimento);
+    }
+
+    public List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
+         return daoConsumirAlimentos.obterConsumirAlimentos(idAlimento);
+    }
 }

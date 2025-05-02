@@ -24,8 +24,8 @@ public class Alimento {
         this.nombre = nombre;
     }
 
-    public Alimento(int parseInt) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Alimento(int id) {
+        this.id = id;
     }
     
     public int getId() {
