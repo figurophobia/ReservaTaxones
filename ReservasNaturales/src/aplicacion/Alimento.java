@@ -1,0 +1,59 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package aplicacion;
+
+/**
+ *
+ * @author alumnogreibd
+ */
+public class Alimento {
+    private int id;
+    private String tipo;
+    private String nombre;
+
+    public Alimento(int id, String tipo, String nombre) {
+        this.id = id;
+        this.tipo = tipo;
+        this.nombre = nombre;
+    }
+    
+    public Alimento(String tipo, String nombre) {
+        this.tipo = tipo;
+        this.nombre = nombre;
+    }
+
+    public Alimento(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    
+    
+    
+    
+}
