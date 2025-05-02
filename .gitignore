@@ -3,8 +3,4 @@ ReservasNaturales/baseDatos.properties
 ReservasNaturales/build
 *.class
 *.xml
-<<<<<<< HEAD
 *.properties
-=======
-*.properties
->>>>>>> bd16dd8bb13c91b5f7ac79c6a655425168820d47
