@@ -11,6 +11,7 @@ import aplicacion.Area;
 import aplicacion.Ejemplar;
 import aplicacion.Area;
 import aplicacion.ConsumirAlimento;
+import aplicacion.Area;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;

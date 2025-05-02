@@ -167,6 +167,7 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoBuscarActionPerformed
+        buscarAreas();
     }//GEN-LAST:event_textoBuscarActionPerformed
 
     private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
@@ -186,17 +187,17 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             tablaAreas.setRowSelectionInterval(0, 0);
         }
     }//GEN-LAST:event_bBorrarActionPerformed
-    
+
     private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
-        //new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
-        //buscarAreas();
+        new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
+        buscarAreas();  
     }//GEN-LAST:event_bEditarActionPerformed
 
     private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed
-        //new VAreasNuevo(this.padre, true, fa).setVisible(true);
-        //buscarAreas();
+        new VAreasNuevo(this.padre, true, fa).setVisible(true);
+        buscarAreas();
     }//GEN-LAST:event_bNuevoActionPerformed
-    
+
     private void buscarAreas() {
         String textoBusqueda = textoBuscar.getText();
         ArrayList<Area> areas = (ArrayList<Area>) fa.buscarAreas(textoBusqueda);

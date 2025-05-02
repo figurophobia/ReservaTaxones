@@ -19,7 +19,7 @@ public class ModeloTablaEspecies extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4; // Nombre científico, nombre común, descripción, área, taxón
+        return 4; // Nombre científico, nombre común, descripción, taxón
     }
 
     @Override

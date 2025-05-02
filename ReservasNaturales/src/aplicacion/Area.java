@@ -59,10 +59,6 @@ public class Area {
         this.altitudAlta = altitudAlta;
     }
 
-    public Area(String nombreReserva) {
-        this.nombreReserva = nombreReserva;
-    }
-
     // Getters y Setters
     public String getNombreReserva() {
         return nombreReserva;

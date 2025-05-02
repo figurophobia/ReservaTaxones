@@ -10,6 +10,9 @@ import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import aplicacion.Especie;
+import aplicacion.FachadaAplicacion;
+import aplicacion.Taxon;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
@@ -63,6 +66,7 @@ public class VEspecies extends javax.swing.JDialog {
         cargarAreas();
         obterEjemplares();
         listenerSeleccionEjemplar();
+
     }
 
     /**
@@ -315,6 +319,13 @@ public class VEspecies extends javax.swing.JDialog {
 
         jLabel8.getAccessibleContext().setAccessibleName("Fecha Nacimiento");
 
+            .addGap(0, 535, Short.MAX_VALUE)
+        );
+        panelEjemplaresLayout.setVerticalGroup(
+            panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 426, Short.MAX_VALUE)
+        );
+
         panelGeneral.addTab("Ejemplares", panelEjemplares);
 
         buttonSalir.setText("Salir");
@@ -333,6 +344,8 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGap(0, 63, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonSalir)
                 .addContainerGap())
         );
@@ -362,13 +375,11 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_NombreComunTextActionPerformed
 
     private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
             NombreComunText.getText(),
             DescripcionText.getText(),
-            a,
             t
         );
         fa.anhadirEspecie(eNueva);
@@ -376,13 +387,11 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AnadirButtonActionPerformed
 
     private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Area a = new Area((String)AreaComboBox.getSelectedItem(), 0.0, false, false);
         Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
             NombreCientificoText.getText(),
             NombreComunText.getText(),
             DescripcionText.getText(),
-            a,
             t
         );
         fa.actualizarEspecie(e,eNueva);
@@ -428,6 +437,9 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
     private javax.swing.JComboBox<String> AreaComboBox;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ActualizarButton;
+    private javax.swing.JButton AnadirButton;
     private javax.swing.JButton BorrarButton;
     private javax.swing.JTextField DescripcionText;
     private javax.swing.JTextField NombreCientificoText;
@@ -468,6 +480,11 @@ public class VEspecies extends javax.swing.JDialog {
 
         AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
     }
+    private javax.swing.JPanel panelEjemplares;
+    private javax.swing.JPanel panelEspecies;
+    private javax.swing.JTabbedPane panelGeneral;
+    // End of variables declaration//GEN-END:variables
+
     
     private void cargarTaxones() {
         List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
@@ -561,6 +578,9 @@ public class VEspecies extends javax.swing.JDialog {
    
         }
         );
+    }
+
+        cargarTaxones(e);
     }
 
 }

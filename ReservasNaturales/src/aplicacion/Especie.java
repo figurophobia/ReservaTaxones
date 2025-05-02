@@ -12,35 +12,19 @@ public class Especie {
     private String nombreCientifico;
     private String nombreComun;
     private String descripcion;
-    private Area area;        // Clase Area que deberías tener creada
-    private Taxon taxon;      // Taxon al que pertenece la especie
+    private Taxon taxon;  // Taxon al que pertenece la especie
 
     // Constructor vacío
     public Especie() {
     }
 
     // Constructor con parámetros
-    public Especie(String nombreCientifico, String nombreComun, String descripcion, Area area, Taxon taxon) {
-        this.nombreCientifico = nombreCientifico;
-        this.nombreComun = nombreComun;
-        this.descripcion = descripcion;
-        this.area = area;
-        this.taxon = taxon;
-    }
-
-    public Especie(String nomCient) {
-        this.nombreCientifico = nomCient;  
-    }
-
     public Especie(String nombreCientifico, String nombreComun, String descripcion, Taxon taxon) {
         this.nombreCientifico = nombreCientifico;
         this.nombreComun = nombreComun;
         this.descripcion = descripcion;
         this.taxon = taxon;
     }
-
-    
-    
 
     // Getters y Setters
     public String getNombreCientifico() {
@@ -65,14 +49,6 @@ public class Especie {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Area getArea() {
-        return area;
-    }
-
-    public void setArea(Area area) {
-        this.area = area;
     }
 
     public Taxon getTaxon() {
