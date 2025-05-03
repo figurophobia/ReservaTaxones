@@ -22,7 +22,7 @@ public class GestionUsuarios {
      this.fbd=fbd;
     }  
     
-  public Boolean comprobarAutentificacion(String idUsuario, String clave){
+    public Boolean comprobarAutentificacion(String idUsuario, String clave){
       Usuario u;
 
       u=fbd.validarUsuario(idUsuario, clave);
@@ -44,8 +44,8 @@ public class GestionUsuarios {
         return fbd.obtenerTodosLosTrabajadores(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo) {
-        return fbd.nuevoTrabajador(dni,nombre,horas,sueldo);
+    boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo, String nombre_reserva) {
+        return fbd.nuevoTrabajador(dni,nombre,horas,sueldo,nombre_reserva);
     }
 
     public boolean actualizarTrabajador(Usuario t) {
@@ -55,6 +55,5 @@ public class GestionUsuarios {
     public boolean eliminarTrabajador(String dni) {
         return fbd.eliminarTrabajador(dni); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
   
 }

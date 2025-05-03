@@ -6,6 +6,7 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -26,6 +27,7 @@ public class FachadaAplicacion {
     GestionConsumirAlimentos gca;
     GestionRevision gr;
     GestionClinicas gc;
+    GestionMisiones gm;
 
     public FachadaAplicacion() {
         fgui = new FachadaGui(this);
@@ -39,6 +41,7 @@ public class FachadaAplicacion {
         gca = new GestionConsumirAlimentos(fgui, fbd);
         gr = new GestionRevision(fbd,fgui);
         gc = new GestionClinicas(fbd,fgui);
+        gm=new GestionMisiones(fgui, fbd);
     }
 
     public static void main(String args[]) {
@@ -72,8 +75,9 @@ public class FachadaAplicacion {
         return gu.obtenerTodosLosTrabajadores();// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo) {
-        return gu.nuevoTrabajador(dni,nombre,horas,sueldo);
+
+    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo,String nombre_reserva) {
+        return gu.nuevoTrabajador(dni,nombre,horas,sueldo,nombre_reserva);
     }
 
     public boolean actualizarTrabajador(Usuario t) {
@@ -177,4 +181,34 @@ public class FachadaAplicacion {
     public void crearVClinica(Ejemplar ejem) {
         fgui.crearVClinicas(ejem);
     }
+     public List<Mision> obtenerMisiones() {
+        return gm.obtenerMisiones();
+    }
+
+    public List<Mision> obtenerMisionesTrabajador(String textoBusqueda) {
+        return gm.obtenerMisionesTrabajador(textoBusqueda); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public List<Mision> obtenerMisonesEstado(String textoBusqueda) {
+        return gm.obtenerMisionesEstado(textoBusqueda);
+    }
+
+    public List<Mision> obtenerMisionesEspecie(String textoBusqueda) {
+        return gm.obtenerMisionesEspecie(textoBusqueda);
+    }
+
+
+    public boolean eliminarMision(Usuario trabajador, Date fechaFin, String especie) {
+        return gm.eliminarMision(trabajador,fechaFin,especie);
+    }
+
+    public boolean actualizarMision(Mision seleccionada) {
+        return gm.actualizarMision(seleccionada);    }
+
+    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
+        return  gm.obtenerTrabajadorMasExperimentado(especie);
+    }
+
+    public Usuario obtenerTrabajadorMision() {
+        return gm.obtenerTrabajadorMision();}
 }

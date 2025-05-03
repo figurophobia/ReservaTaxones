@@ -16,6 +16,7 @@ import aplicacion.ConsumirAlimento;
 import aplicacion.Area;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
+import aplicacion.Mision;
 import aplicacion.Taxon;
 import aplicacion.Usuario;
 import java.sql.*;
@@ -41,6 +42,7 @@ public class FachadaBaseDatos {
     private DAOConsumirAlimentos daoConsumirAlimentos;
     private DAORevisiones daoRevisiones;
     private DAOClinicas daoClinicas;
+    private DAOMisiones daoMisiones;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -83,6 +85,7 @@ public class FachadaBaseDatos {
             daoConsumirAlimentos = new DAOConsumirAlimentos(conexion, fa);
             daoRevisiones = new DAORevisiones(conexion,fa);
             daoClinicas = new DAOClinicas(conexion,fa);
+            daoMisiones=new DAOMisiones(conexion, fa);
           
 
 
@@ -120,8 +123,8 @@ public class FachadaBaseDatos {
         return daoUsuarios.obtenerTodosLosTrabajadores(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo) {
-        return daoUsuarios.nuevoTrabajador(dni,nombre,horas,sueldo);
+    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo, String reserva) {
+        return daoUsuarios.nuevoTrabajador(dni,nombre,horas,sueldo,reserva);
     }
 
     public boolean actualizarTrabajador(Usuario t) {
@@ -211,5 +214,31 @@ public class FachadaBaseDatos {
 
     public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
         return daoClinicas.obtenerClinicas(textoBusqueda);
+       
     }
+    public List<Mision> obtenerMisiones() {
+        return daoMisiones.obtenerMisiones();
+    }
+
+    public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
+        return  daoMisiones.obtenerMisionesEstado(textoBusqueda);
+    }
+
+    public List<Mision> obtenerMisionesTrabajador(String textoBusqueda) {
+         return daoMisiones.obtenerMisionesTrabajador(textoBusqueda);    }
+
+    public List<Mision> obtenerMisionesEspecie(String textoBusqueda) {
+        return daoMisiones.obtenerMisionesEspecie(textoBusqueda);    }
+    public boolean eliminarMision(Usuario trabajador, Date fechaFin, String especie) {
+        return daoMisiones.eliminarMision(trabajador,fechaFin,especie);}
+
+    public boolean actualizarMision(Mision seleccionada) {
+        return daoMisiones.actualizarMision(seleccionada);    }
+
+    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
+        return daoMisiones.obtenerTrabajadorMasExperimentado(especie);    }
+
+    public Usuario obtenerTrabajadorMision() {
+        return  daoMisiones.obtenerTrabajadorMision();}
+
 }

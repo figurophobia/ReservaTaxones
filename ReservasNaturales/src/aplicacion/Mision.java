@@ -1,18 +1,16 @@
 package aplicacion;
 
-/**
- *
- * @author alumnogreibd
- */
+import java.sql.Date;
+
 public class Mision {
     private Usuario trabajador;
     private String especie;
-    private String fechaInicio;
-    private String fechaFin;
+    private Date fechaInicio;
+    private Date fechaFin;
     private String descripcion;
     private boolean completada;
 
-    public Mision(Usuario trabajador, String especie, String fechaInicio, String fechaFin, String descripcion, boolean completada) {
+    public Mision(Usuario trabajador, String especie, Date fechaInicio, Date fechaFin, String descripcion, boolean completada) {
         this.trabajador = trabajador;
         this.especie = especie;
         this.fechaInicio = fechaInicio;
@@ -37,19 +35,30 @@ public class Mision {
         this.especie = especie;
     }
 
-    public String getFechaInicio() {
+    public java.sql.Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFin() {
+    public Date getFechaFin() {
         return fechaFin;
     }
+    public String getCompletada(){
+        if (completada) {
+            return "Completada";
+        }else{
+            return "Incompleta";
+        
+        }
+    }
+    public boolean getEstado(){
+        return completada;
+    }
 
-    public void setFechaFin(String fechaFin) {
+    public void setFechaFin(Date fechaFin) {
         this.fechaFin = fechaFin;
     }
 
@@ -61,11 +70,22 @@ public class Mision {
         this.descripcion = descripcion;
     }
 
-    public boolean estaCompletada() {
+    public boolean isCompletada() {
         return completada;
     }
 
     public void setCompletada(boolean completada) {
         this.completada = completada;
     }
+    public String estaCompletada() {
+        if (completada) {
+            return "Completada";
+        } else {
+            return "Incompleta";
+        }
+    }
+    
+
+  
+    
 }

@@ -33,7 +33,7 @@ public class DAOUsuarios extends AbstractDAO {
         con = this.getConexion();
 
         try {
-            stmUsuario = con.prepareStatement("select dni, nombre, sueldo, horas "
+            stmUsuario = con.prepareStatement("select dni, nombre, sueldo, horas,nombre_reserva "
                     + "from trabajadores "
                     + "where dni = ? and nombre = ?");
             stmUsuario.setString(1, dni);
@@ -43,7 +43,8 @@ public class DAOUsuarios extends AbstractDAO {
                 resultado = new Usuario(rsUsuario.getString("dni"),
                                         rsUsuario.getString("nombre"),
                                         rsUsuario.getFloat("sueldo"),
-                                        rsUsuario.getInt("horas"));
+                                        rsUsuario.getInt("horas"),
+                                        rsUsuario.getString("nombre_reserva"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -60,90 +61,7 @@ public class DAOUsuarios extends AbstractDAO {
     
     
     public List<Usuario> obtenerTrabajadoresDni(String textoBusqueda) {
-        List<Usuario> resultado=new ArrayList<>();
-        Connection con;
-        PreparedStatement stmTrabajador=null;
-        ResultSet rsTrabajador;
-        con=this.getConexion();
-        
-        try {
-        stmTrabajador = con.prepareStatement(
-            "SELECT dni, nombre, sueldo, horas FROM trabajadores WHERE dni = ?"
-        );
-        stmTrabajador.setString(1, textoBusqueda);
-        rsTrabajador = stmTrabajador.executeQuery();
-
-        while (rsTrabajador.next()) {
-            Usuario u = new Usuario(
-                rsTrabajador.getString("dni"),
-                rsTrabajador.getString("nombre"),
-                rsTrabajador.getFloat("sueldo"),
-                rsTrabajador.getInt("horas")
-            );
-            resultado.add(u);
-        }
-
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    } finally {
-        try {
-            if (stmTrabajador != null) stmTrabajador.close();
-        } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
-        }
-    }
-
-    return resultado;
-    
-    
-    
-    
-    
-    
-    
-    }
-
-public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
-        List<Usuario> resultado=new ArrayList<>();
-        Connection con;
-        PreparedStatement stmTrabajador=null;
-        ResultSet rsTrabajador;
-        con=this.getConexion();
-        
-        try {
-        stmTrabajador = con.prepareStatement(
-            "SELECT dni, nombre, sueldo, horas FROM trabajadores WHERE nombre = ?"
-        );
-        stmTrabajador.setString(1, textoBusqueda);
-        rsTrabajador = stmTrabajador.executeQuery();
-
-        while (rsTrabajador.next()) {
-            Usuario u = new Usuario(
-                rsTrabajador.getString("dni"),
-                rsTrabajador.getString("nombre"),
-                rsTrabajador.getFloat("sueldo"),
-                rsTrabajador.getInt("horas")
-            );
-            resultado.add(u);
-        }
-
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    } finally {
-        try {
-            if (stmTrabajador != null) stmTrabajador.close();
-        } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
-        }
-    }
-
-    return resultado;
-    }
-
-    public List<Usuario> obtenerTodosLosTrabajadores() {
-        List<Usuario> resultado = new ArrayList<>();
+    List<Usuario> resultado = new ArrayList<>();
     Connection con;
     PreparedStatement stmTrabajador = null;
     ResultSet rsTrabajador;
@@ -151,7 +69,86 @@ public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     try {
         stmTrabajador = con.prepareStatement(
-            "SELECT dni, nombre, sueldo, horas FROM trabajadores"
+            "SELECT dni, nombre, sueldo, horas, nombre_reserva FROM trabajadores WHERE LOWER(dni) LIKE LOWER(?)"
+        );
+        stmTrabajador.setString(1, "%" + textoBusqueda + "%");
+        rsTrabajador = stmTrabajador.executeQuery();
+
+        while (rsTrabajador.next()) {
+            Usuario u = new Usuario(
+                rsTrabajador.getString("dni"),
+                rsTrabajador.getString("nombre"),
+                rsTrabajador.getFloat("sueldo"),
+                rsTrabajador.getInt("horas"),
+                rsTrabajador.getString("nombre_reserva")
+            );
+            resultado.add(u);
+        }
+
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+    } finally {
+        try {
+            if (stmTrabajador != null) stmTrabajador.close();
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
+        }
+    }
+
+    return resultado;
+}
+
+public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
+    List<Usuario> resultado = new ArrayList<>();
+    Connection con;
+    PreparedStatement stmTrabajador = null;
+    ResultSet rsTrabajador;
+    con = this.getConexion();
+
+    try {
+        stmTrabajador = con.prepareStatement(
+            "SELECT dni, nombre, sueldo, horas FROM trabajadores WHERE LOWER(nombre) LIKE LOWER(?)"
+        );
+        stmTrabajador.setString(1, "%" + textoBusqueda + "%");
+        rsTrabajador = stmTrabajador.executeQuery();
+
+        while (rsTrabajador.next()) {
+            Usuario u = new Usuario(
+                rsTrabajador.getString("dni"),
+                rsTrabajador.getString("nombre"),
+                rsTrabajador.getFloat("sueldo"),
+                rsTrabajador.getInt("horas"),
+                rsTrabajador.getString("nombre_reserva")
+            );
+            resultado.add(u);
+        }
+
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+    } finally {
+        try {
+            if (stmTrabajador != null) stmTrabajador.close();
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
+        }
+    }
+
+    return resultado;
+}
+
+
+    public List<Usuario> obtenerTodosLosTrabajadores() {
+    List<Usuario> resultado = new ArrayList<>();
+    Connection con;
+    PreparedStatement stmTrabajador = null;
+    ResultSet rsTrabajador;
+    con = this.getConexion();
+
+    try {
+        stmTrabajador = con.prepareStatement(
+            "SELECT dni, nombre, sueldo, horas,nombre_reserva FROM trabajadores"
         );
         rsTrabajador = stmTrabajador.executeQuery();
 
@@ -160,7 +157,8 @@ public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
                 rsTrabajador.getFloat("sueldo"),
-                rsTrabajador.getInt("horas")
+                rsTrabajador.getInt("horas"),
+                rsTrabajador.getString("nombre_reserva")
             );
             resultado.add(u);
         }
@@ -180,7 +178,7 @@ public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     }
 
-    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo) {
+    public boolean nuevoTrabajador(String dni, String nombre, int horas, float sueldo, String nombre_reserva) {
     Connection con;
     PreparedStatement stmTrabajador = null;
     boolean exito = true;
@@ -189,12 +187,13 @@ public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     try {
         stmTrabajador = con.prepareStatement(
-            "INSERT INTO trabajadores (dni, nombre, sueldo, horas) VALUES (?, ?, ?, ?)"
+            "INSERT INTO trabajadores (dni, nombre, sueldo, horas,nombre_reserva) VALUES (?, ?, ?, ?,?)"
         );
         stmTrabajador.setString(1, dni);
         stmTrabajador.setString(2, nombre);
         stmTrabajador.setFloat(3, sueldo);
         stmTrabajador.setInt(4,horas);
+        stmTrabajador.setString(5,nombre_reserva);
 
         stmTrabajador.executeUpdate();
 
@@ -286,9 +285,6 @@ public  List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
     }
 
     return exito;    }
-
-    
-    
     
     
 }
