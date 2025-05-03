@@ -16,9 +16,10 @@ public class Usuario {
     private String nombre;
     private float sueldo;
     private int horas;
-    private String Area;
+    private Area Area;
 
-    public Usuario(String dni, String nombre, float sueldo, int horas,String Area) {
+
+    public Usuario(String dni, String nombre, float sueldo, int horas,Area Area) {
         this.dni = dni;
         this.nombre = nombre;
         this.sueldo = sueldo;
@@ -45,7 +46,7 @@ public class Usuario {
     public float getSueldo() {
         return sueldo;
     }
-    public String getArea(){
+    public Area getArea(){
         return Area;
     }
 
@@ -61,7 +62,7 @@ public class Usuario {
         this.horas = horas;
     }
 
-    public void setArea(String area) {
+    public void setArea(Area area) {
         this.Area=area;
     }
  

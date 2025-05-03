@@ -237,6 +237,10 @@ public class FachadaBaseDatos {
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return daoMisiones.actualizarMision(seleccionada,misionOriginal);    }
 
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
+
     public Usuario obtenerTrabajadorMision() {
         return  daoMisiones.obtenerTrabajadorMision();}
 

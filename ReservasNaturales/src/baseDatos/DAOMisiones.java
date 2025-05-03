@@ -5,6 +5,7 @@
 package baseDatos;
 
 
+import aplicacion.Area;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Mision;
 import aplicacion.Usuario;
@@ -72,14 +73,14 @@ public class DAOMisiones extends AbstractDAO{
 
             try (ResultSet rsUsuario = stmUsuario.executeQuery()) {
                 if (rsUsuario.next()) {
+                    String nombreReserva = rsUsuario.getString("nombre_reserva");
+                    Area area = new Area(nombreReserva);
                     resultado = new Usuario(
                         rsUsuario.getString("dni"),
                         rsUsuario.getString("nombre"),
                         rsUsuario.getFloat("sueldo"),
                         rsUsuario.getInt("horas"),
-                        rsUsuario.getString("nombre_reserva")
-                         
-                    );
+                        area);
                 }
             }
 
@@ -312,12 +313,14 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             rsTrabajador = stmTrabajador.executeQuery();
 
             if (rsTrabajador.next()) {
+                String nombreReserva = rsTrabajador.getString("nombre_reserva");
+                Area area = new Area(nombreReserva);
                 resultado = new Usuario(
                         rsTrabajador.getString("dni"),
                         rsTrabajador.getString("nombre"),
                         rsTrabajador.getFloat("sueldo"),
                         rsTrabajador.getInt("horas"),
-                        rsTrabajador.getString("nombre_reserva")
+                        area
                 );
             } else {
                 // Si no hay resultados, devolvemos el primer trabajador de la lista
@@ -351,13 +354,15 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
 
     try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
         try (ResultSet rs = stm.executeQuery()) {
+            String nombreReserva = rs.getString("nombre_reserva");
+            Area area = new Area(nombreReserva);
             if (rs.next()) {
                 resultado = new Usuario(
                     rs.getString("dni"),
                     rs.getString("nombre"),
                     rs.getFloat("sueldo"),
                     rs.getInt("horas"),
-                    rs.getString("nombre_reserva")
+                    area
                 );
             }
         }

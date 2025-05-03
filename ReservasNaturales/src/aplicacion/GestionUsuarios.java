@@ -40,6 +40,10 @@ public class GestionUsuarios {
         return fbd.obtenerTrabajadoresNombre(textoBusqueda);
     }
 
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return fbd.actualizarAreaUsuario(trabajador, areaSeleccionada);
+    }
+
     public List<Usuario> obtenerTodosLosTrabajadores() {
         return fbd.obtenerTodosLosTrabajadores(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }

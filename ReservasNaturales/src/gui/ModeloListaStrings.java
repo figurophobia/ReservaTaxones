@@ -4,44 +4,52 @@
  */
 
 package gui;
-
+import aplicacion.Area;
+import java.util.ArrayList;
+import javax.swing.AbstractListModel;
+import java.util.List;
 /**
  *
  * @author basesdatos
  */
-public class ModeloListaStrings extends javax.swing.AbstractListModel {
-    java.util.List<String> elementos;
 
-    public ModeloListaStrings(){
-        this.elementos=new java.util.ArrayList<String>();
+
+public class ModeloListaStrings extends AbstractListModel<Area> {
+    private List<Area> areas;
+
+    public ModeloListaStrings() {
+        this.areas = new ArrayList<>();
     }
 
-    public int getSize(){
-        return this.elementos.size();
+
+    @Override
+    public int getSize() {
+        return this.areas.size(); }
+
+    @Override
+    public Area getElementAt(int i) {
+        return areas.get(i); // Asumimos que Area tiene un toString() adecuado.
     }
 
-    public String getElementAt(int i){
-        return elementos.get(i);
+    public void setElementos(List<Area> areas) {
+        this.areas = areas;
+        fireContentsChanged(this, 0, areas.size() - 1);
     }
 
-    public void nuevoElemento(String e){
-        this.elementos.add(e);
-        fireIntervalAdded(this, this.elementos.size()-1, this.elementos.size()-1);
+    public List<Area> getAreas() {
+        return this.areas;
     }
 
-    public void borrarElemento(int i){
-        String e;
-        e=this.elementos.get(i);
-        this.elementos.remove(i);
-        fireIntervalRemoved(this,i,i);
+    public void addElement(Area area) {
+        this.areas.add(area);
+        fireIntervalAdded(this, areas.size() - 1, areas.size() - 1);
     }
 
-    public void setElementos(java.util.List<String> elementos){
-        this.elementos=elementos;
-        fireContentsChanged(this, 0, elementos.size()-1);
-    }
-
-    public java.util.List<String> getElementos(){
-        return this.elementos;
+    void removeElement(Area areaSeleccionada) {
+        int index = this.areas.indexOf(areaSeleccionada);
+        if (index != -1) {
+            this.areas.remove(index);
+            fireIntervalRemoved(this, index, index);
+        }
     }
 }

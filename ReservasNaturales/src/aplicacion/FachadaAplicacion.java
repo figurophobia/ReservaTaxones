@@ -108,6 +108,10 @@ public class FachadaAplicacion {
 
     public boolean crearArea(Area area) { return ga.crearArea(area); }
 
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return gu.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
+
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }
