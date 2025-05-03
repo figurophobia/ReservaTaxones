@@ -108,7 +108,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     try {
         stmTrabajador = con.prepareStatement(
-            "SELECT dni, nombre, sueldo, horas FROM trabajadores WHERE LOWER(nombre) LIKE LOWER(?)"
+            "SELECT dni, nombre, sueldo, horas, nombre_reserva FROM trabajadores WHERE LOWER(nombre) LIKE LOWER(?)"
         );
         stmTrabajador.setString(1, "%" + textoBusqueda + "%");
         rsTrabajador = stmTrabajador.executeQuery();
