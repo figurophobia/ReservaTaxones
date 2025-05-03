@@ -23,6 +23,8 @@ public class GestionMisiones {
         return fbd.obtenerMisiones();
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda){ return fbd.obtenerMisionesGeneral(textoBusqueda); }
+
     public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
         return fbd.obtenerMisionesEstado(textoBusqueda);    }
 
@@ -41,9 +43,6 @@ public class GestionMisiones {
         return fbd.actualizarMision(seleccionada, misionOriginal);     
 }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-            return fbd.obtenerTrabajadorMasExperimentado(especie);    }
-
     public Usuario obtenerTrabajadorMision() {
         return fbd.obtenerTrabajadorMision();    }
 
@@ -58,4 +57,7 @@ public class GestionMisiones {
     void completarMision(Mision misionSeleccionada) {
         fbd.completarMision(misionSeleccionada);
     }
+
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return fbd.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+
 }

@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
  */
 public class VTrabajadores extends javax.swing.JDialog {
     aplicacion.FachadaAplicacion fa;
-    
     /**
      * Creates new form VTrabajadores
      */
@@ -215,20 +214,19 @@ public class VTrabajadores extends javax.swing.JDialog {
     }//GEN-LAST:event_TablaTrabajadoresMouseClicked
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNuevoActionPerformed
-        // TODO add your handling code here:
-    Usuario nuevoUsuario = new Usuario("", "", 0.0f, 0, null);
-    ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
 
-    mt.anhadeFila(nuevoUsuario);
+        Usuario nuevoUsuario = new Usuario("", "", 0.0f, 0, null);
 
-    int lastRow = mt.getRowCount() - 1;
-    TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
-    TablaTrabajadores.editCellAt(lastRow, 0);
-    TablaTrabajadores.requestFocusInWindow();
+        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
 
-    
-    mt.setCrearTrabajador(true);
-    }//GEN-LAST:event_bntNuevoActionPerformed
+        mt.anhadeFila(nuevoUsuario);
+
+        int lastRow = mt.getRowCount() - 1;
+        TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
+        TablaTrabajadores.editCellAt(lastRow, 0);
+        TablaTrabajadores.requestFocusInWindow();
+        mt.setCrearTrabajador(true);
+    }
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
@@ -257,8 +255,11 @@ public class VTrabajadores extends javax.swing.JDialog {
         for (Usuario t : trabajadores) {
             fa.actualizarTrabajador(t); 
         }
+
         mt.fireTableDataChanged();
         
+        VAviso aviso = new VAviso((Frame) getParent(), true, "Cambios guardados correctamente.");
+        aviso.setVisible(true);
         JOptionPane.showMessageDialog(this, "Cambios guardados correctamente.");
     }//GEN-LAST:event_btnActualizarActionPerformed
 
@@ -268,21 +269,20 @@ public class VTrabajadores extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void bntMoverAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMoverAreaActionPerformed
-       int selectedRow = TablaTrabajadores.getSelectedRow();
+        int selectedRow = TablaTrabajadores.getSelectedRow();
 
-    if (selectedRow != -1) {
-        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-        Usuario seleccionado = mt.getFila(selectedRow);
+        if (selectedRow != -1) {
+            ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
+            Usuario seleccionado = mt.getFila(selectedRow);
 
-        VMoverArea area = new VMoverArea((Frame) getParent(), true, fa, seleccionado);
-        area.setVisible(true);
-    } else {
-        javax.swing.JOptionPane.showMessageDialog(this, 
-            "Debes seleccionar un trabajador para mover de área.",
-            "Error", 
-            javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
-        
+            VMoverArea area = new VMoverArea((Frame) getParent(), true, fa, seleccionado);
+            area.setVisible(true);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Debes seleccionar un trabajador para mover de área.",
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_bntMoverAreaActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

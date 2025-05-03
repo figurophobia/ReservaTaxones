@@ -6,7 +6,6 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
-import java.sql.Date;
 import java.util.List;
 
 
@@ -107,9 +106,11 @@ public class FachadaAplicacion {
     public boolean eliminarArea(String nombreReserva) { return ga.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return ga.crearArea(area); }
+
     public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
         return gu.actualizarAreaUsuario(trabajador,areaSeleccionada);
     }
+
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }
@@ -199,6 +200,8 @@ public class FachadaAplicacion {
         return gm.obtenerMisionesEspecie(textoBusqueda);
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda){ return gm.obtenerMisionesGeneral(textoBusqueda); }
+
 
     public boolean eliminarMision(Mision trabajador) {
         return gm.eliminarMision(trabajador);
@@ -207,9 +210,7 @@ public class FachadaAplicacion {
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return gm.actualizarMision(seleccionada, misionOriginal);    }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-        return  gm.obtenerTrabajadorMasExperimentado(especie);
-    }
+    public List<String> obtenerAreasPorEspecie(String nombreCientifico) {return ga.obtenerAreasPorEspecie(nombreCientifico);}
 
     public Usuario obtenerTrabajadorMision() {
         return gm.obtenerTrabajadorMision();}
@@ -235,7 +236,6 @@ public class FachadaAplicacion {
 
     public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
          gr.añadirRevsion(clinicaRevision,ejemplarRevision,text);
-
     }
 
     public boolean eliminarNoConsumidos() {
@@ -248,4 +248,7 @@ public class FachadaAplicacion {
     }
 
     
+    public List<Usuario> obtenerTrabajadoresPorArea(String area) {return gu.obtenerTrabajadoresPorArea(area);}
+
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 }

@@ -4,8 +4,8 @@
  */
 
 package aplicacion;
-import gui.FachadaGui;
 import baseDatos.FachadaBaseDatos;
+import gui.FachadaGui;
 import java.util.List;
 /**
  *
@@ -40,6 +40,10 @@ public class GestionUsuarios {
         return fbd.obtenerTrabajadoresNombre(textoBusqueda);
     }
 
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return fbd.actualizarAreaUsuario(trabajador, areaSeleccionada);
+    }
+
     public List<Usuario> obtenerTodosLosTrabajadores() {
         return fbd.obtenerTodosLosTrabajadores(); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -55,7 +59,7 @@ public class GestionUsuarios {
     public boolean eliminarTrabajador(String dni) {
         return fbd.eliminarTrabajador(dni); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
-        return fbd.actualizarAreaUsuario(trabajador, areaSeleccionada);
-    }
+
+    public List<Usuario> obtenerTrabajadoresPorArea(String area) {return fbd.obtenerTrabajadoresPorArea(area);}
+  
 }

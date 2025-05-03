@@ -231,4 +231,44 @@ public class DAOAreas extends AbstractDAO {
 
         return creado;
     }
+
+    public List<String> obtenerAreasPorEspecie(String nombreCientifico) {
+        List<String> resultado = new ArrayList<>();
+        Connection con = this.getConexion();
+        PreparedStatement stmAreas = null;
+        ResultSet rsAreas = null;
+
+        try {
+            // Consulta SQL para obtener áreas con ejemplares de la especie especificada
+            String consulta = "SELECT DISTINCT area_geografica " +
+                    "FROM ejemplar " +
+                    "WHERE nombre_cientifico_especie = ? " +
+                    "ORDER BY area_geografica";
+
+            stmAreas = con.prepareStatement(consulta);
+            stmAreas.setString(1, nombreCientifico);
+            rsAreas = stmAreas.executeQuery();
+
+            while (rsAreas.next()) {
+                String nombreArea = rsAreas.getString("area_geografica");
+                resultado.add(nombreArea);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener áreas por especie: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rsAreas != null) rsAreas.close();
+                if (stmAreas != null) stmAreas.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+
+
 }
