@@ -198,12 +198,12 @@ public class FachadaAplicacion {
     }
 
 
-    public boolean eliminarMision(Usuario trabajador, Date fechaFin, String especie) {
-        return gm.eliminarMision(trabajador,fechaFin,especie);
+    public boolean eliminarMision(Mision trabajador) {
+        return gm.eliminarMision(trabajador);
     }
 
-    public boolean actualizarMision(Mision seleccionada) {
-        return gm.actualizarMision(seleccionada);    }
+    public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
+        return gm.actualizarMision(seleccionada, misionOriginal);    }
 
     public Usuario obtenerTrabajadorMasExperimentado(String especie) {
         return  gm.obtenerTrabajadorMasExperimentado(especie);
@@ -211,4 +211,16 @@ public class FachadaAplicacion {
 
     public Usuario obtenerTrabajadorMision() {
         return gm.obtenerTrabajadorMision();}
+
+    public boolean verificarMisionExistente(Mision mision) {
+        return gm.verificarMisionExistente(mision);
+    }
+
+    public void agregarNuevaMision(Mision misionActual) {
+        gm.agregarNuevaMision(misionActual);
+    }
+
+    public void completarMision(Mision misionSeleccionada) {
+        gm.completarMision(misionSeleccionada);
+    }
 }

@@ -10,9 +10,11 @@ import java.util.Date;
 
 public class ModeloTablaMisiones extends AbstractTableModel {
     private List<Mision> misiones;
+    private List<Mision> misionesOriginales; // Lista para almacenar el estado original
 
     public ModeloTablaMisiones() {
         this.misiones = new ArrayList<Mision>();
+        this.misionesOriginales = new ArrayList<Mision>(); // Inicializamos la lista original
     }
 
     @Override
@@ -63,8 +65,10 @@ public class ModeloTablaMisiones extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int row, int col) {
-        return true;
+        // Solo se pueden editar las columnas 0 (trabajador), 1 (especie) y 4 (descripción)
+        return col == 0 || col == 1 || col == 4;
     }
+
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -81,7 +85,7 @@ public class ModeloTablaMisiones extends AbstractTableModel {
             case 4:
                 return m.getDescripcion();
             case 5:
-                return m.getEstado(); // El valor devuelto es un String ("Completada" o "Incompleta")
+                return m.estaCompletada(); // El valor devuelto es un String ("Completada" o "Incompleta")
         }
         return null;
     }
@@ -111,9 +115,6 @@ public class ModeloTablaMisiones extends AbstractTableModel {
                 m.setDescripcion((String) aValue);
                 break;
             case 5:
-                if (aValue instanceof Boolean) {
-                    m.setCompletada((Boolean) aValue); // Cambié el tipo a Boolean
-                }
                 break;
         }
         fireTableCellUpdated(row, col);
@@ -127,9 +128,18 @@ public class ModeloTablaMisiones extends AbstractTableModel {
 
     public void setMisiones(List<Mision> misiones) {
         this.misiones = misiones;
+
+        // Clonamos las misiones originales para mantener el estado previo
+        this.misionesOriginales.clear();  // Limpiar las originales
+        for (Mision mision : misiones) {
+            this.misionesOriginales.add(mision.clone());  // Clonamos cada misión
+        }
         fireTableDataChanged();
     }
 
+    public List<Mision> getMisionesOriginales() {
+        return misionesOriginales; // Regresa la lista original de misiones
+    }
     public void setFilas(List<Mision> misiones) {
         setMisiones(misiones);
     }

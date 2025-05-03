@@ -8,15 +8,13 @@ public class Mision {
     private Date fechaInicio;
     private Date fechaFin;
     private String descripcion;
-    private boolean completada;
 
-    public Mision(Usuario trabajador, String especie, Date fechaInicio, Date fechaFin, String descripcion, boolean completada) {
+    public Mision(Usuario trabajador, String especie, Date fechaInicio, Date fechaFin, String descripcion) {
         this.trabajador = trabajador;
         this.especie = especie;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
         this.descripcion = descripcion;
-        this.completada = completada;
     }
 
     public Usuario getTrabajador() {
@@ -35,7 +33,7 @@ public class Mision {
         this.especie = especie;
     }
 
-    public java.sql.Date getFechaInicio() {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
@@ -45,17 +43,6 @@ public class Mision {
 
     public Date getFechaFin() {
         return fechaFin;
-    }
-    public String getCompletada(){
-        if (completada) {
-            return "Completada";
-        }else{
-            return "Incompleta";
-        
-        }
-    }
-    public boolean getEstado(){
-        return completada;
     }
 
     public void setFechaFin(Date fechaFin) {
@@ -70,22 +57,42 @@ public class Mision {
         this.descripcion = descripcion;
     }
 
+    // Devuelve "Completada" o "Incompleta" según si fechaFin es null
+    public String getCompletada() {
+        return fechaFin != null ? "Completada" : "Incompleta";
+    }
+
+    // Devuelve true si está completada (fechaFin != null), false en caso contrario
+    public boolean getEstado() {
+        return fechaFin != null;
+    }
+
+    // También devuelve true si está completada, false si no
     public boolean isCompletada() {
-        return completada;
+        return fechaFin != null;
     }
 
-    public void setCompletada(boolean completada) {
-        this.completada = completada;
-    }
+    // Alternativa textual
     public String estaCompletada() {
-        if (completada) {
-            return "Completada";
-        } else {
-            return "Incompleta";
-        }
+        return fechaFin != null ? "Completada" : "Incompleta";
     }
-    
 
-  
-    
+    public void setCompletada() {
+        this.fechaFin = new Date(System.currentTimeMillis());
+    }
+    @Override
+    public String toString() {
+        return "Trabajador: " + trabajador.getNombre() + ", Especie: " + especie + ", Fecha de inicio: " + fechaInicio;
+    }
+    public Mision clone() {
+    return new Mision(
+        this.trabajador, // Clonar el trabajador si es necesario
+        this.especie,
+        this.fechaInicio,
+        this.fechaFin,
+        this.descripcion
+    );
+}
+
+
 }

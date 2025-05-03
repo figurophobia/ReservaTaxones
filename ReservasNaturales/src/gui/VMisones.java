@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package gui;
+import aplicacion.Especie;
 import aplicacion.Mision;
 import aplicacion.Usuario;
 import java.awt.Frame;
@@ -11,6 +12,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 /**
  *
  * @author alumnogreibd
@@ -25,6 +29,7 @@ public class VMisones extends javax.swing.JDialog {
         this.fa=fa;
         initComponents();
         TablaMisiones.setModel(new ModeloTablaMisiones());
+        configurarComboBoxes();
     }
 
     /**
@@ -48,6 +53,7 @@ public class VMisones extends javax.swing.JDialog {
         btnSarlir = new javax.swing.JButton();
         btnCompletada = new javax.swing.JButton();
         btnTrabajadorExperimentado = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Misiones");
@@ -116,47 +122,57 @@ public class VMisones extends javax.swing.JDialog {
             }
         });
 
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBuscar)
-                .addGap(164, 164, 164))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnSarlir)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 642, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBuscar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSarlir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
                         .addComponent(btnNueva)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCompletada)))
-                .addContainerGap(62, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(checkBoxTrabajador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(checkBoxEspecie)
-                .addGap(18, 18, 18)
-                .addComponent(checkBoxEstado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnTrabajadorExperimentado)
+                        .addComponent(btnCompletada))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(checkBoxTrabajador)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(checkBoxEspecie)
+                                .addGap(18, 18, 18)
+                                .addComponent(checkBoxEstado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
+                                .addComponent(btnTrabajadorExperimentado)))))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
@@ -173,10 +189,11 @@ public class VMisones extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNueva)
                     .addComponent(btnEliminar)
-                    .addComponent(btnCompletada))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                    .addComponent(btnCompletada)
+                    .addComponent(btnActualizar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(btnSarlir)
-                .addGap(20, 20, 20))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -216,7 +233,7 @@ public class VMisones extends javax.swing.JDialog {
 
             if (confirm == javax.swing.JOptionPane.YES_OPTION) {
 
-                fa.eliminarMision(seleccionado.getTrabajador(),seleccionado.getFechaFin(),seleccionado.getEspecie());
+                fa.eliminarMision(seleccionado);
                 mm.setFilas(fa.obtenerMisiones());
 
                 VAviso aviso = new VAviso((Frame)getParent(), true, "Mision eliminada correctamente.");
@@ -231,43 +248,24 @@ public class VMisones extends javax.swing.JDialog {
     }//GEN-LAST:event_btnEliminarActionPerformed
     }
     private void btnCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompletadaActionPerformed
-        // TODO add your handling code here:
-            // TODO add your handling code here:
-    int selectedRow = TablaMisiones.getSelectedRow();
+        int filaSeleccionada = TablaMisiones.getSelectedRow();
 
-    if (selectedRow != -1) {
-        ModeloTablaMisiones mm = (ModeloTablaMisiones) TablaMisiones.getModel();
-        Mision seleccionada = mm.getFila(selectedRow);
+        if (filaSeleccionada != -1) {
+            ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
+            Mision misionSeleccionada = modelo.getMision(filaSeleccionada); // método que devuelve la misión de esa fila
 
-        // Verificar si la misión no está completada
-        if (!seleccionada.getEstado()) {
+            if (misionSeleccionada.getFechaFin() == null) {
+                fa.completarMision(misionSeleccionada);
+                JOptionPane.showMessageDialog(this, "Misión marcada como completada.");
+            } else {
+                JOptionPane.showMessageDialog(this, "La misión ya estaba completada.");
+            }
 
-            // Actualizar la misión en la base de datos o donde la tengas
-            fa.actualizarMision(seleccionada);
-
-            // Actualizar las filas del modelo de la tabla
-            mm.fireTableCellUpdated(selectedRow, 5); // 5 es la columna de Estado
-            mm.setFilas(fa.obtenerMisiones());
-            
-            buscarMisiones();
-            System.out.println("Estado nueva misión: " + seleccionada.getEstado());
-
-
-            // Mostrar el aviso de éxito
-            VAviso aviso = new VAviso((Frame) getParent(), true, "Misión marcada como completada.");
-            aviso.setVisible(true);
+            // Opcional: actualiza la vista si hace falta
+            modelo.fireTableRowsUpdated(filaSeleccionada, filaSeleccionada);
         } else {
-            // Si la misión ya estaba completada, mostrar un aviso
-            VAviso aviso = new VAviso((Frame) getParent(), true, "La misión ya estaba completada.");
-            aviso.setVisible(true);
+            JOptionPane.showMessageDialog(this, "Selecciona una misión para marcar como completada.");
         }
-    } else {
-        // Si no se ha seleccionado ninguna fila, mostrar un mensaje de error
-        javax.swing.JOptionPane.showMessageDialog(this,
-                "Debes seleccionar una misión para completarla.",
-                "Error",
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-    }
     }//GEN-LAST:event_btnCompletadaActionPerformed
 
     private void btnTrabajadorExperimentadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrabajadorExperimentadoActionPerformed
@@ -298,8 +296,13 @@ public class VMisones extends javax.swing.JDialog {
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
         // TODO add your handling code here:
         Usuario usuarioMision= fa.obtenerTrabajadorMision();
-        Mision nuevaMision = new Mision(usuarioMision,"", Date.valueOf(LocalDate.MAX),Date.valueOf(LocalDate.MAX),"",false);
-
+        Mision nuevaMision = new Mision(
+            usuarioMision,
+            "", // especie
+            Date.valueOf(LocalDate.now()), // fechaInicio: hoy
+            null, // fechaFin: no completada
+            "" // descripción
+        );
     // Obtener el modelo de la tabla
      ModeloTablaMisiones mm = ( ModeloTablaMisiones) TablaMisiones.getModel();
 
@@ -312,16 +315,67 @@ public class VMisones extends javax.swing.JDialog {
 
    
     TablaMisiones.requestFocusInWindow();
-        TablaMisiones.requestFocusInWindow();
+    TablaMisiones.requestFocusInWindow();
         
        
     }//GEN-LAST:event_btnNuevaActionPerformed
-    
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    // Obtener el modelo de la tabla
+    ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
+
+    // Recoger las misiones actuales y las originales
+    List<Mision> misionesActuales = modelo.getMisiones();
+    List<Mision> misionesOriginales = modelo.getMisionesOriginales(); // Obtienes las misiones originales
+
+
+
+
+    for (int i = 0; i < misionesActuales.size(); i++) {
+        Mision misionActual = misionesActuales.get(i);
+        Mision misionOriginal = (i < misionesOriginales.size()) ? misionesOriginales.get(i) : null;
+
+
+
+        // Si la misión original existe, compararla con la misión actual
+        if (misionOriginal != null) {
+            // Verificar si los campos clave han cambiado
+            if (hasMisionChanged(misionOriginal, misionActual)) {
+                // Si ha cambiado, actualizarla
+                fa.actualizarMision(misionActual, misionOriginal);
+            }
+        } else {
+            // Si la misión original es null, significa que es una misión nueva, así que la agregamos
+            fa.agregarNuevaMision(misionActual);
+        }
+    }
+
+    // Mostrar mensaje de éxito
+    JOptionPane.showMessageDialog(this, "Misiones actualizadas correctamente.");
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private boolean hasMisionChanged(Mision misionOriginal, Mision misionActual) {
+        boolean nombresDistintos = !misionOriginal.getTrabajador().getNombre().equals(misionActual.getTrabajador().getNombre());
+        boolean especieDistinta = !misionOriginal.getEspecie().equals(misionActual.getEspecie());
+        boolean descripcionDistinta = !misionOriginal.getDescripcion().equals(misionActual.getDescripcion());
+        boolean fechaInicioDistinta = !misionOriginal.getFechaInicio().equals(misionActual.getFechaInicio());
+
+        boolean fechaFinDistinta = false;
+        if (misionOriginal.getFechaFin() == null && misionActual.getFechaFin() != null) {
+            fechaFinDistinta = true;
+        } else if (misionOriginal.getFechaFin() != null && !misionOriginal.getFechaFin().equals(misionActual.getFechaFin())) {
+            fechaFinDistinta = true;
+        }
+
+        return nombresDistintos || especieDistinta || descripcionDistinta || fechaInicioDistinta || fechaFinDistinta;
+    }
+
     
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaMisiones;
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCompletada;
     private javax.swing.JButton btnEliminar;
@@ -360,5 +414,27 @@ public class VMisones extends javax.swing.JDialog {
            va.setVisible(true);
 
        }
-}
+    }
+    public void configurarComboBoxes(){
+        
+            // Suponiendo que ya tienes la lista de trabajadores y especies
+    List<Usuario> listaTrabajadores = fa.obtenerTodosLosTrabajadores(); // Obtener trabajadores
+    List<Especie> listaEspecies = fa.obtenerEspecies("");
+
+    // Crear los combo boxes
+    JComboBox<String> comboTrabajadores = new JComboBox<>();
+    for (Usuario u : listaTrabajadores) {
+        comboTrabajadores.addItem(u.getNombre());
+    }
+
+    JComboBox<String> comboEspecies = new JComboBox<>();
+    for (Especie especie : listaEspecies) {
+        comboEspecies.addItem(especie.getNombreCientifico());
+    }
+
+    // Asignar el editor del combo box a las columnas correspondientes
+    TablaMisiones.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboTrabajadores));
+    TablaMisiones.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboEspecies));
+
+    }
 }

@@ -34,11 +34,11 @@ public class GestionMisiones {
         return fbd.obtenerMisionesEspecie(textoBusqueda);
     }
 
-    public boolean eliminarMision(Usuario trabajador, Date fechaFin, String especie) {
-        return fbd.eliminarMision(trabajador,fechaFin,especie);}
+    public boolean eliminarMision(Mision trabajador) {
+        return fbd.eliminarMision(trabajador);}
 
-    public boolean actualizarMision(Mision seleccionada) {
-        return fbd.actualizarMision(seleccionada);     
+    public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
+        return fbd.actualizarMision(seleccionada, misionOriginal);     
 }
 
     public Usuario obtenerTrabajadorMasExperimentado(String especie) {
@@ -46,4 +46,16 @@ public class GestionMisiones {
 
     public Usuario obtenerTrabajadorMision() {
         return fbd.obtenerTrabajadorMision();    }
+
+    boolean verificarMisionExistente(Mision mision) {
+        return fbd.verificarMisionExistente(mision);
+    }
+
+    void agregarNuevaMision(Mision misionActual) {
+        fbd.agregarNuevaMision(misionActual);
+    }
+
+    void completarMision(Mision misionSeleccionada) {
+        fbd.completarMision(misionSeleccionada);
+    }
 }

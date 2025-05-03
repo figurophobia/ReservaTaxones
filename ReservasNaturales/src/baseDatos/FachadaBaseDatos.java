@@ -229,16 +229,28 @@ public class FachadaBaseDatos {
 
     public List<Mision> obtenerMisionesEspecie(String textoBusqueda) {
         return daoMisiones.obtenerMisionesEspecie(textoBusqueda);    }
-    public boolean eliminarMision(Usuario trabajador, Date fechaFin, String especie) {
-        return daoMisiones.eliminarMision(trabajador,fechaFin,especie);}
+    public boolean eliminarMision(Mision trabajador) {
+        return daoMisiones.eliminarMision(trabajador);}
 
-    public boolean actualizarMision(Mision seleccionada) {
-        return daoMisiones.actualizarMision(seleccionada);    }
+    public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
+        return daoMisiones.actualizarMision(seleccionada,misionOriginal);    }
 
     public Usuario obtenerTrabajadorMasExperimentado(String especie) {
         return daoMisiones.obtenerTrabajadorMasExperimentado(especie);    }
 
     public Usuario obtenerTrabajadorMision() {
         return  daoMisiones.obtenerTrabajadorMision();}
+
+    public boolean verificarMisionExistente(Mision mision) {
+        return daoMisiones.verificarMisionExistente(mision);
+    }
+
+    public void agregarNuevaMision(Mision misionActual) {
+        daoMisiones.agregarNuevaMision(misionActual);
+    }
+
+    public void completarMision(Mision misionSeleccionada) {
+        daoMisiones.completarMision(misionSeleccionada);
+    }
 
 }
