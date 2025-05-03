@@ -265,43 +265,79 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
     return exito;
 }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-    Usuario resultado = null;
+    /**
+     * Obtiene el trabajador más experimentado entre una lista de trabajadores.
+     * @param trabajadoresDisponibles Lista de trabajadores disponibles para seleccionar
+     * @return El trabajador con más misiones completadas de entre los disponibles
+     */
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles) {
+        if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty()) {
+            return null;
+        }
 
-    String sql = 
-        "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "FROM trabajadores t " +
-        "JOIN misiones m ON t.dni = m.dni_trabajador " +
-        "WHERE m.nombre_cientifico_especie = ? " +
-        "AND t.dni NOT IN ( " +
-        "    SELECT dni_trabajador FROM misiones WHERE completada = false " +
-        ") " +
-        "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "ORDER BY COUNT(*) DESC " +
-        "LIMIT 1";
+        Usuario resultado = null;
+        Connection con = this.getConexion();
+        PreparedStatement stmTrabajador = null;
+        ResultSet rsTrabajador = null;
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
-        stm.setString(1, especie);
+        try {
+            // Construimos una consulta parametrizada con los DNIs disponibles
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append(
+                    "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva, COUNT(*) as experiencia " +
+                            "FROM trabajadores t " +
+                            "JOIN misiones m ON t.dni = m.dni_trabajador " +
+                            "WHERE t.dni IN (");
 
-        try (ResultSet rs = stm.executeQuery()) {
-            if (rs.next()) {
+            // Añadimos un placeholder ? por cada trabajador disponible
+            String placeholders = trabajadoresDisponibles.stream()
+                    .map(u -> "?")
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
+
+            sqlBuilder.append(placeholders);
+            sqlBuilder.append(") " +
+                    "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+                    "ORDER BY experiencia DESC " +
+                    "LIMIT 1");
+
+            stmTrabajador = con.prepareStatement(sqlBuilder.toString());
+
+            // Establecemos los parámetros para los DNIs de trabajadores disponibles
+            int paramIndex = 1;
+            for (Usuario trabajador : trabajadoresDisponibles) {
+                stmTrabajador.setString(paramIndex++, trabajador.getDni());
+            }
+
+            rsTrabajador = stmTrabajador.executeQuery();
+
+            if (rsTrabajador.next()) {
                 resultado = new Usuario(
-                    rs.getString("dni"),
-                    rs.getString("nombre"),
-                    rs.getFloat("sueldo"),
-                    rs.getInt("horas"),
-                    rs.getString("nombre_reserva")
+                        rsTrabajador.getString("dni"),
+                        rsTrabajador.getString("nombre"),
+                        rsTrabajador.getFloat("sueldo"),
+                        rsTrabajador.getInt("horas"),
+                        rsTrabajador.getString("nombre_reserva")
                 );
+            } else {
+                // Si no hay resultados, devolvemos el primer trabajador de la lista
+                resultado = trabajadoresDisponibles.get(0);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el trabajador más experimentado: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rsTrabajador != null) rsTrabajador.close();
+                if (stmTrabajador != null) stmTrabajador.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
             }
         }
-    } catch (SQLException e) {
-        System.out.println("Error al obtener el trabajador más experimentado: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+
+        return resultado;
     }
-
-    return resultado;
-}
-
     public Usuario obtenerTrabajadorMision() {
         Usuario resultado = null;
     String sql = 

@@ -237,9 +237,6 @@ public class FachadaBaseDatos {
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return daoMisiones.actualizarMision(seleccionada,misionOriginal);    }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-        return daoMisiones.obtenerTrabajadorMasExperimentado(especie);    }
-
     public Usuario obtenerTrabajadorMision() {
         return  daoMisiones.obtenerTrabajadorMision();}
 
@@ -265,5 +262,11 @@ public class FachadaBaseDatos {
     public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
         daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
+
+    public List<String> obtenerAreasPorEspecie(String nombreCientifico) {return daoAreas.obtenerAreasPorEspecie(nombreCientifico);}
+
+    public List<Usuario> obtenerTrabajadoresPorArea(String area) {return daoUsuarios.obtenerTrabajadoresPorArea(area);}
+
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return daoMisiones.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
 }
