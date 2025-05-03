@@ -33,6 +33,14 @@ public class GestionEjemplares {
     int borrarEjemplar(int id, String nom_cient) {
         return fbd.borrarEjemplar(id, nom_cient);
     }
+
+    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al) {
+        return fbd.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al);
+    }
+
+    int modificarEjemplar(Ejemplar ejemplarModificar) {
+        return fbd.modificarEjemplar(ejemplarModificar);
+    }
 }
 
   

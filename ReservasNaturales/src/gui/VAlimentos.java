@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package gui;
+
 import aplicacion.Alimento;
 import java.awt.Frame;
 import java.awt.event.MouseEvent;
@@ -12,19 +13,22 @@ import java.util.List;
 import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author alumnogreibd
  */
 public class VAlimentos extends javax.swing.JDialog {
+
     aplicacion.FachadaAplicacion fa;
+
     /**
      * Creates new form VALimentos
      */
-    
-    public VAlimentos(java.awt.Frame parent, boolean modal,aplicacion.FachadaAplicacion fa) {
+
+    public VAlimentos(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa) {
         super(parent, modal);
-        this.fa=fa;
+        this.fa = fa;
         initComponents();
         setTitle("Gestión Alimentos");
         obterAlimentos();
@@ -192,40 +196,39 @@ public class VAlimentos extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_salirActionPerformed
 
     private void btn_anadirAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anadirAlimentoActionPerformed
-        
+
         if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !tf_distribuidorAlimento.getText().isEmpty()) {
-        ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
-    
-        // Obtener las filas actuales de la tabla
-        List<Alimento> alAux = mta.getFilas();
-        
-        // Buscar si el alimento ya existe
-        boolean alimentoExistente = false;
-        for (Alimento a : alAux) {
-            if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
-                alimentoExistente = true;
-                
-                
-                if (fa.actualizarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+            ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
+
+            // Obtener las filas actuales de la tabla
+            List<Alimento> alAux = mta.getFilas();
+
+            // Buscar si el alimento ya existe
+            boolean alimentoExistente = false;
+            for (Alimento a : alAux) {
+                if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
+                    alimentoExistente = true;
+
+                    if (fa.actualizarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+                        obterAlimentos(); // Refrescar la lista de alimentos
+                    }
+                    break; // Salir del ciclo una vez que se ha encontrado el alimento
+                }
+            }
+
+            // Si el alimento no existe, lo añadimos como nuevo
+            if (!alimentoExistente) {
+                if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
                     obterAlimentos(); // Refrescar la lista de alimentos
                 }
-                break; // Salir del ciclo una vez que se ha encontrado el alimento
             }
         }
-        
-        // Si el alimento no existe, lo añadimos como nuevo
-        if (!alimentoExistente) {
-            if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
-                obterAlimentos(); // Refrescar la lista de alimentos
-            }
-        }
-    }
-    
-    // Limpiar los campos de texto
-    tf_nombreAlimento.setText("");
-    tf_tipoAlimento.setText("");
-    tf_distribuidorAlimento.setText(""); 
-        
+
+        // Limpiar los campos de texto
+        tf_nombreAlimento.setText("");
+        tf_tipoAlimento.setText("");
+        tf_distribuidorAlimento.setText("");
+
         /*if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !TextFieldDistribuidor.getText().isEmpty()) {
         ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
     
@@ -244,60 +247,59 @@ public class VAlimentos extends javax.swing.JDialog {
     tf_nombreAlimento.setText("");
     tf_tipoAlimento.setText("");
     TextFieldDistribuidor.setText(""); */
-        
+
     }//GEN-LAST:event_btn_anadirAlimentoActionPerformed
 
     private void btn_borrarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarAlimentoActionPerformed
         if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty()) {
-        // Verifica si hay una fila seleccionada en la tabla
-        int filaSeleccionada = tabla_alimentos.getSelectedRow();
-        if (filaSeleccionada != -1) {  // Si hay una fila seleccionada
-            String nombreAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 0);
-            String tipoAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 1);
-            String distribuidorAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 2);
-            // Llama al método de la fachada para borrar el alimento
-            if (fa.borrarAlimento(nombreAlimento, tipoAlimento,distribuidorAlimento) != -1) {
-                obterAlimentos();  // Refresca la lista de alimentos
-                tf_nombreAlimento.setText("");
-                tf_tipoAlimento.setText("");
-                tf_distribuidorAlimento.setText("");  // Limpiar los campos de texto
+            // Verifica si hay una fila seleccionada en la tabla
+            int filaSeleccionada = tabla_alimentos.getSelectedRow();
+            if (filaSeleccionada != -1) {  // Si hay una fila seleccionada
+                String nombreAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 0);
+                String tipoAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 1);
+                String distribuidorAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 2);
+                // Llama al método de la fachada para borrar el alimento
+                if (fa.borrarAlimento(nombreAlimento, tipoAlimento, distribuidorAlimento) != -1) {
+                    obterAlimentos();  // Refresca la lista de alimentos
+                    tf_nombreAlimento.setText("");
+                    tf_tipoAlimento.setText("");
+                    tf_distribuidorAlimento.setText("");  // Limpiar los campos de texto
+                } else {
+                    // Mostrar un mensaje si no se puede eliminar el alimento
+                    JOptionPane.showMessageDialog(this, "No se pudo eliminar el alimento.");
+                }
             } else {
-                // Mostrar un mensaje si no se puede eliminar el alimento
-                JOptionPane.showMessageDialog(this, "No se pudo eliminar el alimento.");
+                // Si no hay fila seleccionada, muestra un mensaje
+                JOptionPane.showMessageDialog(this, "Por favor, selecciona un alimento para borrar.");
             }
-        } else {
-            // Si no hay fila seleccionada, muestra un mensaje
-            JOptionPane.showMessageDialog(this, "Por favor, selecciona un alimento para borrar.");
         }
-    }
 
     }//GEN-LAST:event_btn_borrarAlimentoActionPerformed
 
     private void btn_asignarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asignarAlimentoActionPerformed
-    ModeloTablaAlimentos mta;
-        
-    mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
-       
-    VConsumirAlimentos vca = new VConsumirAlimentos( (JFrame) getParent(), true, fa, mta.getFila(tabla_alimentos.getSelectedRow()));
-    vca.setVisible(true);
-   
+        ModeloTablaAlimentos mta;
+
+        mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
+
+        VConsumirAlimentos vca = new VConsumirAlimentos((JFrame) getParent(), true, fa, mta.getFila(tabla_alimentos.getSelectedRow()));
+        vca.setVisible(true);
+
     }//GEN-LAST:event_btn_asignarAlimentoActionPerformed
 
     private void btnNoConsumidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoConsumidosActionPerformed
         // TODO add your handling code here:
         ModeloTablaAlimentos mta;
-        
-        mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
+
+        mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
         mta.setFilas(fa.obtenerAlimentos());
-        
+
         fa.eliminarNoConsumidos();
-        
+
     }//GEN-LAST:event_btnNoConsumidosActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNoConsumidos;
@@ -318,58 +320,56 @@ public class VAlimentos extends javax.swing.JDialog {
 
     private void obterAlimentos() {
         ModeloTablaAlimentos mta;
-        
-        mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
+
+        mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
         mta.setFilas(fa.obtenerAlimentos());
     }
-    
-     private void listenerSeleccionAlimentos() {
+
+    private void listenerSeleccionAlimentos() {
         tabla_alimentos.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent me) {
                 int fila = tabla_alimentos.getSelectedRow();
-    if (fila != -1) {
-        // Get the values from the table, but check for null first
-        Object nomeAlimentoObj = tabla_alimentos.getValueAt(fila, 0);
-        Object tipoAlimentoObj = tabla_alimentos.getValueAt(fila, 1);
-        Object distribuidorAlimentoObj = tabla_alimentos.getValueAt(fila, 2);
-        
-        // Ensure that null values don't cause a NullPointerException
-        String nomeAlimento = (nomeAlimentoObj != null) ? nomeAlimentoObj.toString() : "";
-        String tipoAlimento = (tipoAlimentoObj != null) ? tipoAlimentoObj.toString() : "";
-        String distribuidorAlimento = (distribuidorAlimentoObj != null) ? distribuidorAlimentoObj.toString() : "";
-        
-        // Set the text fields with the values
-        tf_nombreAlimento.setText(nomeAlimento);
-        tf_tipoAlimento.setText(tipoAlimento);
-        tf_distribuidorAlimento.setText(distribuidorAlimento);
-    }
+                if (fila != -1) {
+                    // Get the values from the table, but check for null first
+                    Object nomeAlimentoObj = tabla_alimentos.getValueAt(fila, 0);
+                    Object tipoAlimentoObj = tabla_alimentos.getValueAt(fila, 1);
+                    Object distribuidorAlimentoObj = tabla_alimentos.getValueAt(fila, 2);
+
+                    // Ensure that null values don't cause a NullPointerException
+                    String nomeAlimento = (nomeAlimentoObj != null) ? nomeAlimentoObj.toString() : "";
+                    String tipoAlimento = (tipoAlimentoObj != null) ? tipoAlimentoObj.toString() : "";
+                    String distribuidorAlimento = (distribuidorAlimentoObj != null) ? distribuidorAlimentoObj.toString() : "";
+
+                    // Set the text fields with the values
+                    tf_nombreAlimento.setText(nomeAlimento);
+                    tf_tipoAlimento.setText(tipoAlimento);
+                    tf_distribuidorAlimento.setText(distribuidorAlimento);
+                }
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
-               
+
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-               
+
             }
 
             @Override
             public void mouseEntered(MouseEvent me) {
-                
+
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-               
+
             }
 
-   
         }
         );
     }
-    
-    
+
 }

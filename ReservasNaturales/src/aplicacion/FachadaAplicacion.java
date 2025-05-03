@@ -251,4 +251,12 @@ public class FachadaAplicacion {
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return gu.obtenerTrabajadoresPorArea(area);}
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+
+    public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al) {
+        return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al);
+    }
+
+    public int modificarEjemplar(Ejemplar ejemplarModificar) {
+        return gej.modificarEjemplar(ejemplarModificar);
+    }
 }

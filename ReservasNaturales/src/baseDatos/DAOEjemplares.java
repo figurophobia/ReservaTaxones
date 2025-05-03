@@ -4,6 +4,7 @@
  */
 package baseDatos;
 
+import aplicacion.Alimento;
 import aplicacion.Area;
 import aplicacion.Ejemplar;
 import aplicacion.Especie;
@@ -134,6 +135,34 @@ public class DAOEjemplares extends AbstractDAO {
         stmEjemplar=con.prepareStatement("delete from ejemplar where id = ? and nombre_cientifico_especie = ?");
         stmEjemplar.setInt(1, id);
         stmEjemplar.setString(2, nom_cient);
+        res = stmEjemplar.executeUpdate();
+
+        } catch (SQLException e){
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+        
+        return res;
+    }
+
+    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    int modificarEjemplar(Ejemplar ejemplarModificar) {
+        Connection con;
+        PreparedStatement stmEjemplar=null;
+        int res = -1;
+        con=super.getConexion();
+
+        try {
+        stmEjemplar=con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
+        stmEjemplar.setString(1, ejemplarModificar.getMote());
+        Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
+        stmEjemplar.setDate(2, fecha);
+        stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
+        stmEjemplar.setInt(4, ejemplarModificar.getId());
+        stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
         res = stmEjemplar.executeUpdate();
 
         } catch (SQLException e){
