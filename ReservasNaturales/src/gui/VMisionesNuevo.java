@@ -50,7 +50,10 @@ public class VMisionesNuevo extends javax.swing.JDialog {
 
                 cbxAreas.setEnabled(selected_especies);
                 if (selected_especies) {
-                    TODO:cargarAreas(selectedItem.toString());
+                    if(!cargarAreas(selectedItem.toString())){
+                        JOptionPane.showConfirmDialog(VMisionesNuevo.this, "No existe ningún ejemplar de la especie seleccionada, por favor seleccione otra", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                        cbxEspecies.setSelectedIndex(0);
+                    }
                 } else {
                     cbxAreas.removeAllItems();
                     selected_area = false;
@@ -71,7 +74,10 @@ public class VMisionesNuevo extends javax.swing.JDialog {
                 cbxTrabajador.setEnabled(selected_area);
                 bSeleccionarMasExp.setEnabled(selected_area);
                 if (selected_area) {
-                    cargarTrabajadores(selectedItem.toString());
+                    if (!cargarTrabajadores(selectedItem.toString())){
+                        JOptionPane.showConfirmDialog(VMisionesNuevo.this, "No existe ningún trabajador en el área seleccionada, por favor seleccione otra", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
+                        cbxAreas.setSelectedIndex(0);
+                    }
                 } else {
                     cbxTrabajador.removeAllItems();
                     selected_trabajador = false;
@@ -132,7 +138,7 @@ public class VMisionesNuevo extends javax.swing.JDialog {
         cbxTrabajador.removeAllItems();
     }
 
-    private void cargarAreas(String nombreCientificoEspecie) {
+    boolean cargarAreas(String nombreCientificoEspecie) {
         List<String> areas = fa.obtenerAreasPorEspecie(nombreCientificoEspecie);
         DefaultComboBoxModel<String> modeloAreas = new DefaultComboBoxModel<>();
         modeloAreas.addElement("");
@@ -140,9 +146,10 @@ public class VMisionesNuevo extends javax.swing.JDialog {
             modeloAreas.addElement(area);
         }
         cbxAreas.setModel(modeloAreas);
+        return !areas.isEmpty();
     }
 
-    private void cargarTrabajadores(String area) {
+    private boolean cargarTrabajadores(String area) {
         List<Usuario> trabajadores = fa.obtenerTrabajadoresPorArea(area);
         usuarios_disponibles = trabajadores;
         DefaultComboBoxModel<String> modeloTrabajadores = new DefaultComboBoxModel<>();
@@ -151,6 +158,7 @@ public class VMisionesNuevo extends javax.swing.JDialog {
             modeloTrabajadores.addElement(trabajador.getNombre());
         }
         cbxTrabajador.setModel(modeloTrabajadores);
+        return !trabajadores.isEmpty();
     }
 
     @SuppressWarnings("unchecked")
