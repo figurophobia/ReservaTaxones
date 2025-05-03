@@ -34,7 +34,7 @@ public class VMisionesNuevo extends javax.swing.JDialog {
 
         cbxAreas.setEnabled(false);
         cbxTrabajador.setEnabled(false);
-        bSeleccionarMasExp.setEnabled(false);
+
 
         setupComboBoxListeners();
         setupTextAreaListener();
@@ -58,7 +58,6 @@ public class VMisionesNuevo extends javax.swing.JDialog {
                     cbxAreas.removeAllItems();
                     selected_area = false;
                     cbxTrabajador.setEnabled(false);
-                    bSeleccionarMasExp.setEnabled(false);
                     cbxTrabajador.removeAllItems();
                     selected_trabajador = false;
                 }
@@ -72,7 +71,6 @@ public class VMisionesNuevo extends javax.swing.JDialog {
                 selected_area = (selectedItem != null && !selectedItem.toString().isEmpty());
 
                 cbxTrabajador.setEnabled(selected_area);
-                bSeleccionarMasExp.setEnabled(selected_area);
                 if (selected_area) {
                     if (!cargarTrabajadores(selectedItem.toString())){
                         JOptionPane.showConfirmDialog(VMisionesNuevo.this, "No existe ningún trabajador en el área seleccionada, por favor seleccione otra", "Error", JOptionPane.DEFAULT_OPTION, JOptionPane.ERROR_MESSAGE);
