@@ -223,4 +223,12 @@ public class FachadaAplicacion {
     public void completarMision(Mision misionSeleccionada) {
         gm.completarMision(misionSeleccionada);
     }
+
+    public List<Ejemplar> obterEjemplares(Especie e) {
+        return gej.obterEjemplares(e);
+    }
+
+    public void actualizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
+        gej.actulizarEjemplar(ejemplarSeleccionado,nuevoEjemplar);
+    }
 }

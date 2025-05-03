@@ -13,6 +13,7 @@ import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -107,6 +108,7 @@ public class VEspecies extends javax.swing.JDialog {
         AreaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         ClinicasBoton = new javax.swing.JButton();
+        btn_actualizar = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -256,6 +258,13 @@ public class VEspecies extends javax.swing.JDialog {
             }
         });
 
+        btn_actualizar.setText("Actualizar");
+        btn_actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_actualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
         panelEjemplares.setLayout(panelEjemplaresLayout);
         panelEjemplaresLayout.setHorizontalGroup(
@@ -277,12 +286,6 @@ public class VEspecies extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addComponent(btn_nuevoEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_borrarEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(ClinicasBoton))
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel8))
@@ -295,7 +298,16 @@ public class VEspecies extends javax.swing.JDialog {
                         .addGap(0, 158, Short.MAX_VALUE))
                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                         .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                        .addComponent(btn_nuevoEjemplar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_borrarEjemplar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_actualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ClinicasBoton)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelEjemplaresLayout.setVerticalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,10 +333,11 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nuevoEjemplar)
                     .addComponent(btn_borrarEjemplar)
+                    .addComponent(btn_actualizar)
                     .addComponent(ClinicasBoton)))
         );
 
@@ -444,6 +457,44 @@ public class VEspecies extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_ClinicasBotonActionPerformed
 
+    private void btn_actualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_actualizarActionPerformed
+        int filaSeleccionada = tabla_ejemplares.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            ModeloTablaEjemplaresGeneral modelo = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar viejoEjemplar = modelo.obtenerEjemplar(filaSeleccionada);
+            String nuevoMote = tf_moteEjemplar.getText().trim();
+            String nuevaFecha = tf_fecNac.getText().trim();  // Formato: yyyy-MM-dd
+            Area nuevaArea = new Area(AreaComboBox.getSelectedItem().toString());
+
+            if (nuevoMote.isEmpty() || nuevaFecha.isEmpty() || nuevaArea == null) {
+                JOptionPane.showMessageDialog(this, "Completa todos los campos antes de actualizar.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try {
+                // Crear un nuevo objeto Ejemplar con los datos actualizados
+                Ejemplar nuevoEjemplar = new Ejemplar(
+                    viejoEjemplar.getId(), 
+                    viejoEjemplar.getEspecie(), 
+                    nuevoMote, 
+                    nuevaFecha, 
+                    nuevaArea
+                );
+
+                // Llamar al método de la fachada con viejo y nuevo
+                fa.actualizarEjemplar(viejoEjemplar, nuevoEjemplar);
+                obterEjemplares();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el ejemplar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un ejemplar de la tabla.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_actualizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
@@ -454,6 +505,7 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JTextField NombreCientificoText;
     private javax.swing.JTextField NombreComunText;
     private javax.swing.JComboBox<String> TaxonComboBox;
+    private javax.swing.JButton btn_actualizar;
     private javax.swing.JButton btn_borrarEjemplar;
     private javax.swing.JButton btn_nuevoEjemplar;
     private javax.swing.JButton buttonSalir;
@@ -529,7 +581,7 @@ public class VEspecies extends javax.swing.JDialog {
         ModeloTablaEjemplaresGeneral mteg;
         
         mteg =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
-        mteg.setFilas(fa.obterEjemplares());
+        mteg.setFilas(fa.obterEjemplares(e));
     
     }
     

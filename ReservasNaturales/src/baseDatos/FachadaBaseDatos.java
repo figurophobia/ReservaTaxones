@@ -253,4 +253,12 @@ public class FachadaBaseDatos {
         daoMisiones.completarMision(misionSeleccionada);
     }
 
+    public List<Ejemplar> obterEjemplares(Especie e) {
+        return daoEjemplares.obterEjemplares(e);
+    }
+
+    public void actualizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
+        daoEjemplares.actualizarEjemplar(ejemplarSeleccionado,nuevoEjemplar);
+    }
+
 }
