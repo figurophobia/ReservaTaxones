@@ -248,7 +248,8 @@ INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, nombre_taxon
 ('Pinna nobilis', 'Nacra', 'Molusco bivalvo endémico del Mediterráneo en peligro crítico', 'Bivalvia'),
 ('Caretta caretta', 'Tortuga boba', 'Especie de tortuga marina presente en el Mediterráneo', 'Reptilia'),
 ('Chamaeleo chamaeleon', 'Camaleón común', 'Reptil con capacidad de cambiar de color', 'Reptilia'),
-('Milvus milvus', 'Milano real', 'Ave rapaz en peligro de extinción', 'Aves');
+('Milvus milvus', 'Milano real', 'Ave rapaz en peligro de extinción', 'Aves'),
+('Loxodonta africana', 'Elefante africano', 'Mamífero terrestre de gran tamaño, cuenta con una larga trompa y colmillos de marfil', 'Mammalia');
 
 
 INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac, area_geografica) VALUES 
@@ -258,10 +259,10 @@ INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac, area_geograf
 (1, 'Capra pyrenaica', 'Montés', '2017-09-30', 'Parque Nacional Sierra Nevada'),
 (2, 'Capra pyrenaica', 'Sierra', '2019-12-12', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
 (3, 'Lynx pardinus', 'Sombra', '2021-05-18', 'Parque Nacional Doñana'),
-(4, 'Lynx pardinus', 'Rayo', '2019-06-30', 'Parque Nacional de Doñana'),
+(4, 'Lynx pardinus', 'Rayo', '2019-06-30', 'Parque Nacional Doñana'),
 (2, 'Aquila adalberti', 'Altiva', '2017-04-12', 'Parque Nacional Doñana'),
 (3, 'Aquila adalberti', 'Veloz', '2020-03-25', 'Parque Natural de Monfragüe'),
-(3, 'Capra pyrenaica', 'Cumbre', '2018-05-05', 'Parque Nacional de Sierra Nevada'),
+(3, 'Capra pyrenaica', 'Cumbre', '2018-05-05', 'Parque Nacional Sierra Nevada'),
 (1, 'Ursus arctos cantabricus', 'Pardo', '2015-02-10', 'Parque Nacional de Picos de Europa'),
 (2, 'Ursus arctos cantabricus', 'Bruno', '2017-01-20', 'Parque Nacional de Picos de Europa'),
 (1, 'Gypaetus barbatus', 'Alada', '2016-07-22', 'Parque Nacional de Ordesa y Monte Perdido'),
