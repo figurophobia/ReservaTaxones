@@ -1,10 +1,8 @@
 package gui;
-
 import aplicacion.Area;
 import java.util.ArrayList;
-import javax.swing.AbstractListModel;
 import java.util.List;
-
+import javax.swing.AbstractListModel;
 /**
  *
  * @author basesdatos

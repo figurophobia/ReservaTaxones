@@ -45,10 +45,10 @@ public class DAOUsuarios extends AbstractDAO {
                 String nombreReserva = rsUsuario.getString("nombre_reserva");
                 Area area = new Area(nombreReserva);
                 resultado = new Usuario(rsUsuario.getString("dni"),
-                                        rsUsuario.getString("nombre"),
-                                        rsUsuario.getFloat("sueldo"),
-                                        rsUsuario.getInt("horas"),
-                                        area);
+                        rsUsuario.getString("nombre"),
+                        rsUsuario.getFloat("sueldo"),
+                        rsUsuario.getInt("horas"),
+                        area);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -79,7 +79,8 @@ public class DAOUsuarios extends AbstractDAO {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
-            Area area = new Area(rsTrabajador.getString("nombre_reserva"));
+            String nombreReserva = rsTrabajador.getString("nombre_reserva");
+            Area area = new Area(nombreReserva);
             Usuario u = new Usuario(
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
@@ -119,7 +120,8 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
-            Area area = new Area(rsTrabajador.getString("nombre_reserva"));
+            String nombreReserva = rsTrabajador.getString("nombre_reserva");
+            Area area = new Area(nombreReserva);
             Usuario u = new Usuario(
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
@@ -159,7 +161,6 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
-            //Area area = new Area(rsTrabajador.getString("nombre_reserva"));
             String nombreReserva = rsTrabajador.getString("nombre_reserva");
             Area area = new Area(nombreReserva);
             Usuario u = new Usuario(
@@ -261,76 +262,124 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
     return exito;    }
 
     boolean eliminarTrabajador(String dni) {
-    Connection con;
-    PreparedStatement stmTrabajador = null;
-    boolean exito = true;
+        Connection con;
+        PreparedStatement stmTrabajador = null;
+        boolean exito = true;
 
-    con = this.getConexion();
+        con = this.getConexion();
 
-    try {
-        stmTrabajador = con.prepareStatement(
-            "DELETE FROM trabajadores WHERE dni = ?"
-        );
-
-        stmTrabajador.setString(1, dni);
-
-        // Aquí es donde faltaba:
-        int filas = stmTrabajador.executeUpdate();
-
-        if (filas == 0) {
-            exito = false; // No se eliminó ninguna fila (dni no encontrado)
-        }
-
-    } catch (SQLException e) {
-        exito = false;
-        System.out.println("Error al eliminar el trabajador: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion("Error al eliminar el trabajador: " + e.getMessage());
-    } finally {
         try {
-            if (stmTrabajador != null) stmTrabajador.close();
+            stmTrabajador = con.prepareStatement(
+                "DELETE FROM trabajadores WHERE dni = ?"
+            );
+
+            stmTrabajador.setString(1, dni);
+
+            // Aquí es donde faltaba:
+            int filas = stmTrabajador.executeUpdate();
+
+            if (filas == 0) {
+                exito = false; // No se eliminó ninguna fila (dni no encontrado)
+            }
+
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
-        }
+            exito = false;
+            System.out.println("Error al eliminar el trabajador: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al eliminar el trabajador: " + e.getMessage());
+        } finally {
+            try {
+                if (stmTrabajador != null) stmTrabajador.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
     }
 
     return exito;    }
 
+
     boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
         Connection con;
-    PreparedStatement stm = null;
-    boolean exito = true;
+        PreparedStatement stm = null;
+        boolean exito = true;
 
-    con = this.getConexion();
+        con = this.getConexion();
 
-    try {
-        stm = con.prepareStatement(
-            "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
-        );
-        stm.setString(1, areaSeleccionada.getNombreReserva());
-        stm.setString(2, trabajador.getDni());
-
-        int filas = stm.executeUpdate();
-        if (filas == 0) {
-            exito = false; 
-        } else {
-            
-            trabajador.setArea(areaSeleccionada);
-        }
-
-    } catch (SQLException e) {
-        exito = false;
-        System.out.println("Error al actualizar área del usuario: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
-    } finally {
         try {
-            if (stm != null) stm.close();
+            stm = con.prepareStatement(
+                    "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
+            );
+            stm.setString(1, areaSeleccionada.getNombreReserva());
+            stm.setString(2, trabajador.getDni());
+
+            int filas = stm.executeUpdate();
+            if (filas == 0) {
+                exito = false;
+            } else {
+
+                trabajador.setArea(areaSeleccionada);
+            }
+
         } catch (SQLException e) {
-            System.out.println("Imposible cerrar cursores");
+            exito = false;
+            System.out.println("Error al actualizar área del usuario: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
+        } finally {
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
         }
+
+        return exito;
+
     }
 
-    return exito;
+    public List<Usuario> obtenerTrabajadoresPorArea(String area) {
+        List<Usuario> resultado = new ArrayList<>();
+        Connection con = this.getConexion();
+        PreparedStatement stmTrabajadores = null;
+        ResultSet rsTrabajadores = null;
 
+        try {
+            // Consulta SQL para obtener trabajadores con misiones en el área especificada
+            String consulta = "SELECT DISTINCT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+                    "FROM trabajadores t " +
+                    "JOIN misiones m ON t.dni = m.dni_trabajador " +
+                    "JOIN ejemplar e ON m.nombre_cientifico_especie = e.nombre_cientifico_especie " +
+                    "WHERE e.area_geografica = ? " +
+                    "ORDER BY t.nombre";
+
+            stmTrabajadores = con.prepareStatement(consulta);
+            stmTrabajadores.setString(1, area);
+            rsTrabajadores = stmTrabajadores.executeQuery();
+
+            while (rsTrabajadores.next()) {
+                String nombreReserva = rsTrabajadores.getString("nombre_reserva");
+                Area area_2 = new Area(nombreReserva);
+                Usuario usuario = new Usuario(
+                        rsTrabajadores.getString("dni"),
+                        rsTrabajadores.getString("nombre"),
+                        rsTrabajadores.getFloat("sueldo"),
+                        rsTrabajadores.getInt("horas"),
+                        area_2
+                );
+                resultado.add(usuario);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener trabajadores por área: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rsTrabajadores != null) rsTrabajadores.close();
+                if (stmTrabajadores != null) stmTrabajadores.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
     }
     
     

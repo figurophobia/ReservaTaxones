@@ -9,6 +9,7 @@ import javax.swing.table.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import java.util.ArrayList;
+import aplicacion.Area;
 /**
  *
  * @author alumnogreibd

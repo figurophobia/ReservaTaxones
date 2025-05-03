@@ -80,9 +80,7 @@ public class DAOMisiones extends AbstractDAO{
                         rsUsuario.getString("nombre"),
                         rsUsuario.getFloat("sueldo"),
                         rsUsuario.getInt("horas"),
-                        area
-                         
-                    );
+                        area);
                 }
             }
 
@@ -268,74 +266,107 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
     return exito;
 }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-    Usuario resultado = null;
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles) {
+        if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty()) {
+            return null;
+        }
 
-    String sql = 
-        "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "FROM trabajadores t " +
-        "JOIN misiones m ON t.dni = m.dni_trabajador " +
-        "WHERE m.nombre_cientifico_especie = ? " +
-        "AND t.dni NOT IN ( " +
-        "    SELECT dni_trabajador FROM misiones WHERE completada = false " +
-        ") " +
-        "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "ORDER BY COUNT(*) DESC " +
-        "LIMIT 1";
+        Usuario resultado = null;
+        Connection con = this.getConexion();
+        PreparedStatement stmTrabajador = null;
+        ResultSet rsTrabajador = null;
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
-        stm.setString(1, especie);
+        try {
+            // Construimos una consulta parametrizada con los DNIs disponibles
+            StringBuilder sqlBuilder = new StringBuilder();
+            sqlBuilder.append(
+                    "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva, COUNT(*) as experiencia " +
+                            "FROM trabajadores t " +
+                            "JOIN misiones m ON t.dni = m.dni_trabajador " +
+                            "WHERE t.dni IN (");
 
-        try (ResultSet rs = stm.executeQuery()) {
-            if (rs.next()) {
-                String nombreReserva = rs.getString("nombre_reserva");
+            // Añadimos un placeholder ? por cada trabajador disponible
+            String placeholders = trabajadoresDisponibles.stream()
+                    .map(u -> "?")
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
+
+            sqlBuilder.append(placeholders);
+            sqlBuilder.append(") " +
+                    "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+                    "ORDER BY experiencia DESC " +
+                    "LIMIT 1");
+
+            stmTrabajador = con.prepareStatement(sqlBuilder.toString());
+
+            // Establecemos los parámetros para los DNIs de trabajadores disponibles
+            int paramIndex = 1;
+            for (Usuario trabajador : trabajadoresDisponibles) {
+                stmTrabajador.setString(paramIndex++, trabajador.getDni());
+            }
+
+            rsTrabajador = stmTrabajador.executeQuery();
+
+            if (rsTrabajador.next()) {
+                String nombreReserva = rsTrabajador.getString("nombre_reserva");
                 Area area = new Area(nombreReserva);
                 resultado = new Usuario(
-                    rs.getString("dni"),
-                    rs.getString("nombre"),
-                    rs.getFloat("sueldo"),
-                    rs.getInt("horas"),
-                    area
+                        rsTrabajador.getString("dni"),
+                        rsTrabajador.getString("nombre"),
+                        rsTrabajador.getFloat("sueldo"),
+                        rsTrabajador.getInt("horas"),
+                        area
                 );
+            } else {
+                // Si no hay resultados, devolvemos el primer trabajador de la lista
+                resultado = trabajadoresDisponibles.get(0);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el trabajador más experimentado: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rsTrabajador != null) rsTrabajador.close();
+                if (stmTrabajador != null) stmTrabajador.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
             }
         }
-    } catch (SQLException e) {
-        System.out.println("Error al obtener el trabajador más experimentado: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+
+        return resultado;
     }
-
-    return resultado;
-}
-
+    
+    
     public Usuario obtenerTrabajadorMision() {
         Usuario resultado = null;
-    String sql = 
-        "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "FROM trabajadores t " +
-        "LEFT JOIN misiones m ON t.dni = m.dni_trabajador " +
-        "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 " +
-        "ORDER BY COUNT(m.dni_trabajador) ASC " +
-        "LIMIT 1";
+        String sql = 
+            "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+            "FROM trabajadores t " +
+            "LEFT JOIN misiones m ON t.dni = m.dni_trabajador " +
+            "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+            "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 " +
+            "ORDER BY COUNT(m.dni_trabajador) ASC " +
+            "LIMIT 1";
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
-        try (ResultSet rs = stm.executeQuery()) {
-            if (rs.next()) {
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
                 String nombreReserva = rs.getString("nombre_reserva");
                 Area area = new Area(nombreReserva);
-                resultado = new Usuario(
-                    rs.getString("dni"),
-                    rs.getString("nombre"),
-                    rs.getFloat("sueldo"),
-                    rs.getInt("horas"),
-                    area
-                );
+                if (rs.next()) {
+                    resultado = new Usuario(
+                        rs.getString("dni"),
+                        rs.getString("nombre"),
+                        rs.getFloat("sueldo"),
+                        rs.getInt("horas"),
+                        area
+                    );
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener un trabajador sin misiones activas: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al obtener un trabajador sin misiones activas: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    }
 
     return resultado;
     }
@@ -413,6 +444,80 @@ void agregarNuevaMision(Mision misionActual) {
             System.out.println("Error al completar la misión: " + e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
+    }
+
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda) {
+        List<Mision> resultado = new ArrayList<>();
+
+        if (textoBusqueda == null || textoBusqueda.trim().isEmpty()) {
+            return resultado;
+        }
+
+        // Normalizar la cadena de búsqueda
+        String busqueda = textoBusqueda.trim();
+
+        // Consulta base
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT DISTINCT m.dni_trabajador, m.fecha_inicio, m.fecha_fin, m.descripcion, m.nombre_cientifico_especie ");
+        sqlBuilder.append("FROM misiones m ");
+        sqlBuilder.append("JOIN trabajadores t ON m.dni_trabajador = t.dni ");
+        sqlBuilder.append("WHERE ");
+
+        // Lista para almacenar los parámetros
+        List<String> parametros = new ArrayList<>();
+
+        // Caso especial para "completada" o "incompleta"
+        boolean esBusquedaEspecial = false;
+        if ("completada".equalsIgnoreCase(busqueda)) {
+            sqlBuilder.append("m.fecha_fin IS NOT NULL");
+            esBusquedaEspecial = true;
+        } else if ("incompleta".equalsIgnoreCase(busqueda)) {
+            sqlBuilder.append("m.fecha_fin IS NULL");
+            esBusquedaEspecial = true;
+        }
+
+        // Para búsquedas generales
+        if (!esBusquedaEspecial) {
+            sqlBuilder.append("t.nombre ILIKE ? OR ");
+            parametros.add("%" + busqueda + "%");
+
+            sqlBuilder.append("m.nombre_cientifico_especie ILIKE ? OR ");
+            parametros.add("%" + busqueda + "%");
+
+            sqlBuilder.append("m.descripcion ILIKE ?");
+            parametros.add("%" + busqueda + "%");
+        }
+
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sqlBuilder.toString())) {
+            // Configurar los parámetros
+            for (int i = 0; i < parametros.size(); i++) {
+                stm.setString(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    String dni = rs.getString("dni_trabajador");
+                    Usuario trabajador = obtenerUsuarioDni(dni);
+
+                    if (trabajador != null) {
+                        Mision m = new Mision(
+                                trabajador,
+                                rs.getString("nombre_cientifico_especie"),
+                                rs.getDate("fecha_inicio"),
+                                rs.getDate("fecha_fin"),
+                                rs.getString("descripcion")
+                        );
+                        resultado.add(m);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al realizar búsqueda general de misiones: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+
+        return resultado;
     }
 
 
