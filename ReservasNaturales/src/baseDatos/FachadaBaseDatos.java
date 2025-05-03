@@ -150,7 +150,9 @@ public class FachadaBaseDatos {
     public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
-
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }

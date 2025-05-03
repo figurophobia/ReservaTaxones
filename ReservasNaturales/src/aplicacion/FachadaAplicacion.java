@@ -107,7 +107,9 @@ public class FachadaAplicacion {
     public boolean eliminarArea(String nombreReserva) { return ga.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return ga.crearArea(area); }
-
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return gu.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }

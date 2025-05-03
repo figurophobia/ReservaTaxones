@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package gui;
+import aplicacion.Area;
 import  aplicacion.Usuario;
 import javax.swing.table.*;
 import javax.swing.table.AbstractTableModel;
@@ -14,10 +15,18 @@ import java.util.ArrayList;
  */
 public class ModeloTablaTrabajadores extends AbstractTableModel {
     private  List<Usuario> usuarios;
+    private boolean crearTrabajador = false;
+
     public ModeloTablaTrabajadores() {
         this.usuarios= new ArrayList<Usuario>();
      }
-    
+    public void setCrearTrabajador(boolean crear) {
+    this.crearTrabajador = crear;
+}
+
+public boolean isCrearTrabajador() {
+    return this.crearTrabajador;
+}
     
     @Override
     public int getRowCount() {
@@ -26,7 +35,7 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 4;
+        return 5;
     }
     @Override
     public String getColumnName(int col){
@@ -37,6 +46,7 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
             case 1: nombre= "Nombre"; break;
             case 2: nombre="Horas"; break;
             case 3: nombre="Sueldo"; break;
+            case 4: nombre="Area Geográfica";break;
         }
         return nombre;
     }
@@ -50,15 +60,13 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
             case 1: clase= java.lang.String.class; break;
             case 2: clase=java.lang.Integer.class; break;
             case 3: clase=java.lang.Float.class; break;
+            case 4: clase= java.lang.String.class;break;
             
         }
         return clase;
     }
 
-    @Override
-    public boolean isCellEditable(int row, int col){
-        return true;
-    }
+    
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -69,6 +77,7 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
             case 1: resultado= usuarios.get(row).getNombre(); break;
             case 2: resultado=usuarios.get(row).getHoras();break;
             case 3: resultado=usuarios.get(row).getSueldo(); break;
+            case 4: resultado=usuarios.get(row).getArea();break;
             
         }
         return resultado;
@@ -81,6 +90,7 @@ public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         case 1: t.setNombre((String) aValue); break;
         case 2: t.setHoras((int) aValue); break;
         case 3: t.setSueldo((float) aValue); break;
+        case 4: t.setArea((Area) aValue);break;
         
     }
     fireTableCellUpdated(rowIndex, columnIndex);
@@ -107,6 +117,16 @@ public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         return this.usuarios.get(i);
         
     }
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if (!crearTrabajador) {
+        
+        return columnIndex != 0 && columnIndex != 4;
+    } else {
+        
+        return true;
+    }
+}
     
     
 }
