@@ -24,6 +24,8 @@ public class FachadaAplicacion {
     GestionAlimentos gal;
     GestionEjemplares gej;
     GestionConsumirAlimentos gca;
+    GestionRevision gr;
+    GestionClinicas gc;
 
     public FachadaAplicacion() {
         fgui = new FachadaGui(this);
@@ -35,6 +37,8 @@ public class FachadaAplicacion {
         gal = new GestionAlimentos(fgui, fbd);
         gej = new GestionEjemplares(fgui, fbd);
         gca = new GestionConsumirAlimentos(fgui, fbd);
+        gr = new GestionRevision(fbd,fgui);
+        gc = new GestionClinicas(fbd,fgui);
     }
 
     public static void main(String args[]) {
@@ -157,5 +161,20 @@ public class FachadaAplicacion {
 
     public List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
         return gca.obterConsumirAlimentos(idAlimento);
+    }
+    public void crearRevision(ClinicaMedica clinicaSeleccionada,Ejemplar ejemplar) {
+       fgui.crearRevision(clinicaSeleccionada,ejemplar);
+    }
+
+    public List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return gr.obtenerRevisiones(nClinica, Id);
+    }
+
+    public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+          return gc.obtenerClinicas(textoBusqueda);
+    }
+
+    public void crearVClinica(Ejemplar ejem) {
+        fgui.crearVClinicas(ejem);
     }
 }

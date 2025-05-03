@@ -8,6 +8,8 @@ package baseDatos;
 
 import aplicacion.Alimento;
 import aplicacion.Area;
+import aplicacion.ClinicaMedica;
+import aplicacion.Revision;
 import aplicacion.Ejemplar;
 import aplicacion.Area;
 import aplicacion.ConsumirAlimento;
@@ -37,6 +39,8 @@ public class FachadaBaseDatos {
     private DAOAlimentos daoAlimentos;
     private DAOEjemplares daoEjemplares;
     private DAOConsumirAlimentos daoConsumirAlimentos;
+    private DAORevisiones daoRevisiones;
+    private DAOClinicas daoClinicas;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -77,6 +81,8 @@ public class FachadaBaseDatos {
             daoAlimentos = new DAOAlimentos(conexion, fa);
             daoEjemplares = new DAOEjemplares(conexion, fa);
             daoConsumirAlimentos = new DAOConsumirAlimentos(conexion, fa);
+            daoRevisiones = new DAORevisiones(conexion,fa);
+            daoClinicas = new DAOClinicas(conexion,fa);
           
 
 
@@ -198,5 +204,12 @@ public class FachadaBaseDatos {
 
     public List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
          return daoConsumirAlimentos.obterConsumirAlimentos(idAlimento);
+    }
+    public List<Revision> obtenerRevisiones(String nClinica, int Id) {
+        return daoRevisiones.obtenerRevisiones(nClinica,Id);
+    }
+
+    public List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
+        return daoClinicas.obtenerClinicas(textoBusqueda);
     }
 }

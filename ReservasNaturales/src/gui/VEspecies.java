@@ -39,6 +39,7 @@ public class VEspecies extends javax.swing.JDialog {
         nuevo=true;
         ActualizarButton.setEnabled(false);
         BorrarButton.setEnabled(false);
+        ClinicasBoton.setEnabled(false);
         // Cando creamos unha nova especie non podemos crear aínda un ejemplar de esta
         panelGeneral.setEnabledAt(panelGeneral.indexOfComponent(panelEjemplares), false);
         
@@ -57,6 +58,7 @@ public class VEspecies extends javax.swing.JDialog {
         editar=true;
         this.e=e;
         AnadirButton.setEnabled(false);
+        ClinicasBoton.setEnabled(false);
         
         // Manexamos a tab de exemplares
         
@@ -104,6 +106,7 @@ public class VEspecies extends javax.swing.JDialog {
         tf_idEspecie = new javax.swing.JTextField();
         AreaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        ClinicasBoton = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -246,6 +249,13 @@ public class VEspecies extends javax.swing.JDialog {
 
         jLabel9.setText("Área geográfica");
 
+        ClinicasBoton.setText("Menú Clinicas/Revisiones");
+        ClinicasBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClinicasBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
         panelEjemplares.setLayout(panelEjemplaresLayout);
         panelEjemplaresLayout.setHorizontalGroup(
@@ -269,7 +279,9 @@ public class VEspecies extends javax.swing.JDialog {
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addComponent(btn_nuevoEjemplar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_borrarEjemplar))
+                                        .addComponent(btn_borrarEjemplar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ClinicasBoton))
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -312,7 +324,8 @@ public class VEspecies extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nuevoEjemplar)
-                    .addComponent(btn_borrarEjemplar)))
+                    .addComponent(btn_borrarEjemplar)
+                    .addComponent(ClinicasBoton)))
         );
 
         jLabel8.getAccessibleContext().setAccessibleName("Fecha Nacimiento");
@@ -422,11 +435,21 @@ public class VEspecies extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btn_borrarEjemplarActionPerformed
 
+    private void ClinicasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClinicasBotonActionPerformed
+        int fila = tabla_ejemplares.getSelectedRow();
+        if(fila != -1){
+            ModeloTablaEjemplaresGeneral mteg = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar ejem = mteg.getFila(fila);
+            fa.crearVClinica(ejem);
+        }
+    }//GEN-LAST:event_ClinicasBotonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
     private javax.swing.JComboBox<String> AreaComboBox;
     private javax.swing.JButton BorrarButton;
+    private javax.swing.JButton ClinicasBoton;
     private javax.swing.JTextField DescripcionText;
     private javax.swing.JTextField NombreCientificoText;
     private javax.swing.JTextField NombreComunText;
@@ -516,6 +539,7 @@ public class VEspecies extends javax.swing.JDialog {
             public void mouseClicked(MouseEvent me) {
                 int fila = tabla_ejemplares.getSelectedRow();
                 if (fila != -1) {
+                    ClinicasBoton.setEnabled(true); //activar el botton menu de clinicas
                     String idEjemplar = tabla_ejemplares.getValueAt(fila, 0).toString();
                     String mote = tabla_ejemplares.getValueAt(fila, 2).toString();
                     String fec_nac = tabla_ejemplares.getValueAt(fila, 3).toString();
@@ -533,6 +557,8 @@ public class VEspecies extends javax.swing.JDialog {
                     tf_moteEjemplar.setText(mote);
                     tf_fecNac.setText(fec_nac);
                     AreaComboBox.setSelectedIndex(indice);
+                }else{
+                           ClinicasBoton.setEnabled(false);   
                 }
             }
 

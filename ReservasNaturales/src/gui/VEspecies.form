@@ -232,6 +232,8 @@
                                               <Component id="btn_nuevoEjemplar" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btn_borrarEjemplar" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="ClinicasBoton" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -292,6 +294,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btn_nuevoEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btn_borrarEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="ClinicasBoton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -385,6 +388,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="&#xc1;rea geogr&#xe1;fica"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="ClinicasBoton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Men&#xfa; Clinicas/Revisiones"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ClinicasBotonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

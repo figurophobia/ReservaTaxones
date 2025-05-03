@@ -142,9 +142,10 @@ public class VAutentificacion extends javax.swing.JDialog {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         etiquetaFallo.setVisible(false);
-        if (fa.comprobarAutentificacion(textoUsuario.getText(), textoClave.getText()))
-           this.dispose();
-        else etiquetaFallo.setVisible(true);
+        //if (fa.comprobarAutentificacion(textoUsuario.getText(), textoClave.getText()))
+        //   this.dispose();
+        //else etiquetaFallo.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
