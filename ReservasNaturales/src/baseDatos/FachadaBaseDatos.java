@@ -252,5 +252,15 @@ public class FachadaBaseDatos {
     public void completarMision(Mision misionSeleccionada) {
         daoMisiones.completarMision(misionSeleccionada);
     }
+     public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+        return daoClinicas.nuevaClinica(clinica);
+    }
 
+    public void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        daoClinicas.borrarClinica(clinicaSeleccionada);
+    }
+
+    public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+        daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+    }
 }

@@ -25,5 +25,9 @@ public class GestionRevision {
     List<Revision> obtenerRevisiones(String nClinica, int Id) {
         return fbd.obtenerRevisiones(nClinica, Id);
     }
+
+    void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+        fbd.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+    }
     
 }

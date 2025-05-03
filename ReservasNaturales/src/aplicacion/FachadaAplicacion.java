@@ -223,4 +223,16 @@ public class FachadaAplicacion {
     public void completarMision(Mision misionSeleccionada) {
         gm.completarMision(misionSeleccionada);
     }
+     public void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        gc.borrarClinica(clinicaSeleccionada);
+    }
+
+    public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+        return gc.nuevaClinica(clinica);
+    }
+
+    public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+         gr.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+
+    }
 }

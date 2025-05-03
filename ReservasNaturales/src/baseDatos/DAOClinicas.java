@@ -59,5 +59,52 @@ public class DAOClinicas extends AbstractDAO{
     return resultado;
 }
 
+    public void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            String consulta = "DELETE FROM clinica_medica WHERE nombre = ?";
+            stm = con.prepareStatement(consulta);
+            stm.setString(1, clinicaSeleccionada.getNombre());
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+    }
+
+
+    public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            String consulta = "INSERT INTO clinica_medica(nombre, ubicacion, num_empleados) VALUES (?, ?, ?)";
+            stm = con.prepareStatement(consulta);
+            stm.setString(1, clinica.getNombre());
+            stm.setString(2, clinica.getUbicacion());
+            stm.setInt(3, clinica.getNumEmpleados());
+            stm.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return clinica;
+    }
+
     
 }

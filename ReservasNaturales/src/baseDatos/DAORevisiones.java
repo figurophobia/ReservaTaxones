@@ -4,6 +4,8 @@
  */
 package baseDatos;
 
+import aplicacion.ClinicaMedica;
+import aplicacion.Ejemplar;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Revision;
 import java.sql.Connection;
@@ -12,7 +14,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
+import java.sql.Date; // Ojo: java.sql.Date, no java.util.Date
+
 
 /**
  *
@@ -68,6 +71,40 @@ public class DAORevisiones extends AbstractDAO{
 
         return resultado;
 }
+
+   
+    void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+        Connection con = this.getConexion();
+        PreparedStatement stmInsert = null;
+
+        try {
+            String consulta = "INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) " +
+                              "VALUES (?, ?, ?, ?, ?)";
+
+            stmInsert = con.prepareStatement(consulta);
+            stmInsert.setString(1, clinicaRevision.getNombre());
+            stmInsert.setInt(2, ejemplarRevision.getId());
+            stmInsert.setString(3, ejemplarRevision.getEspecie().getNombreCientifico());
+
+            // Fecha actual
+            java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
+            stmInsert.setDate(4, fechaActual);
+
+            stmInsert.setString(5, text);
+
+            stmInsert.executeUpdate();
+
+        } catch (SQLException e) {
+            System.out.println("Error insertando revisión: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error insertando revisión:\n" + e.getMessage());
+        } finally {
+            try {
+                if (stmInsert != null) stmInsert.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar el statement: " + e.getMessage());
+            }
+        }
+    }
 
 
     
