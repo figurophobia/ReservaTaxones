@@ -197,6 +197,8 @@ public class FachadaAplicacion {
         return gm.obtenerMisionesEspecie(textoBusqueda);
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda){ return gm.obtenerMisionesGeneral(textoBusqueda); }
+
 
     public boolean eliminarMision(Mision trabajador) {
         return gm.eliminarMision(trabajador);

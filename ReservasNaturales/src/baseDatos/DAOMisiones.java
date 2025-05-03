@@ -408,6 +408,80 @@ void agregarNuevaMision(Mision misionActual) {
         }
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda) {
+        List<Mision> resultado = new ArrayList<>();
+
+        if (textoBusqueda == null || textoBusqueda.trim().isEmpty()) {
+            return resultado;
+        }
+
+        // Normalizar la cadena de búsqueda
+        String busqueda = textoBusqueda.trim();
+
+        // Consulta base
+        StringBuilder sqlBuilder = new StringBuilder();
+        sqlBuilder.append("SELECT DISTINCT m.dni_trabajador, m.fecha_inicio, m.fecha_fin, m.descripcion, m.nombre_cientifico_especie ");
+        sqlBuilder.append("FROM misiones m ");
+        sqlBuilder.append("JOIN trabajadores t ON m.dni_trabajador = t.dni ");
+        sqlBuilder.append("WHERE ");
+
+        // Lista para almacenar los parámetros
+        List<String> parametros = new ArrayList<>();
+
+        // Caso especial para "completada" o "incompleta"
+        boolean esBusquedaEspecial = false;
+        if ("completada".equalsIgnoreCase(busqueda)) {
+            sqlBuilder.append("m.fecha_fin IS NOT NULL");
+            esBusquedaEspecial = true;
+        } else if ("incompleta".equalsIgnoreCase(busqueda)) {
+            sqlBuilder.append("m.fecha_fin IS NULL");
+            esBusquedaEspecial = true;
+        }
+
+        // Para búsquedas generales
+        if (!esBusquedaEspecial) {
+            sqlBuilder.append("t.nombre ILIKE ? OR ");
+            parametros.add("%" + busqueda + "%");
+
+            sqlBuilder.append("m.nombre_cientifico_especie ILIKE ? OR ");
+            parametros.add("%" + busqueda + "%");
+
+            sqlBuilder.append("m.descripcion ILIKE ?");
+            parametros.add("%" + busqueda + "%");
+        }
+
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sqlBuilder.toString())) {
+            // Configurar los parámetros
+            for (int i = 0; i < parametros.size(); i++) {
+                stm.setString(i + 1, parametros.get(i));
+            }
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    String dni = rs.getString("dni_trabajador");
+                    Usuario trabajador = obtenerUsuarioDni(dni);
+
+                    if (trabajador != null) {
+                        Mision m = new Mision(
+                                trabajador,
+                                rs.getString("nombre_cientifico_especie"),
+                                rs.getDate("fecha_inicio"),
+                                rs.getDate("fecha_fin"),
+                                rs.getString("descripcion")
+                        );
+                        resultado.add(m);
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al realizar búsqueda general de misiones: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+
+        return resultado;
+    }
+
 
 
     

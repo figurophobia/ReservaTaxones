@@ -220,6 +220,8 @@ public class FachadaBaseDatos {
         return daoMisiones.obtenerMisiones();
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda){ return daoMisiones.obtenerMisionesGeneral(textoBusqueda); }
+
     public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
         return  daoMisiones.obtenerMisionesEstado(textoBusqueda);
     }
@@ -263,4 +265,5 @@ public class FachadaBaseDatos {
     public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
         daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
+
 }

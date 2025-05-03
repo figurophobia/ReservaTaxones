@@ -23,6 +23,8 @@ public class GestionMisiones {
         return fbd.obtenerMisiones();
     }
 
+    public List<Mision> obtenerMisionesGeneral(String textoBusqueda){ return fbd.obtenerMisionesGeneral(textoBusqueda); }
+
     public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
         return fbd.obtenerMisionesEstado(textoBusqueda);    }
 
