@@ -19,6 +19,13 @@
             <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/gui/VAlimentos.java</file>
             <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionAlimentos.java</file>
             <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/baseDatos/DAOAlimentos.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/baseDatos/DAOAreas.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/gui/VMoverArea.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/gui/VALimentos.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionAreas.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/gui/VConsumirAlimentos.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionConsumirAlimentos.java</file>
+            <file>file:/home/antonio/Escritorio/Reservas%20Naturales/ReservaTaxones/ReservasNaturales/src/baseDatos/DAOConsumirAlimentos.java</file>
         </group>
     </open-files>
 </project-private>

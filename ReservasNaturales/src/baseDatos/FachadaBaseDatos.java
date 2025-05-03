@@ -161,12 +161,12 @@ public class FachadaBaseDatos {
         return daoAlimentos.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return daoAlimentos.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return daoAlimentos.anadirAlimento(nome, tipo, distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return daoAlimentos.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return daoAlimentos.borrarAlimento(nome, tipo,distribuidorAlimento);
     }
 
     public List<Ejemplar> obtenerEjemplares() {
@@ -265,4 +265,14 @@ public class FachadaBaseDatos {
     public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
         daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
+
+    public boolean eliminarNoConsumidos() {
+        return daoAlimentos.eliminarNoConsumidos();
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return daoAlimentos.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
 }

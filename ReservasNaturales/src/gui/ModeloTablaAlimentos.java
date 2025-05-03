@@ -27,7 +27,7 @@ public class ModeloTablaAlimentos extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 2; // Nombre alimento
+        return 3; // Nombre alimento
     }
 
     @Override
@@ -35,6 +35,7 @@ public class ModeloTablaAlimentos extends AbstractTableModel {
         switch (col) {
             case 0: return "Nombre";
             case 1: return "Tipo";
+            case 2: return "Distribuidor";
             default: return "";
         }
     }
@@ -55,6 +56,7 @@ public class ModeloTablaAlimentos extends AbstractTableModel {
         switch (col) {
             case 0: return a.getNombre();
             case 1: return a.getTipo();
+            case 2: return a.getDistribuidor();
             default: return null;
         }
     }

@@ -296,7 +296,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
     return exito;    }
 
     boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
-        Connection con;
+     Connection con;
     PreparedStatement stm = null;
     boolean exito = true;
 
@@ -306,15 +306,20 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         stm = con.prepareStatement(
             "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
         );
-        stm.setString(1, areaSeleccionada.getNombreReserva());
+        
+        if (areaSeleccionada != null) {
+            stm.setString(1, areaSeleccionada.getNombreReserva());
+        } else {
+            stm.setNull(1, java.sql.Types.VARCHAR);
+        }
+
         stm.setString(2, trabajador.getDni());
 
         int filas = stm.executeUpdate();
         if (filas == 0) {
             exito = false; 
         } else {
-            
-            trabajador.setArea(areaSeleccionada);
+            trabajador.setArea(areaSeleccionada); // puede ser null, y está bien
         }
 
     } catch (SQLException e) {

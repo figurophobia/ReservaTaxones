@@ -118,12 +118,12 @@ public class FachadaAplicacion {
         return gal.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return gal.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return gal.anadirAlimento(nome, tipo,distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return gal.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return gal.borrarAlimento(nome, tipo, distribuidorAlimento);
     }
     public void editarEspecie(Especie e) {
         ge.editarEspecie(e);
@@ -237,4 +237,15 @@ public class FachadaAplicacion {
          gr.añadirRevsion(clinicaRevision,ejemplarRevision,text);
 
     }
+
+    public boolean eliminarNoConsumidos() {
+        return gal.eliminarNoConsumidos();
+        
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return gal.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
 }

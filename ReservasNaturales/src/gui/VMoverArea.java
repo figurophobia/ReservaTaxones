@@ -175,11 +175,28 @@ public class VMoverArea extends javax.swing.JDialog {
 
     private void btnIzquierdaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIzquierdaActionPerformed
         // TODO add your handling code here:
-    fa.actualizarAreaUsuario(trabajador, null);
+     // Obtener el área seleccionada de la lista de áreas seleccionadas
+    Area areaSeleccionada = lstAreaSeleccionada.getSelectedValue();
 
-    // Limpia la lista de seleccionada
-    ModeloListaStrings modeloSeleccionada = new ModeloListaStrings();
-    lstAreaSeleccionada.setModel(modeloSeleccionada);
+    // Verificar si hay un área seleccionada
+    if (areaSeleccionada != null) {
+        ModeloListaStrings modeloSeleccionada = (ModeloListaStrings) lstAreaSeleccionada.getModel();
+        ModeloListaStrings modeloDisponibles = (ModeloListaStrings) lstAreasDisponibles.getModel();
+
+        // Mover el área seleccionada de la lista de seleccionadas a la lista de disponibles
+        modeloSeleccionada.removeElement(areaSeleccionada);
+        modeloDisponibles.addElement(areaSeleccionada);
+
+        // Actualizar el área del trabajador a null, ya que no tiene área seleccionada
+        fa.actualizarAreaUsuario(trabajador, null);
+
+        // Actualizar la lista de áreas disponibles y seleccionadas
+        lstAreasDisponibles.setModel(modeloDisponibles);
+        lstAreaSeleccionada.setModel(modeloSeleccionada);
+    } else {
+        // Si no hay área seleccionada, puedes mostrar un mensaje informativo (opcional)
+        javax.swing.JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna área.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
     }//GEN-LAST:event_btnIzquierdaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
