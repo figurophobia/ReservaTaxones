@@ -301,10 +301,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
      Connection con;
     PreparedStatement stm = null;
     boolean exito = true;
-        Connection con;
-        PreparedStatement stm = null;
-        boolean exito = true;
-
+        
         con = this.getConexion();
 
     try {
@@ -361,7 +358,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
         return exito;
 
-    }
+    }}
 
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {
         List<Usuario> resultado = new ArrayList<>();
