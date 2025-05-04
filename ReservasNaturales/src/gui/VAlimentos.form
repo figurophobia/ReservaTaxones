@@ -52,8 +52,7 @@
                                   <Component id="tf_tipoAlimento" alignment="0" max="32767" attributes="0"/>
                                   <Component id="tf_nombreAlimento" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="btnNoConsumidos" min="-2" pref="437" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="btn_salir" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -99,11 +98,8 @@
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btn_asignarAlimento" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn_salir" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnNoConsumidos" alignment="3" min="-2" pref="55" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace pref="38" max="32767" attributes="0"/>
+                      <Component id="btn_salir" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="245" max="-2" attributes="0"/>
               </Group>
@@ -193,14 +189,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_asignarAlimentoActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnNoConsumidos">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Deshechar no consumidos"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNoConsumidosActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">

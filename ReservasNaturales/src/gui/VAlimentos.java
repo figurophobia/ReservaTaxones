@@ -58,7 +58,6 @@ public class VAlimentos extends javax.swing.JDialog {
         btn_borrarAlimento = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_asignarAlimento = new javax.swing.JButton();
-        btnNoConsumidos = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         comboBox_distribuidoras = new javax.swing.JComboBox<>();
 
@@ -107,13 +106,6 @@ public class VAlimentos extends javax.swing.JDialog {
             }
         });
 
-        btnNoConsumidos.setText("Deshechar no consumidos");
-        btnNoConsumidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNoConsumidosActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Distribuidora");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,8 +137,7 @@ public class VAlimentos extends javax.swing.JDialog {
                                     .addComponent(tf_tipoAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tf_nombreAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(0, 0, Short.MAX_VALUE)
                                         .addComponent(btn_salir)))
                                 .addGap(15, 15, 15))
                             .addGroup(layout.createSequentialGroup()
@@ -181,10 +172,8 @@ public class VAlimentos extends javax.swing.JDialog {
                             .addComponent(btn_borrarAlimento))
                         .addGap(18, 18, 18)
                         .addComponent(btn_asignarAlimento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_salir)
-                            .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(btn_salir))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
@@ -291,25 +280,11 @@ public class VAlimentos extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btn_asignarAlimentoActionPerformed
 
-    private void btnNoConsumidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoConsumidosActionPerformed
-        // TODO add your handling code here:
-        ModeloTablaAlimentos mta;
-
-        mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
-        mta.setFilas(fa.obtenerAlimentos());
-
-        fa.eliminarNoConsumidos();
-        
-        obterAlimentos();
-
-    }//GEN-LAST:event_btnNoConsumidosActionPerformed
-
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNoConsumidos;
     private javax.swing.JButton btn_anadirAlimento;
     private javax.swing.JButton btn_asignarAlimento;
     private javax.swing.JButton btn_borrarAlimento;

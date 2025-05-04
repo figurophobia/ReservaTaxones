@@ -49,8 +49,6 @@ public class VTrabajadores extends javax.swing.JDialog {
         bntMoverArea = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnDespedirInactivos = new javax.swing.JButton();
-        btnReduccióndePersonal = new javax.swing.JButton();
         btnReducirJornada = new javax.swing.JButton();
         spinner_porcentaxeReducir = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
@@ -124,17 +122,6 @@ public class VTrabajadores extends javax.swing.JDialog {
             }
         });
 
-        btnDespedirInactivos.setText("Despedir Inactivos");
-        btnDespedirInactivos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDespedirInactivosActionPerformed(evt);
-            }
-        });
-
-        btnReduccióndePersonal.setBackground(new java.awt.Color(255, 255, 0));
-        btnReduccióndePersonal.setForeground(new java.awt.Color(255, 0, 0));
-        btnReduccióndePersonal.setText("Reducción de Personal");
-
         btnReducirJornada.setText("Reducir jornada de área más poblada");
         btnReducirJornada.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -178,10 +165,7 @@ public class VTrabajadores extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(ScrollPaneTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnDespedirInactivos)
-                                    .addComponent(btnReduccióndePersonal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnReducirJornada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnReducirJornada)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -204,12 +188,9 @@ public class VTrabajadores extends javax.swing.JDialog {
                     .addComponent(dniCheck)
                     .addComponent(nombreCheck))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnDespedirInactivos)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnReduccióndePersonal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnReducirJornada)
                             .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,20 +329,6 @@ public class VTrabajadores extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_TextFileBuscarTrabajadoresActionPerformed
 
-    private void btnDespedirInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDespedirInactivosActionPerformed
-        /*// TODO add your handling code here:
-        ModeloTablaTrabajadores mt=(ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-            
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de que deseas hacer esto?",          "Confirmar eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION);
-
-            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-
-                fa.despedirInactivos();*/
-        
-    }//GEN-LAST:event_btnDespedirInactivosActionPerformed
-
     private void btnReducirJornadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReducirJornadaActionPerformed
         int res = fa.reducirXornadaAreaMaisSaturada((int) spinner_porcentaxeReducir.getValue());
         
@@ -385,9 +352,7 @@ public class VTrabajadores extends javax.swing.JDialog {
     private javax.swing.JButton bntNuevo;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnDespedirInactivos;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnReduccióndePersonal;
     private javax.swing.JButton btnReducirJornada;
     private javax.swing.JButton btnSalir;
     private javax.swing.JCheckBox dniCheck;
