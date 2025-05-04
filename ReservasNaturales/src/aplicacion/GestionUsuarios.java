@@ -61,5 +61,9 @@ public class GestionUsuarios {
     }
 
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return fbd.obtenerTrabajadoresPorArea(area);}
+
+    int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+        return fbd.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
   
 }

@@ -406,6 +406,27 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
         return resultado;
     }
+
+    int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+         Connection con;
+        PreparedStatement stmUsuario=null;
+        int res = -1;
+        con=super.getConexion();
+
+        try {
+        float porcentaxe = porcentaxeReduc/ 100f;
+        stmUsuario=con.prepareStatement("update trabajadores set horas = horas - horas * ? where nombre_reserva = (SELECT nombre_reserva FROM trabajadores group by nombre_reserva order by count (*) DESC LIMIT 1)");
+        stmUsuario.setFloat(1, porcentaxe);
+       
+        res = stmUsuario.executeUpdate();
+
+        } catch (SQLException e){
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+        
+        return res;
+    }
     
     
 }

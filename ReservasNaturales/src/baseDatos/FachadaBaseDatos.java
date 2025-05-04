@@ -293,4 +293,8 @@ public class FachadaBaseDatos {
         return daoConsumirAlimentos.obterConsumirAlimentosEjemplar(idEjemplar);
     }
 
+    public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+        return daoUsuarios.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
+
 }

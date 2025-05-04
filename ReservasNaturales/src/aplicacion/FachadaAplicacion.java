@@ -263,4 +263,8 @@ public class FachadaAplicacion {
     public List<ConsumirAlimento> obterConsumirAlimentosEjemplar(int idEjemplar) {
         return gca.obterConsumirAlmentosEjemplar(idEjemplar);
     }
+
+    public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+        return gu.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
 }
