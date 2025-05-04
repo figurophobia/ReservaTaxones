@@ -265,8 +265,8 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
     return exito;
 }
 
-    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles) {
-        if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty()) {
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles, String especie) {
+        if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty() || especie == null) {
             return null;
         }
 
@@ -291,7 +291,7 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
                     .orElse("");
 
             sqlBuilder.append(placeholders);
-            sqlBuilder.append(") " +
+            sqlBuilder.append(") AND m.nombre_cientifico_especie = ? " + // Filtrar por especie
                     "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
                     "ORDER BY experiencia DESC " +
                     "LIMIT 1");
@@ -303,6 +303,9 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             for (Usuario trabajador : trabajadoresDisponibles) {
                 stmTrabajador.setString(paramIndex++, trabajador.getDni());
             }
+
+            // Añadimos el parámetro de la especie
+            stmTrabajador.setString(paramIndex, especie);
 
             rsTrabajador = stmTrabajador.executeQuery();
 
@@ -322,7 +325,7 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al obtener el trabajador más experimentado: " + e.getMessage());
+            System.out.println("Error al obtener el trabajador más experimentado para la especie: " + e.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
@@ -335,7 +338,6 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
 
         return resultado;
     }
-    
     
     public Usuario obtenerTrabajadorMision() {
         Usuario resultado = null;

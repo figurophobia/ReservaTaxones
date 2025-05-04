@@ -58,7 +58,7 @@ public class GestionMisiones {
         fbd.completarMision(misionSeleccionada);
     }
 
-    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return fbd.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles, String especie){return fbd.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles, especie);}
 
     public Mision obtenerMisionMasAntigua(String dni) { return fbd.obtenerMisionMasAntigua(dni); }
 

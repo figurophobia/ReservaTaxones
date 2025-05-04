@@ -282,7 +282,7 @@ public class FachadaBaseDatos {
 
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return daoUsuarios.obtenerTrabajadoresPorArea(area);}
 
-    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return daoMisiones.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles, String especie){return daoMisiones.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles, especie);}
 
     public Mision obtenerMisionMasAntigua(String dni) { return daoMisiones.obtenerMisionMasAntigua(dni); }
 

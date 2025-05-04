@@ -286,7 +286,7 @@ public class VMisionesNuevo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSeleccionarMasExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSeleccionarMasExpActionPerformed
-        Usuario masExperto = fa.obtenerTrabajadorMasExperimentado(usuarios_disponibles);
+        Usuario masExperto = fa.obtenerTrabajadorMasExperimentado(usuarios_disponibles, cbxEspecies.getSelectedItem().toString());
         cbxTrabajador.setSelectedItem(masExperto.getNombre());
     }//GEN-LAST:event_bSeleccionarMasExpActionPerformed
 
