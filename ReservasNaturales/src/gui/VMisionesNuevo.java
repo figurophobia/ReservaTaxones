@@ -285,6 +285,7 @@ public class VMisionesNuevo extends javax.swing.JDialog {
 
         Mision nuevaMision = new Mision(trabajador, cbxEspecies.getSelectedItem().toString(), fechaInicio, fechaFin, descripcion);
         fa.agregarNuevaMision(nuevaMision);
+
         this.dispose();
     }//GEN-LAST:event_bAgregarActionPerformed
 

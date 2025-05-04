@@ -284,6 +284,10 @@ public class FachadaBaseDatos {
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return daoMisiones.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
+    public Mision obtenerMisionMasAntigua() { return daoMisiones.obtenerMisionMasAntigua(); }
+
+    public int contarMisionesActivas() { return daoMisiones.contarMisionesActivas(); }
+
     public int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
         return daoEjemplares.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
     }

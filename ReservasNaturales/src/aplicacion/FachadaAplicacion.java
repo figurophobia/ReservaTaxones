@@ -255,6 +255,11 @@ public class FachadaAplicacion {
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
+
+    public Mision obtenerMisionMasAntigua() { return gm.obtenerMisionMasAntigua(); }
+
+    public int contarMisionesActivas() { return gm.contarMisionesActivas(); }
+
     public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
         return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
     }
@@ -274,4 +279,5 @@ public class FachadaAplicacion {
     public List<Distribuidor> obterDistribuidores() {
         return gd.obterDistribuidores();
     }
+
 }

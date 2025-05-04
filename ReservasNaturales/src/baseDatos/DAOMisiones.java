@@ -520,6 +520,79 @@ void agregarNuevaMision(Mision misionActual) {
         return resultado;
     }
 
+    public int contarMisionesActivas() {
+        int contador = 0;
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            String consulta = "SELECT COUNT(*) AS total FROM misiones WHERE fecha_fin IS NULL";
+            stm = con.prepareStatement(consulta);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                contador = rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al contar misiones activas: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return contador;
+    }
+
+    public Mision obtenerMisionMasAntigua() {
+        Mision resultado = null;
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
+                    "FROM misiones " +
+                    "ORDER BY fecha_inicio ASC " +
+                    "LIMIT 1";
+
+            stm = con.prepareStatement(sql);
+            rs = stm.executeQuery();
+
+            if (rs.next()) {
+                String dni = rs.getString("dni_trabajador");
+                Usuario trabajador = obtenerUsuarioDni(dni);
+
+                if (trabajador != null) {
+                    resultado = new Mision(
+                            trabajador,
+                            rs.getString("nombre_cientifico_especie"),
+                            rs.getDate("fecha_inicio"),
+                            rs.getDate("fecha_fin"),
+                            rs.getString("descripcion")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la misión más antigua: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
 
 
     

@@ -60,4 +60,8 @@ public class GestionMisiones {
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return fbd.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
+    public Mision obtenerMisionMasAntigua() { return fbd.obtenerMisionMasAntigua(); }
+
+    public int contarMisionesActivas() { return fbd.contarMisionesActivas(); }
+
 }
