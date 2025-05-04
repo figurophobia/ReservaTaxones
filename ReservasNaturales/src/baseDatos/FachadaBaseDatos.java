@@ -273,4 +273,8 @@ public class FachadaBaseDatos {
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return daoMisiones.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
+    public Mision obtenerMisionMasAntigua() { return daoMisiones.obtenerMisionMasAntigua(); }
+
+    public int contarMisionesActivas() { return daoMisiones.contarMisionesActivas(); }
+
 }

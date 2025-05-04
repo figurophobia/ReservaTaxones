@@ -264,6 +264,22 @@ public class VMisones extends javax.swing.JDialog {
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
         VMisionesNuevo vmn = new VMisionesNuevo(this.parent, true, fa);
         vmn.setVisible(true);
+
+        int numeroMisionesActivas = fa.contarMisionesActivas();
+        System.out.println("Numero de misiones activas: " + numeroMisionesActivas);
+        if (numeroMisionesActivas > 5) {
+            Mision misionMasAntigua = fa.obtenerMisionMasAntigua();
+            int respuesta = JOptionPane.showConfirmDialog(this, "Tienes más de 5 misiones activas, ¿deseas completar la misión más antigua ("
+                    + misionMasAntigua.getFechaInicio() + ") ?", "Completar Misión", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                Mision nuevaMision = misionMasAntigua.clone();
+                nuevaMision.setFechaFin(Date.valueOf(LocalDate.now()));
+                fa.actualizarMision(misionMasAntigua, nuevaMision);
+                JOptionPane.showMessageDialog(this, "La misión más antigua ha sido establecida como completada.");
+            }
+        }
+        // Actualizar la tabla después de agregar una nueva misión
+        buscarMisiones();
     }//GEN-LAST:event_btnNuevaActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
