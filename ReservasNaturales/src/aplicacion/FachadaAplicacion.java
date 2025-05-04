@@ -256,9 +256,9 @@ public class FachadaAplicacion {
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
 
-    public Mision obtenerMisionMasAntigua() { return gm.obtenerMisionMasAntigua(); }
+    public Mision obtenerMisionMasAntigua(String dni) { return gm.obtenerMisionMasAntigua(dni); }
 
-    public int contarMisionesActivas() { return gm.contarMisionesActivas(); }
+    public int contarMisionesActivas(String dni) { return gm.contarMisionesActivas(dni); }
 
     public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
         return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);

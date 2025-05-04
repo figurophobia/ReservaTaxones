@@ -227,7 +227,7 @@ public boolean eliminarMision(Mision mision) {
 
 public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
     String sql = "UPDATE misiones SET " +
-                 "dni_trabajador = ?, nombre_cientifico_especie = ?, fecha_inicio = ?, fecha_fin = ?, descripcion = ? " +
+                 "dni_trabajador = ?, nombre_cientifico_especie = ?, fecha_inicio = ?, fecha_fin = NOW(), descripcion = ? " +
                  "WHERE dni_trabajador = ? AND nombre_cientifico_especie = ? AND fecha_inicio = ?";
     boolean exito = false;
     Connection con = this.getConexion();
@@ -240,13 +240,12 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         stm.setString(1, seleccionada.getTrabajador().getDni());
         stm.setString(2, seleccionada.getEspecie());
         stm.setDate(3, seleccionada.getFechaInicio());
-        stm.setDate(4, seleccionada.getFechaFin());
-        stm.setString(5, seleccionada.getDescripcion());
+        stm.setString(4, seleccionada.getDescripcion());
 
         // Clave primaria para identificar la misión original
-        stm.setString(6, misionOriginal.getTrabajador().getDni());
-        stm.setString(7, misionOriginal.getEspecie());
-        stm.setDate(8, misionOriginal.getFechaInicio());
+        stm.setString(5, misionOriginal.getTrabajador().getDni());
+        stm.setString(6, misionOriginal.getEspecie());
+        stm.setDate(7, misionOriginal.getFechaInicio());
 
         int filasAfectadas = stm.executeUpdate();
         exito = filasAfectadas > 0;
@@ -520,15 +519,16 @@ void agregarNuevaMision(Mision misionActual) {
         return resultado;
     }
 
-    public int contarMisionesActivas() {
+    public int contarMisionesActivas(String dni) {
         int contador = 0;
         Connection con = this.getConexion();
         PreparedStatement stm = null;
         ResultSet rs = null;
 
         try {
-            String consulta = "SELECT COUNT(*) AS total FROM misiones WHERE fecha_fin IS NULL";
+            String consulta = "SELECT COUNT(*) AS total FROM misiones WHERE fecha_fin IS NULL and dni_trabajador = ?";
             stm = con.prepareStatement(consulta);
+            stm.setString(1, dni);
             rs = stm.executeQuery();
 
             if (rs.next()) {
@@ -549,7 +549,7 @@ void agregarNuevaMision(Mision misionActual) {
         return contador;
     }
 
-    public Mision obtenerMisionMasAntigua() {
+    public Mision obtenerMisionMasAntigua(String dniBuscar) {
         Mision resultado = null;
         Connection con = this.getConexion();
         PreparedStatement stm = null;
@@ -557,11 +557,12 @@ void agregarNuevaMision(Mision misionActual) {
 
         try {
             String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-                    "FROM misiones " +
+                    "FROM misiones WHERE fecha_fin IS NULL and dni_trabajador = ?" +
                     "ORDER BY fecha_inicio ASC " +
                     "LIMIT 1";
 
             stm = con.prepareStatement(sql);
+            stm.setString(1, dniBuscar);
             rs = stm.executeQuery();
 
             if (rs.next()) {

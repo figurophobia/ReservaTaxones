@@ -7,6 +7,8 @@ import aplicacion.Especie;
 import aplicacion.Mision;
 import aplicacion.Usuario;
 import java.awt.Frame;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ public class VMisones extends javax.swing.JDialog {
     java.awt.Frame parent;
 
     int modo_busqueda = 0; // 0: ignorar 1: solo devolver incompletas 2: solo devolver completas
-
+    String dniSeleccionado = "";
     public VMisones(java.awt.Frame parent, boolean modal,aplicacion.FachadaAplicacion fa) {
         super(parent, modal);
         this.parent=parent;
@@ -32,7 +34,7 @@ public class VMisones extends javax.swing.JDialog {
         initComponents();
         TablaMisiones.setModel(new ModeloTablaMisiones());
         configurarComboBoxes();
-
+        listenerTabla();
 
 
     }
@@ -248,14 +250,15 @@ public class VMisones extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCompletadaActionPerformed
 
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
-        int numeroMisionesAntes = fa.contarMisionesActivas();
-        VMisionesNuevo vmn = new VMisionesNuevo(this.parent, true, fa);
-        vmn.setVisible(true);
+      
+        String dni = dniSeleccionado;
+        //int numeroMisionesAntes = fa.contarMisionesActivas(dni);
+      
 
-        int numeroMisionesActivas = fa.contarMisionesActivas();
+        int numeroMisionesActivas = fa.contarMisionesActivas(dni);
         System.out.println("Numero de misiones activas: " + numeroMisionesActivas);
-        if (numeroMisionesActivas > 5 && numeroMisionesAntes!=numeroMisionesActivas) {
-            Mision misionMasAntigua = fa.obtenerMisionMasAntigua();
+        if (numeroMisionesActivas > 5) {
+            Mision misionMasAntigua = fa.obtenerMisionMasAntigua(dni);
             int respuesta = JOptionPane.showConfirmDialog(this, "Tienes más de 5 misiones activas, ¿deseas completar la misión más antigua ("
                     + misionMasAntigua.getFechaInicio() + ") ?", "Completar Misión", JOptionPane.YES_NO_OPTION);
             if (respuesta == JOptionPane.YES_OPTION) {
@@ -265,6 +268,9 @@ public class VMisones extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "La misión más antigua ha sido establecida como completada.");
             }
         }
+        
+        VMisionesNuevo vmn = new VMisionesNuevo(this.parent, true, fa);
+        vmn.setVisible(true);
         // Actualizar la tabla después de agregar una nueva misión
         buscarMisiones();
     }//GEN-LAST:event_btnNuevaActionPerformed
@@ -402,5 +408,41 @@ public class VMisones extends javax.swing.JDialog {
     TablaMisiones.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboTrabajadores));
     TablaMisiones.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboEspecies));
 
+    }
+
+    private void listenerTabla() {
+           TablaMisiones.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                int fila = TablaMisiones.getSelectedRow();
+                if (fila != -1) {
+                     dniSeleccionado = TablaMisiones.getValueAt(fila, 0).toString();
+                     List<Usuario> l = fa.obtenerTrabajadoresNombre(dniSeleccionado);
+                     dniSeleccionado = l.get(0).getDni();
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent me) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent me) {
+
+            }
+
+        }
+        );
     }
 }
