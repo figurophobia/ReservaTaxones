@@ -2,14 +2,43 @@ INSERT INTO area_geografica (nombre_reserva, extension, altitud_nivel_bajo, alti
 ('Parque Nacional Doñana', 54252, 0, 40, NULL, FALSE, TRUE),
 ('Reserva Marina Cabo de Palos', 1898, NULL, NULL, 68, TRUE, FALSE),
 ('Parque Nacional Sierra Nevada', 85883, 800, 3479, NULL, FALSE, TRUE),
-('Parque Nacional Marítimo-Terrestre Islas Atlánticas', 8480, 0, 200, 45, TRUE, TRUE);
-
+('Parque Nacional Marítimo-Terrestre Islas Atlánticas', 8480, 0, 200, 45, TRUE, TRUE),
+('Parque Nacional de Ordesa y Monte Perdido', 15696, 700, 3355, NULL, FALSE, TRUE),
+('Parque Nacional de Timanfaya', 5107, 0, 510, NULL, FALSE, TRUE),
+('Parque Nacional de Garajonay', 3984, 700, 1487, NULL, FALSE, TRUE),
+('Reserva Marina de las Islas Columbretes', 5543, NULL, NULL, 80, TRUE, FALSE),
+('Parque Nacional del Teide', 18990, 1600, 3718, NULL, FALSE, TRUE),
+('Parque Nacional de Cabrera', 10021, 0, 172, 118, TRUE, TRUE),
+('Reserva Natural de las Marismas de Santoña', 6678, 0, 20, 3, TRUE, TRUE),
+('Parque Nacional de Aigüestortes', 14119, 1600, 3033, NULL, FALSE, TRUE),
+('Reserva Marina de La Graciosa', 70700, NULL, NULL, 60, TRUE, FALSE),
+('Parque Natural de Cazorla', 209920, 500, 2107, NULL, FALSE, TRUE),
+('Delta del Ebro', 7736, 0, 5, 10, TRUE, TRUE),
+('Parque Natural de las Bardenas Reales', 42500, 280, 659, NULL, FALSE, TRUE),
+('Reserva Natural de las Tablas de Daimiel', 3030, 605, 620, 2, TRUE, TRUE),
+('Parque Natural de Monfragüe', 18396, 220, 773, NULL, FALSE, TRUE),
+('Parque Nacional de Picos de Europa', 67127, 75, 2648, NULL, FALSE, TRUE);
 
 INSERT INTO pais (nombre, area) VALUES 
 ('España', 'Parque Nacional Doñana'),
 ('España', 'Reserva Marina Cabo de Palos'),
 ('España', 'Parque Nacional Sierra Nevada'),
-('España', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas');
+('España', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
+('España', 'Parque Nacional de Ordesa y Monte Perdido'),
+('España', 'Parque Nacional de Timanfaya'),
+('España', 'Parque Nacional de Garajonay'),
+('España', 'Reserva Marina de las Islas Columbretes'),
+('España', 'Parque Nacional del Teide'),
+('España', 'Parque Nacional de Cabrera'),
+('España', 'Reserva Natural de las Marismas de Santoña'),
+('España', 'Parque Nacional de Aigüestortes'),
+('España', 'Reserva Marina de La Graciosa'),
+('España', 'Parque Natural de Cazorla'),
+('España', 'Delta del Ebro'),
+('España', 'Parque Natural de las Bardenas Reales'),
+('España', 'Reserva Natural de las Tablas de Daimiel'),
+('España', 'Parque Natural de Monfragüe'),
+('España', 'Parque Nacional de Picos de Europa');
 
 
 INSERT INTO taxones (nombre, tipo, taxon_superior) VALUES
@@ -205,7 +234,22 @@ INSERT INTO especies (nombre_cientifico, nombre_comun, descripcion, nombre_taxon
 ('Aquila adalberti', 'Águila imperial ibérica', 'Ave rapaz endémica de la península ibérica', 'Aves'),
 ('Muraena helena', 'Morena', 'Pez anguiliforme del Mediterráneo', 'Actinopterygii'),
 ('Capra pyrenaica', 'Cabra montés', 'Ungulado endémico de la península ibérica','Mammalia'),
-('Posidonia oceanica', 'Posidonia', 'Planta acuática endémica del Mediterráneo','Liliopsida');
+('Posidonia oceanica', 'Posidonia', 'Planta acuática endémica del Mediterráneo','Liliopsida'),
+('Ursus arctos cantabricus', 'Oso pardo cantábrico', 'Subespecie de oso pardo que habita en la cordillera Cantábrica', 'Mammalia'),
+('Gypaetus barbatus', 'Quebrantahuesos', 'Ave rapaz que se alimenta principalmente de huesos', 'Aves'),
+('Rupicapra pyrenaica', 'Rebeco', 'Ungulado montés de tamaño mediano', 'Mammalia'),
+('Delphinus delphis', 'Delfín común', 'Cetáceo muy extendido en aguas templadas y tropicales', 'Mammalia'),
+('Testudo graeca', 'Tortuga mora', 'Especie de tortuga terrestre presente en el sur de España', 'Reptilia'),
+('Alytes dickhilleni', 'Sapo partero bético', 'Anfibio endémico de las montañas del sur de España', 'Amphibia'),
+('Salmo trutta', 'Trucha común', 'Pez de agua dulce muy apreciado en pesca deportiva', 'Actinopterygii'),
+('Aegypius monachus', 'Buitre negro', 'Una de las aves voladoras más grandes del mundo', 'Aves'),
+('Lutra lutra', 'Nutria europea', 'Mamífero semiacuático que habita en ríos y lagos', 'Mammalia'),
+('Quercus suber', 'Alcornoque', 'Árbol perennifolio característico del bosque mediterráneo', 'Magnoliopsida'),
+('Pinna nobilis', 'Nacra', 'Molusco bivalvo endémico del Mediterráneo en peligro crítico', 'Bivalvia'),
+('Caretta caretta', 'Tortuga boba', 'Especie de tortuga marina presente en el Mediterráneo', 'Reptilia'),
+('Chamaeleo chamaeleon', 'Camaleón común', 'Reptil con capacidad de cambiar de color', 'Reptilia'),
+('Milvus milvus', 'Milano real', 'Ave rapaz en peligro de extinción', 'Aves'),
+('Loxodonta africana', 'Elefante africano', 'Mamífero terrestre de gran tamaño, cuenta con una larga trompa y colmillos de marfil', 'Mammalia');
 
 
 INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac, area_geografica) VALUES 
@@ -213,41 +257,161 @@ INSERT INTO ejemplar (id, nombre_cientifico_especie, mote, fec_nac, area_geograf
 (2, 'Lynx pardinus', 'Luna', '2020-07-22', 'Parque Nacional Doñana'),
 (1, 'Aquila adalberti', 'Reina', '2015-05-10', 'Reserva Marina Cabo de Palos'),
 (1, 'Capra pyrenaica', 'Montés', '2017-09-30', 'Parque Nacional Sierra Nevada'),
-(2, 'Capra pyrenaica', 'Sierra', '2019-12-12', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas');
+(2, 'Capra pyrenaica', 'Sierra', '2019-12-12', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
+(3, 'Lynx pardinus', 'Sombra', '2021-05-18', 'Parque Nacional Doñana'),
+(4, 'Lynx pardinus', 'Rayo', '2019-06-30', 'Parque Nacional Doñana'),
+(2, 'Aquila adalberti', 'Altiva', '2017-04-12', 'Parque Nacional Doñana'),
+(3, 'Aquila adalberti', 'Veloz', '2020-03-25', 'Parque Natural de Monfragüe'),
+(3, 'Capra pyrenaica', 'Cumbre', '2018-05-05', 'Parque Nacional Sierra Nevada'),
+(1, 'Ursus arctos cantabricus', 'Pardo', '2015-02-10', 'Parque Nacional de Picos de Europa'),
+(2, 'Ursus arctos cantabricus', 'Bruno', '2017-01-20', 'Parque Nacional de Picos de Europa'),
+(1, 'Gypaetus barbatus', 'Alada', '2016-07-22', 'Parque Nacional de Ordesa y Monte Perdido'),
+(2, 'Gypaetus barbatus', 'Huesos', '2019-08-15', 'Parque Nacional de Ordesa y Monte Perdido'),
+(1, 'Rupicapra pyrenaica', 'Ágil', '2020-04-10', 'Parque Nacional de Aigüestortes'),
+(2, 'Rupicapra pyrenaica', 'Salto', '2019-05-15', 'Parque Nacional de Aigüestortes'),
+(1, 'Delphinus delphis', 'Marino', '2017-09-08', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
+(2, 'Delphinus delphis', 'Océano', '2018-07-12', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
+(1, 'Testudo graeca', 'Lenta', '2010-06-05', 'Parque Natural de Cazorla'),
+(1, 'Alytes dickhilleni', 'Croac', '2021-04-28', 'Parque Natural de Cazorla'),
+(1, 'Salmo trutta', 'Nadador', '2022-03-17', 'Parque Nacional de Aigüestortes'),
+(1, 'Aegypius monachus', 'Sombría', '2015-09-30', 'Parque Natural de Monfragüe'),
+(1, 'Lutra lutra', 'Acuática', '2019-02-14', 'Delta del Ebro'),
+(1, 'Caretta caretta', 'Marina', '2012-08-20', 'Reserva Marina de La Graciosa'),
+(1, 'Chamaeleo chamaeleon', 'Cambia', '2021-05-10', 'Parque Nacional de Timanfaya');
 
 
 
 INSERT INTO trabajadores (dni, nombre, sueldo, horas,nombre_reserva) VALUES 
-('11111111A', 'Pepe', 1250.00, 40,'Parque Nacional Doñana');
+('11111111A', 'Pepe', 1250.00, 40,'Parque Nacional Doñana'),
+('22222222B', 'María Gómez', 1500.00, 40, 'Parque Nacional Doñana'),
+('33333333C', 'Juan Martínez', 1450.00, 40, 'Parque Nacional Sierra Nevada'),
+('44444444D', 'Laura Sánchez', 1350.00, 35, 'Parque Nacional Marítimo-Terrestre Islas Atlánticas'),
+('55555555E', 'Carlos Fernández', 1600.00, 40, 'Reserva Marina Cabo de Palos'),
+('66666666F', 'Ana López', 1400.00, 30, 'Parque Nacional de Ordesa y Monte Perdido'),
+('77777777G', 'David Pérez', 1550.00, 40, 'Parque Nacional de Picos de Europa'),
+('88888888H', 'Elena García', 1300.00, 35, 'Parque Nacional del Teide'),
+('99999999I', 'Miguel Rodríguez', 1450.00, 40, 'Parque Nacional de Garajonay'),
+('10101010J', 'Sofía Díaz', 1380.00, 35, 'Parque Natural de Cazorla'),
+('11222222K', 'Pablo Ruiz', 1520.00, 40, 'Parque Nacional de Aigüestortes'),
+('12121212L', 'Isabel Moreno', 1420.00, 35, 'Delta del Ebro'),
+('13131313M', 'Javier Torres', 1390.00, 35, 'Parque Natural de Monfragüe'),
+('14141414N', 'Carmen Vázquez', 1510.00, 40, 'Reserva Marina de las Islas Columbretes'),
+('15151515O', 'Daniel Navarro', 1470.00, 40, 'Parque Nacional de Timanfaya'),
+('16161616P', 'Lucía Jiménez', 1430.00, 35, 'Parque Nacional de Cabrera'),
+('17171717Q', 'Roberto Castro', 1490.00, 40, 'Reserva Natural de las Marismas de Santoña'),
+('18181818R', 'Patricia Serrano', 1360.00, 30, 'Reserva Marina de La Graciosa'),
+('19191919S', 'Fernando Molina', 1580.00, 40, 'Parque Natural de las Bardenas Reales'),
+('20202020T', 'Raquel Ortiz', 1410.00, 35, 'Reserva Natural de las Tablas de Daimiel');
 
 
 INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, fecha_fin, descripcion) VALUES 
 ('11111111A', 'Lynx pardinus', '2024-03-15', '2024-05-30', 'Monitoreo de población de lince ibérico'),
-('11111111A', 'Capra pyrenaica', '2024-06-01', NULL, 'Censo de cabra montés en Sierra Nevada');
+('11111111A', 'Capra pyrenaica', '2024-06-01', NULL, 'Censo de cabra montés en Sierra Nevada'),
+('22222222B', 'Lynx pardinus', '2023-12-10', '2024-02-15', 'Seguimiento de reproducción de lince ibérico'),
+('33333333C', 'Capra pyrenaica', '2024-01-05', '2024-03-20', 'Estudio de distribución de población'),
+('44444444D', 'Delphinus delphis', '2024-02-01', NULL, 'Monitoreo de comportamiento social'),
+('55555555E', 'Muraena helena', '2024-01-15', '2024-04-15', 'Estudio de hábitos alimenticios'),
+('66666666F', 'Gypaetus barbatus', '2024-03-01', NULL, 'Censo de parejas reproductoras'),
+('77777777G', 'Ursus arctos cantabricus', '2024-02-15', NULL, 'Seguimiento con cámaras trampa'),
+('88888888H', 'Chamaeleo chamaeleon', '2024-04-01', '2024-05-15', 'Estudio de camuflaje y adaptación'),
+('99999999I', 'Quercus suber', '2024-03-15', NULL, 'Monitoreo de estado sanitario del alcornocal'),
+('10101010J', 'Testudo graeca', '2024-04-10', NULL, 'Estudio de áreas de nidificación'),
+('11222222K', 'Salmo trutta', '2024-01-20', '2024-04-20', 'Análisis de calidad de agua y población'),
+('12121212L', 'Lutra lutra', '2024-02-10', NULL, 'Evaluación de impacto de contaminación fluvial'),
+('13131313M', 'Aegypius monachus', '2024-03-20', NULL, 'Protección de nidos y seguimiento de crías'),
+('14141414N', 'Posidonia oceanica', '2024-01-10', '2024-05-10', 'Evaluación del estado de praderas submarinas'),
+('15151515O', 'Loxodonta africana', '2024-05-01', NULL, 'Colaboración internacional en conservación'),
+('11111111A', 'Aquila adalberti', '2023-12-01', '2024-02-28', 'Monitoreo de nidos de águila imperial'),
+('22222222B', 'Caretta caretta', '2024-04-15', NULL, 'Protección de áreas de puesta'),
+('33333333C', 'Rupicapra pyrenaica', '2024-02-15', '2024-05-15', 'Estudio sanitario de población'),
+('44444444D', 'Milvus milvus', '2024-03-10', NULL, 'Censo e identificación de amenazas'),
+('55555555E', 'Pinna nobilis', '2024-01-05', '2024-04-05', 'Evaluación de estado de conservación'),
+('66666666F', 'Alytes dickhilleni', '2024-04-05', NULL, 'Monitoreo de charcas de reproducción');
 
 
 INSERT INTO empresa_distribuidora(nombre) VALUES
 ('Alimentos Naturales S.A.'),
-('Distribuciones Globales S.L.');
+('Distribuciones Globales S.L.'),
+('Alimentación Natural Ibérica'),
+('EcoNutrientes S.L.'),
+('Distribuciones Fauna Silvestre'),
+('Suplementos Ecológicos S.A.'),
+('Nutrición Animal Especializada');
 
 INSERT INTO alimento (id, tipo, nombre,distribuidor) VALUES
 (1, 'Carne', 'Carne de res', 'Alimentos Naturales S.A.'),
 (2, 'Vegetal', 'Zanahorias', 'Distribuciones Globales S.L.'),
-(3, 'Pienso', 'Pienso para carnívoros', 'Alimentos Naturales S.A.');
+(3, 'Pienso', 'Pienso para carnívoros', 'Alimentos Naturales S.A.'),
+(4, 'Pescado', 'Pescado fresco del Cantábrico', 'Alimentación Natural Ibérica'),
+(5, 'Vegetal', 'Manzanas ecológicas', 'Distribuciones Globales S.L.'),
+(6, 'Pienso', 'Pienso para herbívoros', 'EcoNutrientes S.L.'),
+(7, 'Pienso', 'Pienso para aves rapaces', 'Distribuciones Fauna Silvestre'),
+(8, 'Insectos', 'Insectos vivos para reptiles', 'Suplementos Ecológicos S.A.'),
+(9, 'Carne', 'Carne de conejo', 'Alimentos Naturales S.A.'),
+(10, 'Frutos secos', 'Mezcla de frutos secos', 'Nutrición Animal Especializada'),
+(11, 'Vegetal', 'Hierbas frescas alpinas', 'EcoNutrientes S.L.'),
+(12, 'Sal', 'Bloques de sal mineral', 'Distribuciones Globales S.L.');
 
 INSERT INTO consumirAlimentos (id_especie, nombre_especie, id_alimento, cantidad, frecuencia) VALUES
 (1, 'Lynx pardinus', 2, 300, 3),
 (2, 'Lynx pardinus', 1, 500, 2),
-(1, 'Aquila adalberti', 3, 600, 2);
+(1, 'Aquila adalberti', 3, 600, 2),
+(1, 'Ursus arctos cantabricus', 1, 800, 2),
+(1, 'Ursus arctos cantabricus', 5, 400, 3),
+(1, 'Ursus arctos cantabricus', 10, 200, 1),
+(1, 'Gypaetus barbatus', 7, 350, 2),
+(1, 'Rupicapra pyrenaica', 6, 450, 2),
+(1, 'Rupicapra pyrenaica', 11, 300, 1),
+(1, 'Rupicapra pyrenaica', 12, 50, 7),
+(1, 'Delphinus delphis', 4, 600, 3),
+(1, 'Testudo graeca', 5, 100, 2),
+(1, 'Testudo graeca', 8, 50, 3),
+(1, 'Alytes dickhilleni', 8, 30, 2),
+(1, 'Salmo trutta', 4, 200, 3),
+(1, 'Aegypius monachus', 9, 400, 2),
+(1, 'Lutra lutra', 4, 350, 3),
+(1, 'Caretta caretta', 4, 250, 2),
+(1, 'Chamaeleo chamaeleon', 8, 40, 3),
+(3, 'Lynx pardinus', 9, 400, 2),
+(4, 'Lynx pardinus', 1, 350, 2),
+(2, 'Aquila adalberti', 4, 300, 2),
+(3, 'Aquila adalberti', 7, 280, 2);
 
 INSERT INTO clinica_medica (nombre, ubicacion, num_empleados) VALUES
 ('Centro Veterinario Doñana', 'Parque Nacional Doñana', 5),
 ('Clínica Sierra Vet', 'Parque Nacional Sierra Nevada', 3),
-('Islas Atlánticas Salud Animal', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas', 4);
+('Islas Atlánticas Salud Animal', 'Parque Nacional Marítimo-Terrestre Islas Atlánticas', 4),
+('Veterinaria Picos de Europa', 'Parque Nacional de Picos de Europa', 6),
+('Centro Médico Fauna Teide', 'Parque Nacional del Teide', 4),
+('Veterinaria Ordesa', 'Parque Nacional de Ordesa y Monte Perdido', 5),
+('Hospital Veterinario Monfragüe', 'Parque Natural de Monfragüe', 7),
+('Centro de Recuperación Cazorla', 'Parque Natural de Cazorla', 8),
+('Clínica Marina Columbretes', 'Reserva Marina de las Islas Columbretes', 3),
+('Centro Veterinario Garajonay', 'Parque Nacional de Garajonay', 4),
+('Salud Animal Aigüestortes', 'Parque Nacional de Aigüestortes', 5),
+('Clínica Fauna del Delta', 'Delta del Ebro', 4),
+('Hospital Veterinario La Graciosa', 'Reserva Marina de La Graciosa', 3);
 
 INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) VALUES
 ('Centro Veterinario Doñana', 1, 'Lynx pardinus', '2024-01-10', 'Buen estado de salud.'),
 ('Clínica Sierra Vet', 2, 'Lynx pardinus', '2024-02-20', 'Leve deshidratación tratada.'),
-('Islas Atlánticas Salud Animal', 2, 'Capra pyrenaica', '2024-03-15', 'Lesión en la pata, en recuperación.');
-
+('Islas Atlánticas Salud Animal', 2, 'Capra pyrenaica', '2024-03-15', 'Lesión en la pata, en recuperación.'),
+('Centro Veterinario Doñana', 3, 'Lynx pardinus', '2024-01-15', 'Estado óptimo, vacunas actualizadas.'),
+('Centro Veterinario Doñana', 4, 'Lynx pardinus', '2024-01-20', 'Pequeña infección tratada con antibióticos.'),
+('Centro Veterinario Doñana', 2, 'Aquila adalberti', '2024-02-05', 'Revisión de rutina, estado saludable.'),
+('Veterinaria Picos de Europa', 1, 'Ursus arctos cantabricus', '2024-02-10', 'Seguimiento de implante de chip, evolución favorable.'),
+('Veterinaria Picos de Europa', 2, 'Ursus arctos cantabricus', '2024-02-15', 'Tratamiento de ectoparásitos completado.'),
+('Veterinaria Ordesa', 1, 'Gypaetus barbatus', '2024-03-01', 'Revisión de plumaje y estado general.'),
+('Veterinaria Ordesa', 2, 'Gypaetus barbatus', '2024-03-10', 'Recuperación de fractura alar.'),
+('Salud Animal Aigüestortes', 1, 'Rupicapra pyrenaica', '2024-03-20', 'Control rutinario y toma de muestras.'),
+('Salud Animal Aigüestortes', 2, 'Rupicapra pyrenaica', '2024-03-25', 'Tratamiento preventivo contra parásitos.'),
+('Islas Atlánticas Salud Animal', 1, 'Delphinus delphis', '2024-04-05', 'Evaluación de comportamiento y salud general.'),
+('Islas Atlánticas Salud Animal', 2, 'Delphinus delphis', '2024-04-10', 'Control de patógenos cutáneos.'),
+('Centro de Recuperación Cazorla', 1, 'Testudo graeca', '2024-04-15', 'Revisión de caparazón y alimentación.'),
+('Centro de Recuperación Cazorla', 1, 'Alytes dickhilleni', '2024-04-20', 'Control de desarrollo y estado general.'),
+('Salud Animal Aigüestortes', 1, 'Salmo trutta', '2024-04-25', 'Análisis de agua y estado de branquias.'),
+('Hospital Veterinario Monfragüe', 1, 'Aegypius monachus', '2024-05-01', 'Revisión completa y toma de muestras sanguíneas.'),
+('Clínica Fauna del Delta', 1, 'Lutra lutra', '2024-05-05', 'Control dental y estado del pelaje.'),
+('Hospital Veterinario La Graciosa', 1, 'Caretta caretta', '2024-05-10', 'Evaluación de natación y comportamiento.'),
+('Centro Médico Fauna Teide', 1, 'Chamaeleo chamaeleon', '2024-05-15', 'Control de hidratación y cambio de color.');
 

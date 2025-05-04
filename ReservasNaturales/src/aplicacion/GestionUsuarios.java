@@ -58,4 +58,12 @@ public class GestionUsuarios {
     public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
         return fbd.actualizarAreaUsuario(trabajador, areaSeleccionada);
     }
+
+    void despedirInactivos() {
+        fbd.despedirInactivos();
+    }
+
+    void reducirPersonal() {
+        fbd.reducirPersonal();
+    }
 }

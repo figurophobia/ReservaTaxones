@@ -214,6 +214,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Reducci&#xf3;n de Personal"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReducci&#xf3;ndePersonalActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

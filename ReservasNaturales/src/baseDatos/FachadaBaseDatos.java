@@ -274,5 +274,13 @@ public class FachadaBaseDatos {
         return daoAlimentos.actualizarAlimento(tipo,nombre,distribuidor);
     }
 
+    public void despedirInactivos() {
+        daoUsuarios.despedirInactivos();
+    }
+
+    public void reducirPersonal() {
+        daoUsuarios.reducirPersonal();
+    }
+
     
 }

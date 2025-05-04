@@ -130,6 +130,11 @@ public class VTrabajadores extends javax.swing.JDialog {
         btnReduccióndePersonal.setBackground(new java.awt.Color(255, 255, 0));
         btnReduccióndePersonal.setForeground(new java.awt.Color(255, 0, 0));
         btnReduccióndePersonal.setText("Reducción de Personal");
+        btnReduccióndePersonal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReduccióndePersonalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -321,18 +326,48 @@ public class VTrabajadores extends javax.swing.JDialog {
     }//GEN-LAST:event_TextFileBuscarTrabajadoresActionPerformed
 
     private void btnDespedirInactivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDespedirInactivosActionPerformed
-        /*// TODO add your handling code here:
-        ModeloTablaTrabajadores mt=(ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-            
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de que deseas hacer esto?",          "Confirmar eliminación", 
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(
+            this,
+            "¿Estás seguro de que deseas despedir a todos los trabajadores inactivos?\nEsta acción no se puede deshacer.",
+            "Confirmar despido masivo",
+            javax.swing.JOptionPane.YES_NO_OPTION,
+            javax.swing.JOptionPane.WARNING_MESSAGE
+        );
+
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            fa.despedirInactivos();
+            buscarUsuarios();
+            javax.swing.JOptionPane.showMessageDialog(this, "Trabajadores inactivos despedidos correctamente.");
+        }
+    }//GEN-LAST:event_btnDespedirInactivosActionPerformed
+
+    private void btnReduccióndePersonalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReduccióndePersonalActionPerformed
+        // Pedir confirmación antes de proceder
+        int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
+            "¿Estás seguro de que deseas reducir el personal que cobra por encima de la media?", 
+            "Confirmar reducción de personal", 
             javax.swing.JOptionPane.YES_NO_OPTION);
 
-            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-
-                fa.despedirInactivos();*/
-        
-    }//GEN-LAST:event_btnDespedirInactivosActionPerformed
+        // Si el usuario acepta la reducción, llamar al método correspondiente
+        if (confirm == javax.swing.JOptionPane.YES_OPTION) {
+            try {
+                // Llamar al método de la fachada para reducir el personal
+                fa.reducirPersonalPorEncimaDeMedia();
+                buscarUsuarios();
+                // Mensaje de éxito
+                JOptionPane.showMessageDialog(this, "El personal ha sido reducido correctamente.", 
+                                              "Reducción exitosa", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                // Manejar cualquier error que pueda ocurrir al reducir el personal
+                JOptionPane.showMessageDialog(this, "Error al reducir el personal: " + ex.getMessage(), 
+                                              "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            // Si el usuario cancela la acción
+            JOptionPane.showMessageDialog(this, "La reducción de personal ha sido cancelada.", 
+                                          "Operación cancelada", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnReduccióndePersonalActionPerformed
 
     /**
      * @param args the command line arguments

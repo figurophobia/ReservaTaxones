@@ -247,5 +247,13 @@ public class FachadaAplicacion {
         return gal.actualizarAlimento(tipo,nombre,distribuidor);
     }
 
+    public void despedirInactivos() {
+        gu.despedirInactivos();
+    }
+
+    public void reducirPersonalPorEncimaDeMedia() {
+        gu.reducirPersonal();
+    }
+
     
 }

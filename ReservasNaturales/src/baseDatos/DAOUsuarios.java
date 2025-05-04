@@ -10,6 +10,7 @@ import aplicacion.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -337,6 +338,73 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
     return exito;
 
     }
+    
+    void despedirInactivos() {
+        String sql = "DELETE FROM trabajadores " +
+                     "WHERE dni NOT IN ( " +
+                     "    SELECT DISTINCT dni_trabajador " +
+                     "    FROM misiones " +
+                     "    WHERE fecha_inicio >= current_date - INTERVAL '1 month' " +
+                     "    OR fecha_fin IS NULL " +
+                     "    OR fecha_fin >= current_date " +
+                     ")";
+
+        Connection con = this.getConexion();
+        try (
+             PreparedStatement stm = con.prepareStatement(sql)) {
+
+            int filas = stm.executeUpdate();
+
+            if (filas > 0) {
+                // Mensaje usando JOptionPane
+                JOptionPane.showMessageDialog(null, "Se han despedido " + filas + " trabajadores inactivos.");
+            } else {
+                // Mensaje usando JOptionPane
+                JOptionPane.showMessageDialog(null, "No hay trabajadores inactivos para despedir.");
+            }
+
+        } catch (SQLException e) {
+            // Manejar si algún trabajador no puede eliminarse por la restricción
+            System.out.println("Error al despedir inactivos: " + e.getMessage());
+            // Mensaje de error
+            JOptionPane.showMessageDialog(null, "No se han podido despedir algunos trabajadores porque aún tienen misiones asignadas.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    void reducirPersonal() {
+        String sqlMediaSueldo = "SELECT AVG(sueldo) FROM trabajadores";  // Calcula la media de sueldo
+        String sqlEliminarTrabajadores = "DELETE FROM trabajadores WHERE sueldo > (SELECT AVG(sueldo) FROM trabajadores)";  
+        // Elimina a los trabajadores con sueldo superior a la media
+        Connection con = this.getConexion();
+
+        try (PreparedStatement stmMediaSueldo = con.prepareStatement(sqlMediaSueldo);
+             PreparedStatement stmEliminar = con.prepareStatement(sqlEliminarTrabajadores)) {
+
+            // Ejecutamos la consulta para obtener la media del sueldo
+            ResultSet rs = stmMediaSueldo.executeQuery();
+
+            if (rs.next()) {
+                double mediaSueldo = rs.getDouble(1);  // Extraemos la media de sueldo
+
+                // Ahora ejecutamos la consulta para eliminar a los trabajadores con sueldo superior a la media
+                int filasEliminadas = stmEliminar.executeUpdate();
+
+                if (filasEliminadas > 0) {
+                    JOptionPane.showMessageDialog(null, "Se han despedido " + filasEliminadas + " trabajadores por tener sueldo superior a la media.", "Reducción de Personal", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay trabajadores por despedir, todos están por debajo de la media.", "Reducción de Personal", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al reducir personal: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "No se pudo reducir el personal debido a un error en la base de datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+
+
     
     
 }
