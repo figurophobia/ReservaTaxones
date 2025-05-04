@@ -308,4 +308,8 @@ public class FachadaBaseDatos {
         return daoDistribuidores.obterDistribuidores();
     }
 
+    public List<Ejemplar> obtenerEjemplares(String nomCient) {
+        return daoEjemplares.obtenerEjemplares(nomCient);
+    }
+
 }

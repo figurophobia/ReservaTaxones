@@ -280,4 +280,8 @@ public class FachadaAplicacion {
         return gd.obterDistribuidores();
     }
 
+    public List<Ejemplar> obterEjemplares(String nomCient) {
+        return gej.obtenerEjemplares(nomCient);
+    }
+
 }

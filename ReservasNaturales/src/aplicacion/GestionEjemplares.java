@@ -41,6 +41,10 @@ public class GestionEjemplares {
     int modificarEjemplar(Ejemplar ejemplarModificar) {
         return fbd.modificarEjemplar(ejemplarModificar);
     }
+
+    List<Ejemplar> obtenerEjemplares(String nomCient) {
+        return fbd.obtenerEjemplares(nomCient);
+    }
 }
 
   

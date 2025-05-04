@@ -64,7 +64,7 @@ public class VEspecies extends javax.swing.JDialog {
         
         tf_nomeCientEspecie.setText(e.getNombreCientifico());
         cargarAreas();
-        obterEjemplares();
+        obterEjemplares(e.getNombreCientifico());
         listenerSeleccionEjemplar();
 
     }
@@ -422,7 +422,7 @@ public class VEspecies extends javax.swing.JDialog {
                                                 new Area(AreaComboBox.getSelectedItem().toString())
                                                 );
             if (fa.novoEjemplar(novoEjemplar) != -1) {
-                obterEjemplares();
+                obterEjemplares(e.getNombreCientifico());
             }
         }
     }//GEN-LAST:event_btn_nuevoEjemplarActionPerformed
@@ -435,7 +435,7 @@ public class VEspecies extends javax.swing.JDialog {
                 tf_idEspecie.setText("");
                 tf_moteEjemplar.setText("");
                 AreaComboBox.setSelectedIndex(-1);
-                obterEjemplares();
+                obterEjemplares(e.getNombreCientifico());
             }
         }
     }//GEN-LAST:event_btn_borrarEjemplarActionPerformed
@@ -462,7 +462,7 @@ public class VEspecies extends javax.swing.JDialog {
             
             VEjemplarModificar vem = new VEjemplarModificar(padre, true, fa, ej);
             vem.setVisible(true);
-            obterEjemplares();
+            obterEjemplares(e.getNombreCientifico());
         }
     }//GEN-LAST:event_btn_editarEjemplarActionPerformed
 
@@ -553,6 +553,14 @@ public class VEspecies extends javax.swing.JDialog {
         
         mteg =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
         mteg.setFilas(fa.obterEjemplares());
+    
+    }
+    
+    private void obterEjemplares(String nomCient) {
+        ModeloTablaEjemplaresGeneral mteg;
+        
+        mteg =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+        mteg.setFilas(fa.obterEjemplares(nomCient));
     
     }
     
