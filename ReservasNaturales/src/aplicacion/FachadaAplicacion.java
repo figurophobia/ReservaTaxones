@@ -27,6 +27,7 @@ public class FachadaAplicacion {
     GestionRevision gr;
     GestionClinicas gc;
     GestionMisiones gm;
+    GestionDistribuidores gd;
 
     public FachadaAplicacion() {
         fgui = new FachadaGui(this);
@@ -41,6 +42,8 @@ public class FachadaAplicacion {
         gr = new GestionRevision(fbd,fgui);
         gc = new GestionClinicas(fbd,fgui);
         gm=new GestionMisiones(fgui, fbd);
+        gd = new GestionDistribuidores(fgui, fbd);
+        
     }
 
     public static void main(String args[]) {
@@ -266,5 +269,9 @@ public class FachadaAplicacion {
 
     public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
         return gu.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
+
+    public List<Distribuidor> obterDistribuidores() {
+        return gd.obterDistribuidores();
     }
 }

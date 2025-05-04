@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/FachadaAplicacion.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionUsuarios.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/baseDatos/FachadaBaseDatos.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/baseDatos/DAOUsuarios.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VTrabajadores.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VMoverArea.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

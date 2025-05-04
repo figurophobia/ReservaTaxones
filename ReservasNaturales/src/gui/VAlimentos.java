@@ -5,12 +5,14 @@
 package gui;
 
 import aplicacion.Alimento;
+import aplicacion.Distribuidor;
 import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,6 +34,7 @@ public class VAlimentos extends javax.swing.JDialog {
         initComponents();
         setTitle("Gestión Alimentos");
         obterAlimentos();
+        cargarDistribuidores();
         listenerSeleccionAlimentos();
     }
 
@@ -57,7 +60,7 @@ public class VAlimentos extends javax.swing.JDialog {
         btn_asignarAlimento = new javax.swing.JButton();
         btnNoConsumidos = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        tf_distribuidorAlimento = new javax.swing.JTextField();
+        comboBox_distribuidoras = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -132,12 +135,8 @@ public class VAlimentos extends javax.swing.JDialog {
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3))
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(tf_distribuidorAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn_asignarAlimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btn_anadirAlimento)
@@ -149,7 +148,13 @@ public class VAlimentos extends javax.swing.JDialog {
                                         .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btn_salir)))
-                                .addGap(15, 15, 15))))))
+                                .addGap(15, 15, 15))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(comboBox_distribuidoras, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,9 +173,9 @@ public class VAlimentos extends javax.swing.JDialog {
                         .addComponent(tf_tipoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel4)
-                        .addGap(8, 8, 8)
-                        .addComponent(tf_distribuidorAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(2, 2, 2)
+                        .addComponent(comboBox_distribuidoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_anadirAlimento)
                             .addComponent(btn_borrarAlimento))
@@ -197,7 +202,7 @@ public class VAlimentos extends javax.swing.JDialog {
 
     private void btn_anadirAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anadirAlimentoActionPerformed
 
-        if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !tf_distribuidorAlimento.getText().isEmpty()) {
+        if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && comboBox_distribuidoras.getSelectedIndex() != -1) {
             ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
 
             // Obtener las filas actuales de la tabla
@@ -209,7 +214,7 @@ public class VAlimentos extends javax.swing.JDialog {
                 if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
                     alimentoExistente = true;
 
-                    if (fa.actualizarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+                    if (fa.actualizarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), comboBox_distribuidoras.getSelectedItem().toString()) != -1) {
                         obterAlimentos(); // Refrescar la lista de alimentos
                     }
                     break; // Salir del ciclo una vez que se ha encontrado el alimento
@@ -218,7 +223,7 @@ public class VAlimentos extends javax.swing.JDialog {
 
             // Si el alimento no existe, lo añadimos como nuevo
             if (!alimentoExistente) {
-                if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+                if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), comboBox_distribuidoras.getSelectedItem().toString()) != -1) {
                     obterAlimentos(); // Refrescar la lista de alimentos
                 }
             }
@@ -227,7 +232,7 @@ public class VAlimentos extends javax.swing.JDialog {
         // Limpiar los campos de texto
         tf_nombreAlimento.setText("");
         tf_tipoAlimento.setText("");
-        tf_distribuidorAlimento.setText("");
+        comboBox_distribuidoras.setSelectedIndex(-1);
 
         /*if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !TextFieldDistribuidor.getText().isEmpty()) {
         ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
@@ -263,7 +268,7 @@ public class VAlimentos extends javax.swing.JDialog {
                     obterAlimentos();  // Refresca la lista de alimentos
                     tf_nombreAlimento.setText("");
                     tf_tipoAlimento.setText("");
-                    tf_distribuidorAlimento.setText("");  // Limpiar los campos de texto
+                    comboBox_distribuidoras.setSelectedIndex(-1);
                 } else {
                     // Mostrar un mensaje si no se puede eliminar el alimento
                     JOptionPane.showMessageDialog(this, "No se pudo eliminar el alimento.");
@@ -294,6 +299,8 @@ public class VAlimentos extends javax.swing.JDialog {
         mta.setFilas(fa.obtenerAlimentos());
 
         fa.eliminarNoConsumidos();
+        
+        obterAlimentos();
 
     }//GEN-LAST:event_btnNoConsumidosActionPerformed
 
@@ -307,13 +314,13 @@ public class VAlimentos extends javax.swing.JDialog {
     private javax.swing.JButton btn_asignarAlimento;
     private javax.swing.JButton btn_borrarAlimento;
     private javax.swing.JButton btn_salir;
+    private javax.swing.JComboBox<String> comboBox_distribuidoras;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla_alimentos;
-    private javax.swing.JTextField tf_distribuidorAlimento;
     private javax.swing.JTextField tf_nombreAlimento;
     private javax.swing.JTextField tf_tipoAlimento;
     // End of variables declaration//GEN-END:variables
@@ -344,7 +351,13 @@ public class VAlimentos extends javax.swing.JDialog {
                     // Set the text fields with the values
                     tf_nombreAlimento.setText(nomeAlimento);
                     tf_tipoAlimento.setText(tipoAlimento);
-                    tf_distribuidorAlimento.setText(distribuidorAlimento);
+                    comboBox_distribuidoras.setSelectedIndex(-1);
+                    for (int i = 0; i < comboBox_distribuidoras.getItemCount(); i++) {
+                        if (comboBox_distribuidoras.getItemAt(i).toString().equals(distribuidorAlimento)) {
+                            comboBox_distribuidoras.setSelectedIndex(i);
+                            break;
+                        }
+                    }
                 }
             }
 
@@ -370,6 +383,19 @@ public class VAlimentos extends javax.swing.JDialog {
 
         }
         );
+    }
+    
+     private void cargarDistribuidores() {
+        
+        List<Distribuidor> distribuidores = fa.obterDistribuidores(); // obtener la lista de áreas
+
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+
+        for (Distribuidor d : distribuidores) {
+            modelo.addElement(d.getNombre()); // suponiendo que el área tiene un método getNombre()
+        }
+
+        comboBox_distribuidoras.setModel(modelo); // asignar el modelo al ComboBox
     }
 
 }

@@ -14,6 +14,7 @@ import aplicacion.Ejemplar;
 import aplicacion.Area;
 import aplicacion.ConsumirAlimento;
 import aplicacion.Area;
+import aplicacion.Distribuidor;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Mision;
@@ -43,6 +44,7 @@ public class FachadaBaseDatos {
     private DAORevisiones daoRevisiones;
     private DAOClinicas daoClinicas;
     private DAOMisiones daoMisiones;
+    private DAODistribuidores daoDistribuidores;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -86,6 +88,7 @@ public class FachadaBaseDatos {
             daoRevisiones = new DAORevisiones(conexion,fa);
             daoClinicas = new DAOClinicas(conexion,fa);
             daoMisiones=new DAOMisiones(conexion, fa);
+            daoDistribuidores = new DAODistribuidores(conexion, fa);
           
 
 
@@ -295,6 +298,10 @@ public class FachadaBaseDatos {
 
     public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
         return daoUsuarios.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
+
+    public List<Distribuidor> obterDistribuidores() {
+        return daoDistribuidores.obterDistribuidores();
     }
 
 }
