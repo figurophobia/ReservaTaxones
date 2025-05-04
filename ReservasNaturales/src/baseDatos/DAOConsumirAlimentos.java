@@ -5,6 +5,7 @@
 package baseDatos;
 
 import aplicacion.Alimento;
+import aplicacion.Area;
 import aplicacion.ConsumirAlimento;
 import aplicacion.Ejemplar;
 import aplicacion.Especie;
@@ -33,7 +34,7 @@ public class DAOConsumirAlimentos extends AbstractDAO {
         try {
             Alimento al = null;
             String consulta = "SELECT id_especie, nombre_especie, id_alimento, cantidad, frecuencia FROM consumirAlimentos";
-            String consultaAl = "SELECT id, tipo, nombre FROM alimento where id = ?";
+            String consultaAl = "SELECT id, tipo, nombre, distribuidor FROM alimento where id = ?";
             stmConsAlimento = con.prepareStatement(consulta);
             stmAlimento = con.prepareStatement(consultaAl);
             
@@ -52,7 +53,9 @@ public class DAOConsumirAlimentos extends AbstractDAO {
                 while(rsAlimento.next()) {
                     al = new Alimento(idAlimento,
                                       rsAlimento.getString("tipo"),
-                                      rsAlimento.getString("nombre"));
+                                      rsAlimento.getString("nombre"),
+                                      rsAlimento.getString("distribuidor")
+                    );
                 }
                 
                 ConsumirAlimento consAlm = new ConsumirAlimento(new Ejemplar(id, new Especie(nombre)), al, cantidad, frecuencia);
@@ -85,7 +88,7 @@ public class DAOConsumirAlimentos extends AbstractDAO {
         try {
             Alimento al = null;
             String consulta = "SELECT id_especie, nombre_especie, id_alimento, cantidad, frecuencia FROM consumirAlimentos where id_alimento = ?";
-            String consultaAl = "SELECT id, tipo, nombre FROM alimento where id = ?";
+            String consultaAl = "SELECT id, tipo, nombre, distribuidor FROM alimento where id = ?";
             stmConsAlimento = con.prepareStatement(consulta);
             stmAlimento = con.prepareStatement(consultaAl);
             
@@ -104,7 +107,9 @@ public class DAOConsumirAlimentos extends AbstractDAO {
                 while(rsAlimento.next()) {
                     al = new Alimento(idAlimento,
                                       rsAlimento.getString("tipo"),
-                                      rsAlimento.getString("nombre"));
+                                      rsAlimento.getString("nombre"),
+                                      rsAlimento.getString("distribuidor")
+                    );
                 }
                 
                 ConsumirAlimento consAlm = new ConsumirAlimento(new Ejemplar(id, new Especie(nombre)), al, cantidad, frecuencia);
@@ -173,6 +178,65 @@ public class DAOConsumirAlimentos extends AbstractDAO {
         return res;
     }
 
-   
-   
+    List<ConsumirAlimento> obterConsumirAlimentosEjemplar(int idEjemplar) {
+            List<ConsumirAlimento> resultado = new ArrayList<>();
+        Connection con = this.getConexion();
+        PreparedStatement stmConsAlimento = null;
+        PreparedStatement stmAlimento = null;
+        ResultSet rsConsAlimento;
+        ResultSet rsAlimento;
+
+        
+        try {
+            Alimento al = null;
+            String consulta = "SELECT id_especie, nombre_especie, id_alimento, cantidad, frecuencia FROM consumirAlimentos where id_especie = ?";
+            String consultaAl = "SELECT id, tipo, nombre, distribuidor FROM alimento where id = ?";
+            stmConsAlimento = con.prepareStatement(consulta);
+            stmAlimento = con.prepareStatement(consultaAl);
+            
+            stmConsAlimento.setInt(1, idEjemplar);
+            rsConsAlimento = stmConsAlimento.executeQuery();
+            
+
+            while (rsConsAlimento.next()) {
+                int id = rsConsAlimento.getInt("id_especie");
+                String nombre = rsConsAlimento.getString("nombre_especie");
+                int idAlimento = rsConsAlimento.getInt("id_alimento");
+                int cantidad = rsConsAlimento.getInt("cantidad");
+                int frecuencia = rsConsAlimento.getInt("frecuencia");
+                
+                stmAlimento.setInt(1, idAlimento);
+                rsAlimento = stmAlimento.executeQuery();
+                while(rsAlimento.next()) {
+                    al = new Alimento(idAlimento,
+                                      rsAlimento.getString("tipo"),
+                                      rsAlimento.getString("nombre"),
+                                      rsAlimento.getString("distribuidor")
+                    );
+                }
+                
+                ConsumirAlimento consAlm = new ConsumirAlimento(new Ejemplar(id, new Especie(nombre)), al, cantidad, frecuencia);
+                resultado.add(consAlm);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmAlimento != null) stmAlimento.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+    
 }
+
+
+   
+   
+

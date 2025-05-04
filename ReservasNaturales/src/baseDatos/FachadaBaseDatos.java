@@ -14,6 +14,7 @@ import aplicacion.Ejemplar;
 import aplicacion.Area;
 import aplicacion.ConsumirAlimento;
 import aplicacion.Area;
+import aplicacion.Distribuidor;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Mision;
@@ -43,6 +44,7 @@ public class FachadaBaseDatos {
     private DAORevisiones daoRevisiones;
     private DAOClinicas daoClinicas;
     private DAOMisiones daoMisiones;
+    private DAODistribuidores daoDistribuidores;
 
     public FachadaBaseDatos (FachadaAplicacion fa){
         
@@ -86,6 +88,7 @@ public class FachadaBaseDatos {
             daoRevisiones = new DAORevisiones(conexion,fa);
             daoClinicas = new DAOClinicas(conexion,fa);
             daoMisiones=new DAOMisiones(conexion, fa);
+            daoDistribuidores = new DAODistribuidores(conexion, fa);
           
 
 
@@ -150,7 +153,9 @@ public class FachadaBaseDatos {
     public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
-
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }
@@ -159,12 +164,12 @@ public class FachadaBaseDatos {
         return daoAlimentos.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return daoAlimentos.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return daoAlimentos.anadirAlimento(nome, tipo, distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return daoAlimentos.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return daoAlimentos.borrarAlimento(nome, tipo,distribuidorAlimento);
     }
 
     public List<Ejemplar> obtenerEjemplares() {
@@ -237,9 +242,6 @@ public class FachadaBaseDatos {
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return daoMisiones.actualizarMision(seleccionada,misionOriginal);    }
 
-    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
-        return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
-    }
 
     public Usuario obtenerTrabajadorMision() {
         return  daoMisiones.obtenerTrabajadorMision();}
@@ -267,6 +269,15 @@ public class FachadaBaseDatos {
         daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
 
+    public boolean eliminarNoConsumidos() {
+        return daoAlimentos.eliminarNoConsumidos();
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return daoAlimentos.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
     public List<String> obtenerAreasPorEspecie(String nombreCientifico) {return daoAreas.obtenerAreasPorEspecie(nombreCientifico);}
 
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return daoUsuarios.obtenerTrabajadoresPorArea(area);}
@@ -276,5 +287,25 @@ public class FachadaBaseDatos {
     public Mision obtenerMisionMasAntigua() { return daoMisiones.obtenerMisionMasAntigua(); }
 
     public int contarMisionesActivas() { return daoMisiones.contarMisionesActivas(); }
+
+    public int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
+        return daoEjemplares.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
+    }
+
+    public int modificarEjemplar(Ejemplar ejemplarModificar) {
+        return daoEjemplares.modificarEjemplar(ejemplarModificar);
+    }
+
+    public List<ConsumirAlimento> obterConsumirAlimentosEjemplar(int idEjemplar) {
+        return daoConsumirAlimentos.obterConsumirAlimentosEjemplar(idEjemplar);
+    }
+
+    public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+        return daoUsuarios.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
+
+    public List<Distribuidor> obterDistribuidores() {
+        return daoDistribuidores.obterDistribuidores();
+    }
 
 }

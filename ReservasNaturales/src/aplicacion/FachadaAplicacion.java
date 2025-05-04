@@ -6,7 +6,6 @@ package aplicacion;
 
 import baseDatos.FachadaBaseDatos;
 import gui.FachadaGui;
-import java.sql.Date;
 import java.util.List;
 
 
@@ -28,6 +27,7 @@ public class FachadaAplicacion {
     GestionRevision gr;
     GestionClinicas gc;
     GestionMisiones gm;
+    GestionDistribuidores gd;
 
     public FachadaAplicacion() {
         fgui = new FachadaGui(this);
@@ -42,6 +42,8 @@ public class FachadaAplicacion {
         gr = new GestionRevision(fbd,fgui);
         gc = new GestionClinicas(fbd,fgui);
         gm=new GestionMisiones(fgui, fbd);
+        gd = new GestionDistribuidores(fgui, fbd);
+        
     }
 
     public static void main(String args[]) {
@@ -120,12 +122,12 @@ public class FachadaAplicacion {
         return gal.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return gal.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return gal.anadirAlimento(nome, tipo,distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return gal.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return gal.borrarAlimento(nome, tipo, distribuidorAlimento);
     }
     public void editarEspecie(Especie e) {
         ge.editarEspecie(e);
@@ -239,13 +241,43 @@ public class FachadaAplicacion {
          gr.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
 
+    public boolean eliminarNoConsumidos() {
+        return gal.eliminarNoConsumidos();
+        
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return gal.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return gu.obtenerTrabajadoresPorArea(area);}
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+
 
     public Mision obtenerMisionMasAntigua() { return gm.obtenerMisionMasAntigua(); }
 
     public int contarMisionesActivas() { return gm.contarMisionesActivas(); }
 
+    public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
+        return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
+    }
+
+    public int modificarEjemplar(Ejemplar ejemplarModificar) {
+        return gej.modificarEjemplar(ejemplarModificar);
+    }
+
+    public List<ConsumirAlimento> obterConsumirAlimentosEjemplar(int idEjemplar) {
+        return gca.obterConsumirAlmentosEjemplar(idEjemplar);
+    }
+
+    public int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+        return gu.reducirXornadaAreaMaisSaturada(porcentaxeReduc);
+    }
+
+    public List<Distribuidor> obterDistribuidores() {
+        return gd.obterDistribuidores();
+    }
 
 }

@@ -12,11 +12,13 @@ public class Alimento {
     private int id;
     private String tipo;
     private String nombre;
+    private String distribuidor;
 
-    public Alimento(int id, String tipo, String nombre) {
+    public Alimento(int id, String tipo, String nombre, String distribuidor) {
         this.id = id;
         this.tipo = tipo;
         this.nombre = nombre;
+        this.distribuidor=distribuidor;
     }
     
     public Alimento(String tipo, String nombre) {
@@ -51,7 +53,13 @@ public class Alimento {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
+    public String getDistribuidor() {
+        return distribuidor;
+    }
+    public void SetDistribuidor(String distribuidor){
+        this.distribuidor=distribuidor;
+    }
     
     
     

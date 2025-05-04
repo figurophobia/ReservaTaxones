@@ -106,6 +106,7 @@ public class VEspecies extends javax.swing.JDialog {
         tf_idEspecie = new javax.swing.JTextField();
         AreaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        btn_editarEjemplar = new javax.swing.JButton();
         ClinicasBoton = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
 
@@ -179,7 +180,7 @@ public class VEspecies extends javax.swing.JDialog {
                         .addComponent(ActualizarButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BorrarButton)
-                        .addGap(0, 274, Short.MAX_VALUE)))
+                        .addGap(0, 582, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelEspeciesLayout.setVerticalGroup(
@@ -212,6 +213,7 @@ public class VEspecies extends javax.swing.JDialog {
 
         tabla_ejemplares.setModel(new ModeloTablaEjemplaresGeneral()
         );
+        tabla_ejemplares.setRowHeight(20);
         jScrollPane2.setViewportView(tabla_ejemplares);
 
         btn_nuevoEjemplar.setText("Nuevo");
@@ -249,6 +251,13 @@ public class VEspecies extends javax.swing.JDialog {
 
         jLabel9.setText("Área geográfica");
 
+        btn_editarEjemplar.setText("Modificar");
+        btn_editarEjemplar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_editarEjemplarActionPerformed(evt);
+            }
+        });
+
         ClinicasBoton.setText("Menú Clinicas/Revisiones");
         ClinicasBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -263,45 +272,43 @@ public class VEspecies extends javax.swing.JDialog {
             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEjemplaresLayout.createSequentialGroup()
-                                .addComponent(jlabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel9)
                             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addComponent(btn_nuevoEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_borrarEjemplar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(ClinicasBoton))
+                                        .addComponent(btn_borrarEjemplar)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(AreaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tf_fecNac, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tf_moteEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(0, 158, Short.MAX_VALUE))
-                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                                        .addComponent(btn_editarEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(162, 162, 162)
+                                        .addComponent(ClinicasBoton))
+                                    .addComponent(tf_fecNac)
+                                    .addComponent(tf_moteEjemplar)))
+                            .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelEjemplaresLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(tf_nomeCientEspecie))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelEjemplaresLayout.createSequentialGroup()
+                                    .addComponent(jlabel9)
+                                    .addGap(170, 170, 170)
+                                    .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 454, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 194, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         panelEjemplaresLayout.setVerticalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -321,10 +328,11 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nuevoEjemplar)
                     .addComponent(btn_borrarEjemplar)
+                    .addComponent(btn_editarEjemplar)
                     .addComponent(ClinicasBoton)))
         );
 
@@ -343,11 +351,9 @@ public class VEspecies extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(panelGeneral)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonSalir)
                 .addContainerGap())
         );
@@ -355,9 +361,8 @@ public class VEspecies extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSalir)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(buttonSalir))
         );
 
         pack();
@@ -423,7 +428,7 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_nuevoEjemplarActionPerformed
 
     private void btn_borrarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarEjemplarActionPerformed
-        if (!tf_idEspecie.getText().isEmpty()) {
+        if (!tf_idEspecie.getText().isEmpty() && !tf_nomeCientEspecie.getText().isEmpty()) {
             
             if (fa.borrarEjemplar(Integer.parseInt(tf_idEspecie.getText()),tf_nomeCientEspecie.getText()) != -1) {
                 tf_fecNac.setText("");
@@ -444,6 +449,23 @@ public class VEspecies extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_ClinicasBotonActionPerformed
 
+    private void btn_editarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editarEjemplarActionPerformed
+        if (!tf_idEspecie.getText().isEmpty() && !tf_nomeCientEspecie.getText().isEmpty() && !tf_fecNac.getText().isEmpty() && !tf_moteEjemplar.getText().isEmpty() && AreaComboBox.getSelectedIndex() != -1) {
+            String nomCient = tf_nomeCientEspecie.getText();
+            String id = tf_idEspecie.getText();
+            String mote = tf_moteEjemplar.getText();
+            String fecNac = tf_fecNac.getText();
+            
+            Especie es = new Especie(nomCient);
+            Area ar = new Area(AreaComboBox.getSelectedItem().toString());
+            Ejemplar ej = new Ejemplar(Integer.parseInt(id), es, mote, fecNac, ar);
+            
+            VEjemplarModificar vem = new VEjemplarModificar(padre, true, fa, ej);
+            vem.setVisible(true);
+            obterEjemplares();
+        }
+    }//GEN-LAST:event_btn_editarEjemplarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
@@ -455,6 +477,7 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JTextField NombreComunText;
     private javax.swing.JComboBox<String> TaxonComboBox;
     private javax.swing.JButton btn_borrarEjemplar;
+    private javax.swing.JButton btn_editarEjemplar;
     private javax.swing.JButton btn_nuevoEjemplar;
     private javax.swing.JButton buttonSalir;
     private javax.swing.JLabel jLabel1;

@@ -266,11 +266,6 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
     return exito;
 }
 
-    /**
-     * Obtiene el trabajador más experimentado entre una lista de trabajadores.
-     * @param trabajadoresDisponibles Lista de trabajadores disponibles para seleccionar
-     * @return El trabajador con más misiones completadas de entre los disponibles
-     */
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles) {
         if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty()) {
             return null;
@@ -341,35 +336,37 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
 
         return resultado;
     }
+    
+    
     public Usuario obtenerTrabajadorMision() {
         Usuario resultado = null;
-    String sql = 
-        "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "FROM trabajadores t " +
-        "LEFT JOIN misiones m ON t.dni = m.dni_trabajador " +
-        "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-        "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 " +
-        "ORDER BY COUNT(m.dni_trabajador) ASC " +
-        "LIMIT 1";
+        String sql = 
+            "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+            "FROM trabajadores t " +
+            "LEFT JOIN misiones m ON t.dni = m.dni_trabajador " +
+            "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
+            "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 " +
+            "ORDER BY COUNT(m.dni_trabajador) ASC " +
+            "LIMIT 1";
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
-        try (ResultSet rs = stm.executeQuery()) {
-            String nombreReserva = rs.getString("nombre_reserva");
-            Area area = new Area(nombreReserva);
-            if (rs.next()) {
-                resultado = new Usuario(
-                    rs.getString("dni"),
-                    rs.getString("nombre"),
-                    rs.getFloat("sueldo"),
-                    rs.getInt("horas"),
-                    area
-                );
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
+            try (ResultSet rs = stm.executeQuery()) {
+                String nombreReserva = rs.getString("nombre_reserva");
+                Area area = new Area(nombreReserva);
+                if (rs.next()) {
+                    resultado = new Usuario(
+                        rs.getString("dni"),
+                        rs.getString("nombre"),
+                        rs.getFloat("sueldo"),
+                        rs.getInt("horas"),
+                        area
+                    );
+                }
             }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener un trabajador sin misiones activas: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error al obtener un trabajador sin misiones activas: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    }
 
     return resultado;
     }

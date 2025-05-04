@@ -25,11 +25,19 @@ public class GestionAlimentos {
         return fbd.obtenerAlimentos();
     }
 
-    int anadirAlimento(String nome, String tipo) {
-        return fbd.anadirAlimento(nome, tipo);
+    int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return fbd.anadirAlimento(nome, tipo,distribuidor);
     }
 
-    int borrarAlimento(String nome, String tipo) {
-        return fbd.borrarAlimento(nome, tipo);
+    int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return fbd.borrarAlimento(nome, tipo,distribuidorAlimento);
+    }
+
+    boolean eliminarNoConsumidos() {
+        return fbd.eliminarNoConsumidos();
+    }
+
+    int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return fbd.actualizarAlimento(tipo,nombre,distribuidor);
     }
 }

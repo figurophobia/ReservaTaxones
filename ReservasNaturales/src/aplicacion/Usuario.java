@@ -18,7 +18,6 @@ public class Usuario {
     private int horas;
     private Area Area;
 
-
     public Usuario(String dni, String nombre, float sueldo, int horas,Area Area) {
         this.dni = dni;
         this.nombre = nombre;

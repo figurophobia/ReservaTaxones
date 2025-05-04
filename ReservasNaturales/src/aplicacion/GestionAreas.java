@@ -34,5 +34,6 @@ public class GestionAreas {
 
     public boolean crearArea(Area area) { return fbd.crearArea(area); }
 
+    
     public List<String> obtenerAreasPorEspecie(String nombreCientifico) {return fbd.obtenerAreasPorEspecie(nombreCientifico);}
 }

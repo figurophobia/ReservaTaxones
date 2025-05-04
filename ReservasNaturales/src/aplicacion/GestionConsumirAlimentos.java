@@ -36,5 +36,11 @@ public class GestionConsumirAlimentos {
     List<ConsumirAlimento> obterConsumirAlimentos(int idAlimento) {
         return fbd.obterConsumirAlimentos(idAlimento);
     }
+
+    List<ConsumirAlimento> obterConsumirAlmentosEjemplar(int idEjemplar) {
+        return fbd.obterConsumirAlimentosEjemplar(idEjemplar);
+    }
+
+    
     
 }

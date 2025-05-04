@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package gui;
+import aplicacion.Area;
 import  aplicacion.Usuario;
 import javax.swing.table.*;
 import javax.swing.table.AbstractTableModel;
@@ -15,19 +16,19 @@ import aplicacion.Area;
  */
 public class ModeloTablaTrabajadores extends AbstractTableModel {
     private  List<Usuario> usuarios;
+    private boolean crearTrabajador = false;
+
     public ModeloTablaTrabajadores() {
         this.usuarios= new ArrayList<Usuario>();
      }
-    private boolean crearTrabajador = false;
-
     public void setCrearTrabajador(boolean crear) {
-        this.crearTrabajador = crear;
-    }
+    this.crearTrabajador = crear;
+}
 
-    public boolean isCrearTrabajador() {
-        return this.crearTrabajador;
-    }
-
+public boolean isCrearTrabajador() {
+    return this.crearTrabajador;
+}
+    
     @Override
     public int getRowCount() {
         return usuarios.size();
@@ -66,17 +67,7 @@ public class ModeloTablaTrabajadores extends AbstractTableModel {
         return clase;
     }
 
-
-    @Override
-    public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if (!crearTrabajador) {
-
-            return columnIndex != 0 && columnIndex != 4;
-        } else {
-
-            return true;
-        }
-    }
+    
 
     @Override
     public Object getValueAt(int row, int col) {
@@ -101,6 +92,7 @@ public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         case 2: t.setHoras((int) aValue); break;
         case 3: t.setSueldo((float) aValue); break;
         case 4: t.setArea((Area) aValue);break;
+        
     }
     fireTableCellUpdated(rowIndex, columnIndex);
 }
@@ -126,6 +118,16 @@ public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
         return this.usuarios.get(i);
         
     }
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+    if (!crearTrabajador) {
+        
+        return columnIndex != 0 && columnIndex != 4;
+    } else {
+        
+        return true;
+    }
+}
     
     
 }

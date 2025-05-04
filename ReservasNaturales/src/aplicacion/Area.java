@@ -119,10 +119,8 @@ public class Area {
     public void setAltitudAlta(Double altitudAlta) {
         this.altitudAlta = altitudAlta;
     }
-
     @Override
     public String toString() {
         return nombreReserva; // Esto es lo que se mostrará al imprimir el objeto
     }
-
 }

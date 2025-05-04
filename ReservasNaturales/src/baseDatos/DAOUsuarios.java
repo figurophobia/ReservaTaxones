@@ -296,6 +296,70 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     return exito;    }
 
+
+    boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+    Connection con;
+    PreparedStatement stm = null;
+    boolean exito = true;
+        
+        con = this.getConexion();
+
+    try {
+        stm = con.prepareStatement(
+            "UPDATE trabajadores SET nombre_reserva = ?, sueldo = sueldo + sueldo * 0.1 WHERE dni = ?"
+        );
+        
+        if (areaSeleccionada != null) {
+            stm.setString(1, areaSeleccionada.getNombreReserva());
+        } else {
+            stm.setNull(1, java.sql.Types.VARCHAR);
+        }
+
+        stm.setString(2, trabajador.getDni());
+
+        int filas = stm.executeUpdate();
+        if (filas == 0) {
+            exito = false; 
+        } else {
+            trabajador.setArea(areaSeleccionada); // puede ser null, y está bien
+        }
+
+    } catch (SQLException e) {
+        exito = false;
+        System.out.println("Error al actualizar área del usuario: " + e.getMessage());
+        this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
+    } finally {
+        try {
+            stm = con.prepareStatement(
+                    "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
+            );
+            stm.setString(1, areaSeleccionada.getNombreReserva());
+            stm.setString(2, trabajador.getDni());
+
+            int filas = stm.executeUpdate();
+            if (filas == 0) {
+                exito = false;
+            } else {
+
+                trabajador.setArea(areaSeleccionada);
+            }
+
+        } catch (SQLException e) {
+            exito = false;
+            System.out.println("Error al actualizar área del usuario: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
+        } finally {
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return exito;
+
+    }}
+
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {
         List<Usuario> resultado = new ArrayList<>();
         Connection con = this.getConexion();
@@ -343,42 +407,25 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         return resultado;
     }
 
-    boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
-        Connection con;
-        PreparedStatement stm = null;
-        boolean exito = true;
-
-        con = this.getConexion();
+    int reducirXornadaAreaMaisSaturada(int porcentaxeReduc) {
+         Connection con;
+        PreparedStatement stmUsuario=null;
+        int res = -1;
+        con=super.getConexion();
 
         try {
-            stm = con.prepareStatement(
-                    "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
-            );
-            stm.setString(1, areaSeleccionada.getNombreReserva());
-            stm.setString(2, trabajador.getDni());
+        float porcentaxe = porcentaxeReduc/ 100f;
+        stmUsuario=con.prepareStatement("update trabajadores set horas = horas - horas * ? where nombre_reserva = (SELECT nombre_reserva FROM trabajadores group by nombre_reserva order by count (*) DESC LIMIT 1)");
+        stmUsuario.setFloat(1, porcentaxe);
+       
+        res = stmUsuario.executeUpdate();
 
-            int filas = stm.executeUpdate();
-            if (filas == 0) {
-                exito = false;
-            } else {
-
-                trabajador.setArea(areaSeleccionada);
-            }
-
-        } catch (SQLException e) {
-            exito = false;
-            System.out.println("Error al actualizar área del usuario: " + e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
-        } finally {
-            try {
-                if (stm != null) stm.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
+        } catch (SQLException e){
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-
-        return exito;
-
+        
+        return res;
     }
     
     
