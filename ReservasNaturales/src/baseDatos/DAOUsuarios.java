@@ -10,6 +10,8 @@ import aplicacion.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -299,7 +301,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
     Connection con;
-    PreparedStatement stm = null;
+    PreparedStatement stm = null, stmMisions = null;
     boolean exito = true;
         
         con = this.getConexion();
@@ -309,6 +311,8 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
             "UPDATE trabajadores SET nombre_reserva = ?, sueldo = sueldo + sueldo * 0.1 WHERE dni = ?"
         );
         
+        stmMisions = con.prepareStatement("UPDATE misiones SET fecha_inicio = NOW() WHERE dni_trabajador = ? and fecha_fin IS NULL");
+        
         if (areaSeleccionada != null) {
             stm.setString(1, areaSeleccionada.getNombreReserva());
         } else {
@@ -316,49 +320,34 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         }
 
         stm.setString(2, trabajador.getDni());
-
+        
+        con.setAutoCommit(false);
+        
         int filas = stm.executeUpdate();
-        if (filas == 0) {
-            exito = false; 
-        } else {
-            trabajador.setArea(areaSeleccionada); // puede ser null, y está bien
+        
+        stmMisions.setString(1, trabajador.getDni());
+        
+        int res = stmMisions.executeUpdate();
+        
+        if (filas != -1 || res != -1) {
+            exito = true;
         }
+        
+        con.setAutoCommit(true);
 
     } catch (SQLException e) {
+        try {
+            con.setAutoCommit(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
         exito = false;
         System.out.println("Error al actualizar área del usuario: " + e.getMessage());
         this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
-    } finally {
-        try {
-            stm = con.prepareStatement(
-                    "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
-            );
-            stm.setString(1, areaSeleccionada.getNombreReserva());
-            stm.setString(2, trabajador.getDni());
-
-            int filas = stm.executeUpdate();
-            if (filas == 0) {
-                exito = false;
-            } else {
-
-                trabajador.setArea(areaSeleccionada);
-            }
-
-        } catch (SQLException e) {
-            exito = false;
-            System.out.println("Error al actualizar área del usuario: " + e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
-        } finally {
-            try {
-                if (stm != null) stm.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
-        }
-
+    }
+    
         return exito;
-
-    }}
+    }
 
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {
         List<Usuario> resultado = new ArrayList<>();
