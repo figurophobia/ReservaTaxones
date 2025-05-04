@@ -52,7 +52,6 @@ public class VMisones extends javax.swing.JDialog {
         btnEliminar = new javax.swing.JButton();
         btnSarlir = new javax.swing.JButton();
         btnCompletada = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
         checkIncompletas = new javax.swing.JCheckBox();
         checkCompletas = new javax.swing.JCheckBox();
 
@@ -114,13 +113,6 @@ public class VMisones extends javax.swing.JDialog {
             }
         });
 
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-
         checkIncompletas.setText("Solo mostrar incompletas");
         checkIncompletas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,46 +131,41 @@ public class VMisones extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(checkBoxTrabajador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(checkBoxEspecie)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkIncompletas)
+                        .addGap(18, 18, 18)
+                        .addComponent(checkCompletas)
+                        .addGap(0, 262, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBuscar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnNueva)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCompletada)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnSarlir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(checkBoxTrabajador)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(checkBoxEspecie)
-                                .addGap(18, 18, 18)
-                                .addComponent(checkIncompletas)
-                                .addGap(18, 18, 18)
-                                .addComponent(checkCompletas)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(35, 35, 35))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSarlir)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(checkBoxTrabajador)
@@ -192,9 +179,8 @@ public class VMisones extends javax.swing.JDialog {
                     .addComponent(btnNueva)
                     .addComponent(btnEliminar)
                     .addComponent(btnCompletada)
-                    .addComponent(btnActualizar)
                     .addComponent(btnSarlir))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -262,12 +248,13 @@ public class VMisones extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCompletadaActionPerformed
 
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
+        int numeroMisionesAntes = fa.contarMisionesActivas();
         VMisionesNuevo vmn = new VMisionesNuevo(this.parent, true, fa);
         vmn.setVisible(true);
 
         int numeroMisionesActivas = fa.contarMisionesActivas();
         System.out.println("Numero de misiones activas: " + numeroMisionesActivas);
-        if (numeroMisionesActivas > 5) {
+        if (numeroMisionesActivas > 5 && numeroMisionesAntes!=numeroMisionesActivas) {
             Mision misionMasAntigua = fa.obtenerMisionMasAntigua();
             int respuesta = JOptionPane.showConfirmDialog(this, "Tienes más de 5 misiones activas, ¿deseas completar la misión más antigua ("
                     + misionMasAntigua.getFechaInicio() + ") ?", "Completar Misión", JOptionPane.YES_NO_OPTION);
@@ -281,40 +268,6 @@ public class VMisones extends javax.swing.JDialog {
         // Actualizar la tabla después de agregar una nueva misión
         buscarMisiones();
     }//GEN-LAST:event_btnNuevaActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-    // Obtener el modelo de la tabla
-    ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
-
-    // Recoger las misiones actuales y las originales
-    List<Mision> misionesActuales = modelo.getMisiones();
-    List<Mision> misionesOriginales = modelo.getMisionesOriginales(); // Obtienes las misiones originales
-
-
-
-
-    for (int i = 0; i < misionesActuales.size(); i++) {
-        Mision misionActual = misionesActuales.get(i);
-        Mision misionOriginal = (i < misionesOriginales.size()) ? misionesOriginales.get(i) : null;
-
-
-
-        // Si la misión original existe, compararla con la misión actual
-        if (misionOriginal != null) {
-            // Verificar si los campos clave han cambiado
-            if (hasMisionChanged(misionOriginal, misionActual)) {
-                // Si ha cambiado, actualizarla
-                fa.actualizarMision(misionActual, misionOriginal);
-            }
-        } else {
-            // Si la misión original es null, significa que es una misión nueva, así que la agregamos
-            fa.agregarNuevaMision(misionActual);
-        }
-    }
-
-    // Mostrar mensaje de éxito
-    JOptionPane.showMessageDialog(this, "Misiones actualizadas correctamente.");
-    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void checkIncompletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkIncompletasActionPerformed
         if (checkIncompletas.isSelected()) {
@@ -399,7 +352,6 @@ public class VMisones extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablaMisiones;
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCompletada;
     private javax.swing.JButton btnEliminar;
