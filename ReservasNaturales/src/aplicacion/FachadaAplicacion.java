@@ -253,7 +253,7 @@ public class FachadaAplicacion {
     
     public List<Usuario> obtenerTrabajadoresPorArea(String area) {return gu.obtenerTrabajadoresPorArea(area);}
 
-    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
+    public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles, String especie){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles, especie);}
 
 
     public Mision obtenerMisionMasAntigua() { return gm.obtenerMisionMasAntigua(); }
