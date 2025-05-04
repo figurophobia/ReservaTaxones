@@ -11,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 /**
  *
  * @author alumnogreibd
@@ -50,6 +51,9 @@ public class VAlimentos extends javax.swing.JDialog {
         btn_borrarAlimento = new javax.swing.JButton();
         btn_salir = new javax.swing.JButton();
         btn_asignarAlimento = new javax.swing.JButton();
+        btnNoConsumidos = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        tf_distribuidorAlimento = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -96,6 +100,15 @@ public class VAlimentos extends javax.swing.JDialog {
             }
         });
 
+        btnNoConsumidos.setText("Deshechar no consumidos");
+        btnNoConsumidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNoConsumidosActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Distribuidora");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -107,25 +120,30 @@ public class VAlimentos extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3))
                                 .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(tf_distribuidorAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btn_asignarAlimento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btn_anadirAlimento)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
                                         .addComponent(btn_borrarAlimento))
                                     .addComponent(tf_tipoAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(tf_nombreAlimento, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(btn_salir)))
                                 .addGap(15, 15, 15))))))
         );
@@ -135,7 +153,7 @@ public class VAlimentos extends javax.swing.JDialog {
                 .addGap(10, 10, 10)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -144,16 +162,22 @@ public class VAlimentos extends javax.swing.JDialog {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tf_tipoAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addGap(8, 8, 8)
+                        .addComponent(tf_distribuidorAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_anadirAlimento)
                             .addComponent(btn_borrarAlimento))
                         .addGap(18, 18, 18)
                         .addComponent(btn_asignarAlimento)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_salir))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_salir)
+                            .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         pack();
@@ -169,35 +193,84 @@ public class VAlimentos extends javax.swing.JDialog {
 
     private void btn_anadirAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anadirAlimentoActionPerformed
         
-        if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty()) {
-            ModeloTablaAlimentos mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
+        if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !tf_distribuidorAlimento.getText().isEmpty()) {
+        ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
+    
+        // Obtener las filas actuales de la tabla
+        List<Alimento> alAux = mta.getFilas();
         
-            List<Alimento> alAux = mta.getFilas();
-            
-            for (Alimento a : alAux) {
-                if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
-                   
-                    return;
+        // Buscar si el alimento ya existe
+        boolean alimentoExistente = false;
+        for (Alimento a : alAux) {
+            if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
+                alimentoExistente = true;
+                
+                
+                if (fa.actualizarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+                    obterAlimentos(); // Refrescar la lista de alimentos
                 }
+                break; // Salir del ciclo una vez que se ha encontrado el alimento
             }
-            if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText()) != -1) {
-                obterAlimentos();
-            }
-            
         }
+        
+        // Si el alimento no existe, lo añadimos como nuevo
+        if (!alimentoExistente) {
+            if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), tf_distribuidorAlimento.getText()) != -1) {
+                obterAlimentos(); // Refrescar la lista de alimentos
+            }
+        }
+    }
+    
+    // Limpiar los campos de texto
+    tf_nombreAlimento.setText("");
+    tf_tipoAlimento.setText("");
+    tf_distribuidorAlimento.setText(""); 
+        
+        /*if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty() && !TextFieldDistribuidor.getText().isEmpty()) {
+        ModeloTablaAlimentos mta = (ModeloTablaAlimentos) tabla_alimentos.getModel();
+    
+        List<Alimento> alAux = mta.getFilas();
+        
+        for (Alimento a : alAux) {
+            if (a.getNombre().equals(tf_nombreAlimento.getText()) && a.getTipo().equals(tf_tipoAlimento.getText())) {
+                return;
+            }
+        }
+        // Se pasa el distribuidor como un parámetro adicional
+        if (fa.anadirAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText(), TextFieldDistribuidor.getText()) != -1) {
+            obterAlimentos();
+        }
+    }
+    tf_nombreAlimento.setText("");
+    tf_tipoAlimento.setText("");
+    TextFieldDistribuidor.setText(""); */
         
     }//GEN-LAST:event_btn_anadirAlimentoActionPerformed
 
     private void btn_borrarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarAlimentoActionPerformed
         if (!tf_nombreAlimento.getText().isEmpty() && !tf_tipoAlimento.getText().isEmpty()) {
-            
-            if (fa.borrarAlimento(tf_nombreAlimento.getText(), tf_tipoAlimento.getText()) != -1) {
-                obterAlimentos();
+        // Verifica si hay una fila seleccionada en la tabla
+        int filaSeleccionada = tabla_alimentos.getSelectedRow();
+        if (filaSeleccionada != -1) {  // Si hay una fila seleccionada
+            String nombreAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 0);
+            String tipoAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 1);
+            String distribuidorAlimento = (String) tabla_alimentos.getValueAt(filaSeleccionada, 2);
+            // Llama al método de la fachada para borrar el alimento
+            if (fa.borrarAlimento(nombreAlimento, tipoAlimento,distribuidorAlimento) != -1) {
+                obterAlimentos();  // Refresca la lista de alimentos
                 tf_nombreAlimento.setText("");
                 tf_tipoAlimento.setText("");
+                tf_distribuidorAlimento.setText("");  // Limpiar los campos de texto
+            } else {
+                // Mostrar un mensaje si no se puede eliminar el alimento
+                JOptionPane.showMessageDialog(this, "No se pudo eliminar el alimento.");
             }
-        
+        } else {
+            // Si no hay fila seleccionada, muestra un mensaje
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un alimento para borrar.");
         }
+    }
+
     }//GEN-LAST:event_btn_borrarAlimentoActionPerformed
 
     private void btn_asignarAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_asignarAlimentoActionPerformed
@@ -210,12 +283,24 @@ public class VAlimentos extends javax.swing.JDialog {
    
     }//GEN-LAST:event_btn_asignarAlimentoActionPerformed
 
+    private void btnNoConsumidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNoConsumidosActionPerformed
+        // TODO add your handling code here:
+        ModeloTablaAlimentos mta;
+        
+        mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
+        mta.setFilas(fa.obtenerAlimentos());
+        
+        fa.eliminarNoConsumidos();
+        
+    }//GEN-LAST:event_btnNoConsumidosActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNoConsumidos;
     private javax.swing.JButton btn_anadirAlimento;
     private javax.swing.JButton btn_asignarAlimento;
     private javax.swing.JButton btn_borrarAlimento;
@@ -223,8 +308,10 @@ public class VAlimentos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabla_alimentos;
+    private javax.swing.JTextField tf_distribuidorAlimento;
     private javax.swing.JTextField tf_nombreAlimento;
     private javax.swing.JTextField tf_tipoAlimento;
     // End of variables declaration//GEN-END:variables
@@ -241,12 +328,22 @@ public class VAlimentos extends javax.swing.JDialog {
             @Override
             public void mouseClicked(MouseEvent me) {
                 int fila = tabla_alimentos.getSelectedRow();
-                if (fila != -1) {
-                    String nomeAlimento = tabla_alimentos.getValueAt(fila, 0).toString();
-                    String tipoAlimento = tabla_alimentos.getValueAt(fila, 1).toString();
-                    tf_nombreAlimento.setText(nomeAlimento);
-                    tf_tipoAlimento.setText(tipoAlimento);
-                }
+    if (fila != -1) {
+        // Get the values from the table, but check for null first
+        Object nomeAlimentoObj = tabla_alimentos.getValueAt(fila, 0);
+        Object tipoAlimentoObj = tabla_alimentos.getValueAt(fila, 1);
+        Object distribuidorAlimentoObj = tabla_alimentos.getValueAt(fila, 2);
+        
+        // Ensure that null values don't cause a NullPointerException
+        String nomeAlimento = (nomeAlimentoObj != null) ? nomeAlimentoObj.toString() : "";
+        String tipoAlimento = (tipoAlimentoObj != null) ? tipoAlimentoObj.toString() : "";
+        String distribuidorAlimento = (distribuidorAlimentoObj != null) ? distribuidorAlimentoObj.toString() : "";
+        
+        // Set the text fields with the values
+        tf_nombreAlimento.setText(nomeAlimento);
+        tf_tipoAlimento.setText(tipoAlimento);
+        tf_distribuidorAlimento.setText(distribuidorAlimento);
+    }
             }
 
             @Override

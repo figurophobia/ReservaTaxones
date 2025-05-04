@@ -31,6 +31,7 @@ public class VClinicas extends javax.swing.JDialog {
         Integer id = ejemplarRevisado.getId();
         EjemplarField.setText(id.toString());
         listenerSeleccionClinica();
+        BorrarBoton.setEnabled(false);
        
     }
 
@@ -206,11 +207,42 @@ public class VClinicas extends javax.swing.JDialog {
     }//GEN-LAST:event_nombreFieldActionPerformed
 
     private void AñadirClinicaBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirClinicaBotonActionPerformed
-        // TODO add your handling code here:
+          if (!nombreField.getText().isEmpty() && !ubicacionField.getText().isEmpty()
+                 &&!numField.getText().isEmpty()) {
+            String numS = numField.getText();
+            Integer num = Integer.parseInt(numS);
+            ClinicaMedica clinica = new ClinicaMedica(nombreField.getText(),ubicacionField.getText(),num);
+            fa.nuevaClinica(clinica);
+            ModeloTablaClinicasMedicas mt;
+            mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
+
+
+            mt.setFilas(fa.obtenerClinicas(""));
+         
+            
+        }
+        
+            
     }//GEN-LAST:event_AñadirClinicaBotonActionPerformed
 
     private void BorrarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBotonActionPerformed
-        // TODO add your handling code here:
+            ModeloTablaClinicasMedicas modelo = (ModeloTablaClinicasMedicas) TablaClinicas.getModel();
+            int seleccionada = TablaClinicas.getSelectedRow();
+            if(seleccionada != -1){
+                //falta transaccion de añadir xd pero esta es la idea
+                ClinicaMedica clinicaSeleccionada = modelo.getFila(seleccionada);
+                fa.borrarClinica(clinicaSeleccionada);
+                numField.setText("");
+                nombreField.setText("");
+                ubicacionField.setText("");
+                ModeloTablaClinicasMedicas mt;
+                mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
+
+                String textoBusqueda= nombreField.getText().trim();
+
+                mt.setFilas(fa.obtenerClinicas(textoBusqueda));
+                
+            }
     }//GEN-LAST:event_BorrarBotonActionPerformed
 
     private void AñadirRevisionBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirRevisionBotonActionPerformed
@@ -220,6 +252,7 @@ public class VClinicas extends javax.swing.JDialog {
                 //falta transaccion de añadir xd pero esta es la idea
                 ClinicaMedica clinicaSeleccionada = modelo.getFila(seleccionada);
                 fa.crearRevision(clinicaSeleccionada,this.ejemplarRevisado);
+               
                 
             }
             
@@ -294,6 +327,7 @@ private void buscarUsuarios(){
             public void mouseClicked(MouseEvent me) {
                 int fila = TablaClinicas.getSelectedRow();
                 if (fila != -1) {
+                    BorrarBoton.setEnabled(true);
                     ModeloTablaClinicasMedicas mt;
                     mt=(ModeloTablaClinicasMedicas)TablaClinicas.getModel();
                     ClinicaMedica clini = mt.getFila(fila);
@@ -307,6 +341,9 @@ private void buscarUsuarios(){
                     
                     
                    
+                }else{
+                    BorrarBoton.setEnabled(false);
+                    
                 }
                           
                 

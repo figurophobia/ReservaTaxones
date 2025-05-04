@@ -150,7 +150,9 @@ public class FachadaBaseDatos {
     public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
-
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
     public List<Taxon> obtenerTaxones() {
         return daoTaxones.obtenerTaxones();
     }
@@ -159,12 +161,12 @@ public class FachadaBaseDatos {
         return daoAlimentos.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return daoAlimentos.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return daoAlimentos.anadirAlimento(nome, tipo, distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return daoAlimentos.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return daoAlimentos.borrarAlimento(nome, tipo,distribuidorAlimento);
     }
 
     public List<Ejemplar> obtenerEjemplares() {
@@ -252,13 +254,25 @@ public class FachadaBaseDatos {
     public void completarMision(Mision misionSeleccionada) {
         daoMisiones.completarMision(misionSeleccionada);
     }
-
-    public List<Ejemplar> obterEjemplares(Especie e) {
-        return daoEjemplares.obterEjemplares(e);
+     public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+        return daoClinicas.nuevaClinica(clinica);
     }
 
-    public void actualizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
-        daoEjemplares.actualizarEjemplar(ejemplarSeleccionado,nuevoEjemplar);
+    public void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        daoClinicas.borrarClinica(clinicaSeleccionada);
     }
 
+    public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+        daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+    }
+
+    public boolean eliminarNoConsumidos() {
+        return daoAlimentos.eliminarNoConsumidos();
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return daoAlimentos.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
 }

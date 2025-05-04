@@ -9,6 +9,7 @@ import java.awt.Frame;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -16,7 +17,7 @@ import java.util.Set;
  */
 public class VTrabajadores extends javax.swing.JDialog {
     aplicacion.FachadaAplicacion fa;
-    private boolean crearTrabajador;
+    
     /**
      * Creates new form VTrabajadores
      */
@@ -215,57 +216,29 @@ public class VTrabajadores extends javax.swing.JDialog {
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntNuevoActionPerformed
         // TODO add your handling code here:
-    Usuario nuevoUsuario = new Usuario("", "", 0.0f,0,"");
-
-    // Obtener el modelo de la tabla
+    Usuario nuevoUsuario = new Usuario("", "", 0.0f, 0, null);
     ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
 
     mt.anhadeFila(nuevoUsuario);
 
     int lastRow = mt.getRowCount() - 1;
     TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
-
     TablaTrabajadores.editCellAt(lastRow, 0);
-
-   
     TablaTrabajadores.requestFocusInWindow();
-        TablaTrabajadores.requestFocusInWindow();
-        
-        crearTrabajador=true;
-       /* Usuario nuevoUsuario = new Usuario("","",0,0); 
 
-        // Obtener el modelo de la tabla
-        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-
-        // Añadir la nueva fila vacía al modelo
-        mt.setFilas(fa.obtenerTodosLosTrabajadores());
-        mt.anhadeFila(nuevoUsuario);
-
-        // Seleccionar la última fila para editar
-        int lastRow = mt.getRowCount() - 1;
-        TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
-        TablaTrabajadores.editCellAt(lastRow, 0); // Empieza a editar en la primera columna
-        TablaTrabajadores.requestFocusInWindow();
-
-        // Obtener los valores de la nueva fila
-        String dni = (String) mt.getValueAt(lastRow, 0); // Suponiendo que el DNI está en la primera columna
-        String nombre = (String) mt.getValueAt(lastRow, 1); // Suponiendo que el nombre está en la segunda columna
-        int horas = (Integer) mt.getValueAt(lastRow, 2); // Suponiendo que las horas están en la tercera columna
-        float sueldo = (Float) mt.getValueAt(lastRow, 3); // Suponiendo que el sueldo está en la cuarta columna
-
-        // Ahora que tienes los valores de la tabla, los pasas al método para agregar el trabajador a la base de datos
-        fa.nuevoTrabajador(dni, nombre, horas, sueldo);*/
+    
+    mt.setCrearTrabajador(true);
     }//GEN-LAST:event_bntNuevoActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // Obtener el modelo de la tabla
+        
         ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
 
-        // Obtener la lista de trabajadores de la tabla
+        
         List<Usuario> trabajadores = mt.getFilas();
 
         
-        if (crearTrabajador) {
+        if (mt.isCrearTrabajador()) {
             
             String dni = (String) mt.getValueAt(mt.getRowCount() - 1, 0);
             String nombre = (String) mt.getValueAt(mt.getRowCount() - 1, 1);
@@ -277,17 +250,16 @@ public class VTrabajadores extends javax.swing.JDialog {
             fa.nuevoTrabajador(dni, nombre, horas, sueldo,nombre_reserva);
 
             
-            crearTrabajador = false;
+            mt.setCrearTrabajador(false);
         }
 
         
         for (Usuario t : trabajadores) {
-            fa.actualizarTrabajador(t); // Actualiza cada trabajador en la base de datos
+            fa.actualizarTrabajador(t); 
         }
-
+        mt.fireTableDataChanged();
         
-        VAviso aviso = new VAviso((Frame) getParent(), true, "Cambios guardados correctamente.");
-        aviso.setVisible(true);
+        JOptionPane.showMessageDialog(this, "Cambios guardados correctamente.");
     }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -296,9 +268,21 @@ public class VTrabajadores extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void bntMoverAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMoverAreaActionPerformed
-        // TODO add your handling code here:
-        //VMoverArea area = new VMoverArea((Frame) getParent(), true);
-        //area.setVisible(true);
+       int selectedRow = TablaTrabajadores.getSelectedRow();
+
+    if (selectedRow != -1) {
+        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
+        Usuario seleccionado = mt.getFila(selectedRow);
+
+        VMoverArea area = new VMoverArea((Frame) getParent(), true, fa, seleccionado);
+        area.setVisible(true);
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Debes seleccionar un trabajador para mover de área.",
+            "Error", 
+            javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+        
     }//GEN-LAST:event_bntMoverAreaActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

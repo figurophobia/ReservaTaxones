@@ -4,6 +4,7 @@
  */
 package baseDatos;
 
+import aplicacion.Area;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Usuario;
 import java.sql.*;
@@ -40,11 +41,14 @@ public class DAOUsuarios extends AbstractDAO {
             stmUsuario.setString(2, nombre);
             rsUsuario = stmUsuario.executeQuery();
             if (rsUsuario.next()) {
+                //Area area = new Area(rsUsuario.getString("nombre_reserva"));
+                String nombreReserva = rsUsuario.getString("nombre_reserva");
+                Area area = new Area(nombreReserva);
                 resultado = new Usuario(rsUsuario.getString("dni"),
                                         rsUsuario.getString("nombre"),
                                         rsUsuario.getFloat("sueldo"),
                                         rsUsuario.getInt("horas"),
-                                        rsUsuario.getString("nombre_reserva"));
+                                        area);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -75,12 +79,13 @@ public class DAOUsuarios extends AbstractDAO {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
+            Area area = new Area(rsTrabajador.getString("nombre_reserva"));
             Usuario u = new Usuario(
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
                 rsTrabajador.getFloat("sueldo"),
                 rsTrabajador.getInt("horas"),
-                rsTrabajador.getString("nombre_reserva")
+                area
             );
             resultado.add(u);
         }
@@ -114,12 +119,13 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
+            Area area = new Area(rsTrabajador.getString("nombre_reserva"));
             Usuario u = new Usuario(
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
                 rsTrabajador.getFloat("sueldo"),
                 rsTrabajador.getInt("horas"),
-                rsTrabajador.getString("nombre_reserva")
+                area
             );
             resultado.add(u);
         }
@@ -153,12 +159,15 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
         rsTrabajador = stmTrabajador.executeQuery();
 
         while (rsTrabajador.next()) {
+            //Area area = new Area(rsTrabajador.getString("nombre_reserva"));
+            String nombreReserva = rsTrabajador.getString("nombre_reserva");
+            Area area = new Area(nombreReserva);
             Usuario u = new Usuario(
                 rsTrabajador.getString("dni"),
                 rsTrabajador.getString("nombre"),
                 rsTrabajador.getFloat("sueldo"),
                 rsTrabajador.getInt("horas"),
-                rsTrabajador.getString("nombre_reserva")
+                area
             );
             resultado.add(u);
         }
@@ -285,6 +294,49 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
     }
 
     return exito;    }
+
+    boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+     Connection con;
+    PreparedStatement stm = null;
+    boolean exito = true;
+
+    con = this.getConexion();
+
+    try {
+        stm = con.prepareStatement(
+            "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
+        );
+        
+        if (areaSeleccionada != null) {
+            stm.setString(1, areaSeleccionada.getNombreReserva());
+        } else {
+            stm.setNull(1, java.sql.Types.VARCHAR);
+        }
+
+        stm.setString(2, trabajador.getDni());
+
+        int filas = stm.executeUpdate();
+        if (filas == 0) {
+            exito = false; 
+        } else {
+            trabajador.setArea(areaSeleccionada); // puede ser null, y está bien
+        }
+
+    } catch (SQLException e) {
+        exito = false;
+        System.out.println("Error al actualizar área del usuario: " + e.getMessage());
+        this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área del usuario: " + e.getMessage());
+    } finally {
+        try {
+            if (stm != null) stm.close();
+        } catch (SQLException e) {
+            System.out.println("Imposible cerrar cursores");
+        }
+    }
+
+    return exito;
+
+    }
     
     
 }

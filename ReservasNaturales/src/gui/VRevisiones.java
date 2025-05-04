@@ -25,6 +25,7 @@ public class VRevisiones extends javax.swing.JDialog {
     public VRevisiones(java.awt.Frame parent, boolean modal, 
             aplicacion.FachadaAplicacion fa,Ejemplar ejemplar,ClinicaMedica clinica) {
         super(parent, modal);
+        this.fa=fa;
         this.clinicaRevision= clinica;
         this.ejemplarRevision = ejemplar;
        
@@ -88,6 +89,8 @@ public class VRevisiones extends javax.swing.JDialog {
         TablaRevisiones.setModel(new ModeloTablaRevisiones());
         jScrollPane1.setViewportView(TablaRevisiones);
 
+        InformeField.setPreferredSize(new java.awt.Dimension(1000, 30));
+
         jLabel1.setText("informe");
 
         AñadirBoton.setText("AÑADIR");
@@ -111,21 +114,20 @@ public class VRevisiones extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 88, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(InformeField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(87, 87, 87))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(AñadirBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)
-                                .addComponent(salirBoton)
-                                .addContainerGap())))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(InformeField, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 94, Short.MAX_VALUE)
+                                .addComponent(AñadirBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(salirBoton))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -149,6 +151,8 @@ public class VRevisiones extends javax.swing.JDialog {
 
     private void AñadirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirBotonActionPerformed
         // TODO add your handling code here:
+        
+        fa.añadirRevsion(this.clinicaRevision,this.ejemplarRevision,this.InformeField.getText());
         this.dispose();
     }//GEN-LAST:event_AñadirBotonActionPerformed
 

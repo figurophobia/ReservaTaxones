@@ -24,5 +24,13 @@ public class GestionClinicas {
     List<ClinicaMedica> obtenerClinicas(String textoBusqueda) {
         return fbd.obtenerClinicas(textoBusqueda);
     }
+
+    ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+         return fbd.nuevaClinica(clinica);
+    }
+
+    void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        fbd.borrarClinica(clinicaSeleccionada);
+    }
     
 }

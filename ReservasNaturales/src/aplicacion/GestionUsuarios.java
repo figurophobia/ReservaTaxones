@@ -55,5 +55,7 @@ public class GestionUsuarios {
     public boolean eliminarTrabajador(String dni) {
         return fbd.eliminarTrabajador(dni); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-  
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return fbd.actualizarAreaUsuario(trabajador, areaSeleccionada);
+    }
 }

@@ -33,14 +33,6 @@ public class GestionEjemplares {
     int borrarEjemplar(int id, String nom_cient) {
         return fbd.borrarEjemplar(id, nom_cient);
     }
-
-    List<Ejemplar> obterEjemplares(Especie e) {
-        return fbd.obterEjemplares(e);
-    }
-
-    void actulizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
-        fbd.actualizarEjemplar(ejemplarSeleccionado,nuevoEjemplar);
-    }
 }
 
   

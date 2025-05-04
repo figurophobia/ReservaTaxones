@@ -107,7 +107,9 @@ public class FachadaAplicacion {
     public boolean eliminarArea(String nombreReserva) { return ga.eliminarArea(nombreReserva); }
 
     public boolean crearArea(Area area) { return ga.crearArea(area); }
-
+    public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
+        return gu.actualizarAreaUsuario(trabajador,areaSeleccionada);
+    }
     public List<Taxon> obtenerTaxones() {
         return gt.obtenerTaxones();
     }
@@ -116,12 +118,12 @@ public class FachadaAplicacion {
         return gal.obtenerAlimentos();
     }
 
-    public int anadirAlimento(String nome, String tipo) {
-        return gal.anadirAlimento(nome, tipo);
+    public int anadirAlimento(String nome, String tipo, String distribuidor) {
+        return gal.anadirAlimento(nome, tipo,distribuidor);
     }
 
-    public int borrarAlimento(String nome, String tipo) {
-        return gal.borrarAlimento(nome, tipo);
+    public int borrarAlimento(String nome, String tipo, String distribuidorAlimento) {
+        return gal.borrarAlimento(nome, tipo, distribuidorAlimento);
     }
     public void editarEspecie(Especie e) {
         ge.editarEspecie(e);
@@ -223,12 +225,27 @@ public class FachadaAplicacion {
     public void completarMision(Mision misionSeleccionada) {
         gm.completarMision(misionSeleccionada);
     }
-
-    public List<Ejemplar> obterEjemplares(Especie e) {
-        return gej.obterEjemplares(e);
+     public void borrarClinica(ClinicaMedica clinicaSeleccionada) {
+        gc.borrarClinica(clinicaSeleccionada);
     }
 
-    public void actualizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
-        gej.actulizarEjemplar(ejemplarSeleccionado,nuevoEjemplar);
+    public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
+        return gc.nuevaClinica(clinica);
     }
+
+    public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+         gr.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+
+    }
+
+    public boolean eliminarNoConsumidos() {
+        return gal.eliminarNoConsumidos();
+        
+    }
+
+    public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
+        return gal.actualizarAlimento(tipo,nombre,distribuidor);
+    }
+
+    
 }
