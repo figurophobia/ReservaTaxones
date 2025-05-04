@@ -298,7 +298,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
 
     boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
-     Connection con;
+    Connection con;
     PreparedStatement stm = null;
     boolean exito = true;
         
@@ -306,7 +306,7 @@ public List<Usuario> obtenerTrabajadoresNombre(String textoBusqueda) {
 
     try {
         stm = con.prepareStatement(
-            "UPDATE trabajadores SET nombre_reserva = ? WHERE dni = ?"
+            "UPDATE trabajadores SET nombre_reserva = ?, sueldo = sueldo + sueldo * 0.1 WHERE dni = ?"
         );
         
         if (areaSeleccionada != null) {
