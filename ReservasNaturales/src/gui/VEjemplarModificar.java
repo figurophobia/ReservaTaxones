@@ -6,6 +6,7 @@ package gui;
 
 import aplicacion.Alimento;
 import aplicacion.Area;
+import aplicacion.ConsumirAlimento;
 import aplicacion.Ejemplar;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
@@ -14,10 +15,7 @@ import java.awt.event.ItemListener;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author jaime
- */
+
 public class VEjemplarModificar extends javax.swing.JDialog {
 
 
@@ -35,6 +33,7 @@ public class VEjemplarModificar extends javax.swing.JDialog {
         
         cargarAreas();
         cargarAlimentos();
+        cargarAlimentosEjemplarEspecifico(ej.getId());
         
         tf_idModificarEjemplar.setText(String.valueOf(ej.getId()));
         tf_modificarNombreCient.setText(ej.getEspecie().getNombreCientifico());
@@ -53,8 +52,10 @@ public class VEjemplarModificar extends javax.swing.JDialog {
             public void itemStateChanged(ItemEvent ie) {
                if (ie.getStateChange() == ItemEvent.SELECTED) {
                    comboBox_alimentos.setEnabled(true);
+                   comboBox_alimentoModificar.setEnabled(true);
                } else {
                    comboBox_alimentos.setEnabled(false);
+                   comboBox_alimentoModificar.setEnabled(false);
                }
             }
         });
@@ -71,6 +72,19 @@ public class VEjemplarModificar extends javax.swing.JDialog {
         }
 
         comboBox_alimentos.setModel(modelo); // asignar el modelo al ComboBox
+    }
+    
+     private void cargarAlimentosEjemplarEspecifico(int idEjemplar) {
+        List<ConsumirAlimento> alimentos = fa.obterConsumirAlimentosEjemplar(idEjemplar);
+
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+
+        for (ConsumirAlimento a : alimentos) {
+            // Formato : id - nombreAlimento - tipoAlimento
+            modelo.addElement(a.getAlimento().getId() + "-" + a.getAlimento().getNombre() + "-" + a.getAlimento().getTipo()); 
+        }
+
+        comboBox_alimentoModificar.setModel(modelo); // asignar el modelo al ComboBox
     }
     
     private void cargarAreas() {
@@ -111,6 +125,8 @@ public class VEjemplarModificar extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         cb_cambiarAlimento = new javax.swing.JCheckBox();
         comboBox_alimentos = new javax.swing.JComboBox<>();
+        comboBox_alimentoModificar = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -146,6 +162,10 @@ public class VEjemplarModificar extends javax.swing.JDialog {
 
         comboBox_alimentos.setEnabled(false);
 
+        comboBox_alimentoModificar.setEnabled(false);
+
+        jLabel4.setText("Alimento modificar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -179,9 +199,16 @@ public class VEjemplarModificar extends javax.swing.JDialog {
                             .addComponent(comboBox_areas, 0, 216, Short.MAX_VALUE)
                             .addComponent(tf_novaFechaNac))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cb_cambiarAlimento)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(comboBox_alimentos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cb_cambiarAlimento)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboBox_alimentoModificar, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(comboBox_alimentos, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -200,7 +227,9 @@ public class VEjemplarModificar extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(tf_novaFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_novaFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBox_alimentoModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboBox_areas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,11 +265,19 @@ public class VEjemplarModificar extends javax.swing.JDialog {
                 String[] info = infoAlimento.split("-");
                 Alimento al = new Alimento(Integer.parseInt(info[0]));
                 
-                res = fa.modificarEjemplar_cambioAlimentoPoArea(ejemploModificar, al);
-            
+                infoAlimento = comboBox_alimentoModificar.getSelectedItem().toString();
+                info = infoAlimento.split("-");
+                res = fa.modificarEjemplar_cambioAlimentoPoArea(ejemploModificar, al, Integer.parseInt(info[0]));
+                if (res != -1) {
+                    cargarAlimentosEjemplarEspecifico(ej.getId());
+                } else {
+                    System.out.println("MERDAAAA");
+                }
             } else {
                 res = fa.modificarEjemplar(ejemploModificar);
             }
+            
+      
             
         }
     }//GEN-LAST:event_btnAceptarCambiosEjemplarActionPerformed
@@ -249,11 +286,13 @@ public class VEjemplarModificar extends javax.swing.JDialog {
     private javax.swing.JButton bSalir;
     private javax.swing.JButton btnAceptarCambiosEjemplar;
     private javax.swing.JCheckBox cb_cambiarAlimento;
+    private javax.swing.JComboBox<String> comboBox_alimentoModificar;
     private javax.swing.JComboBox<String> comboBox_alimentos;
     private javax.swing.JComboBox<String> comboBox_areas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jlabel1;
     private javax.swing.JLabel labNombre;
     private javax.swing.JTextField tf_idModificarEjemplar;

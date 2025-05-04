@@ -252,11 +252,15 @@ public class FachadaAplicacion {
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles){return gm.obtenerTrabajadorMasExperimentado(trabajadoresDisponibles);}
 
-    public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al) {
-        return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al);
+    public int modificarEjemplar_cambioAlimentoPoArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
+        return gej.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
     }
 
     public int modificarEjemplar(Ejemplar ejemplarModificar) {
         return gej.modificarEjemplar(ejemplarModificar);
+    }
+
+    public List<ConsumirAlimento> obterConsumirAlimentosEjemplar(int idEjemplar) {
+        return gca.obterConsumirAlmentosEjemplar(idEjemplar);
     }
 }

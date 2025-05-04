@@ -34,8 +34,8 @@ public class GestionEjemplares {
         return fbd.borrarEjemplar(id, nom_cient);
     }
 
-    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al) {
-        return fbd.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al);
+    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
+        return fbd.modificarEjemplar_cambioAlimentoPorArea(ejemplarModificar, al, idAlimentoVello);
     }
 
     int modificarEjemplar(Ejemplar ejemplarModificar) {

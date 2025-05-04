@@ -15,6 +15,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DAOEjemplares extends AbstractDAO {
 
@@ -145,8 +147,50 @@ public class DAOEjemplares extends AbstractDAO {
         return res;
     }
 
-    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
+        Connection con;
+        PreparedStatement stmEjemplar=null, stmUpdateConsAlimentos = null;
+        int resEj = -1, resConsAl = -1;
+        con=super.getConexion();
+
+        try {
+        con.setAutoCommit(false); 
+            
+        stmEjemplar=con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
+        stmEjemplar.setString(1, ejemplarModificar.getMote());
+        Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
+        stmEjemplar.setDate(2, fecha);
+        stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
+        stmEjemplar.setInt(4, ejemplarModificar.getId());
+        stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
+        resEj = stmEjemplar.executeUpdate();
+        
+        stmUpdateConsAlimentos = con.prepareStatement("update consumirAlimentos set id_alimento = ? where id_especie = ? and nombre_especie = ? and id_alimento = ?");
+        stmUpdateConsAlimentos.setInt(1, al.getId());
+        stmUpdateConsAlimentos.setInt(2, ejemplarModificar.getId());
+        stmUpdateConsAlimentos.setString(3, ejemplarModificar.getEspecie().getNombreCientifico());
+        stmUpdateConsAlimentos.setInt(4, idAlimentoVello);
+        
+        resConsAl = stmUpdateConsAlimentos.executeUpdate();
+        
+        
+        con.setAutoCommit(true);
+        } catch (SQLException e){
+            try {
+                con.rollback();
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(DAOEjemplares.class.getName()).log(Level.SEVERE, null, ex);
+            }
+          System.out.println(e.getMessage());
+          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+        
+        if (resEj != -1 && resConsAl != -1) {
+            return 1;
+        }
+        
+        return -1;
     }
 
     int modificarEjemplar(Ejemplar ejemplarModificar) {
