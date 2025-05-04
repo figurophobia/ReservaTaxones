@@ -2,17 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VMisionesNuevo.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VMisones.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/FachadaAplicacion.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionMisiones.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/baseDatos/FachadaBaseDatos.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/baseDatos/DAOMisiones.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VConsumirAlimentos.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionUsuarios.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/gui/VEspecies.java</file>
-            <file>file:/home/alumnogreibd/NetBeansProjects/ReservaTaxones/ReservasNaturales/src/aplicacion/GestionEjemplares.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

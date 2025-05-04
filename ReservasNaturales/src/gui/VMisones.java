@@ -271,7 +271,11 @@ public class VMisones extends javax.swing.JDialog {
         
         VMisionesNuevo vmn = new VMisionesNuevo(this.parent, true, fa);
         vmn.setVisible(true);
+    
+        
         // Actualizar la tabla después de agregar una nueva misión
+        
+        
         buscarMisiones();
     }//GEN-LAST:event_btnNuevaActionPerformed
 

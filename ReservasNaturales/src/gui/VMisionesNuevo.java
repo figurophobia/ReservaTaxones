@@ -12,6 +12,7 @@ import aplicacion.Usuario;
 import javax.swing.*;
 import java.util.List;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -304,6 +305,24 @@ public class VMisionesNuevo extends javax.swing.JDialog {
 
         Mision nuevaMision = new Mision(trabajador, cbxEspecies.getSelectedItem().toString(), fechaInicio, fechaFin, descripcion);
         fa.agregarNuevaMision(nuevaMision);
+        
+              
+       
+        String dni= nuevaMision.getTrabajador().getDni();
+    
+        int numeroMisionesActivas = fa.contarMisionesActivas(dni);
+        if (numeroMisionesActivas > 5) {
+            Mision misionMasAntigua = fa.obtenerMisionMasAntigua(dni);
+            int respuesta = JOptionPane.showConfirmDialog(this, "Tienes más de 5 misiones activas, ¿deseas completar la misión más antigua ("
+                    + misionMasAntigua.getFechaInicio() + ") ?", "Completar Misión", JOptionPane.YES_NO_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                Mision nuevaMisionn = misionMasAntigua.clone();
+                nuevaMision.setFechaFin(Date.valueOf(LocalDate.now()));
+                fa.actualizarMision(misionMasAntigua, nuevaMisionn);
+                JOptionPane.showMessageDialog(this, "La misión más antigua ha sido establecida como completada.");
+            }
+        }
+        
 
         this.dispose();
     }//GEN-LAST:event_bAgregarActionPerformed
