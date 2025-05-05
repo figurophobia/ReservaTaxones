@@ -23,56 +23,41 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labExtension" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="labProfundidad" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="labNombre" min="-2" max="-2" attributes="0"/>
+                          <Component id="labExtension" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labProfundidad" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="Crearbtn" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="Salirbtn" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="checkTerrestre" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="checkAcuatica" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="textoExtension" pref="217" max="32767" attributes="0"/>
-                              <Component id="textoProfundidad" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="bCrear" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                          <Component id="bSalir" min="-2" max="-2" attributes="0"/>
+                          <Component id="labAltMax" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="Extensiontf" pref="278" max="32767" attributes="0"/>
+                              <Component id="ProfundidadTF" alignment="0" pref="278" max="32767" attributes="0"/>
+                              <Component id="NombreTF" alignment="0" max="32767" attributes="0"/>
+                              <Component id="AltMaxTF" alignment="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Component id="labAltMin" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="textoAltMin" alignment="0" max="32767" attributes="0"/>
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="checkTerrestre" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Component id="checkAcuatica" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="labNombre" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="textoNombre" min="-2" pref="241" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="labAltMax" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="textoAltMax" min="-2" pref="201" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="labAltMin" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                      <Component id="AltMinTF" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -84,46 +69,40 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="textoNombre" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="NombreTF" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labNombre" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="textoExtension" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Extensiontf" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labExtension" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="textoProfundidad" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="ProfundidadTF" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="labProfundidad" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="labAltMax" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="textoAltMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="AltMaxTF" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labAltMin" min="-2" max="-2" attributes="0"/>
-                  <Component id="textoAltMin" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="checkTerrestre" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="checkAcuatica" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bCrear" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bSalir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="labAltMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="AltMinTF" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Component id="checkTerrestre" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="checkAcuatica" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="47" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="Crearbtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Salirbtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -136,7 +115,7 @@
         <Property name="text" type="java.lang.String" value="Nombre"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoNombre">
+    <Component class="javax.swing.JTextField" name="NombreTF">
     </Component>
     <Component class="javax.swing.JLabel" name="labExtension">
       <Properties>
@@ -148,9 +127,9 @@
         <Property name="text" type="java.lang.String" value="Profundidad"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoExtension">
+    <Component class="javax.swing.JTextField" name="Extensiontf">
     </Component>
-    <Component class="javax.swing.JTextField" name="textoProfundidad">
+    <Component class="javax.swing.JTextField" name="ProfundidadTF">
     </Component>
     <Component class="javax.swing.JLabel" name="labAltMax">
       <Properties>
@@ -162,9 +141,9 @@
         <Property name="text" type="java.lang.String" value="Altura m&#xed;nima"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textoAltMax">
+    <Component class="javax.swing.JTextField" name="AltMaxTF">
     </Component>
-    <Component class="javax.swing.JTextField" name="textoAltMin">
+    <Component class="javax.swing.JTextField" name="AltMinTF">
     </Component>
     <Component class="javax.swing.JCheckBox" name="checkTerrestre">
       <Properties>
@@ -179,20 +158,23 @@
         <Property name="text" type="java.lang.String" value="Acu&#xe1;tica"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="bSalir">
+    <Component class="javax.swing.JButton" name="Salirbtn">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3c" green="4c" red="e7" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSalirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="SalirbtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="bCrear">
+    <Component class="javax.swing.JButton" name="Crearbtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Crear"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bCrearActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CrearbtnActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">

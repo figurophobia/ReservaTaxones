@@ -26,21 +26,20 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="858" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="815" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="textoBuscar" min="-2" pref="570" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                      <Component id="bBuscar" min="-2" pref="95" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <Component id="buscarTF" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Buscarbtn" min="-2" pref="95" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="bNuevo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bEditar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="bBorrar" min="-2" max="-2" attributes="0"/>
+                      <Component id="Nuevobtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Editarbtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="Bprrarbtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="bSalir" min="-2" max="-2" attributes="0"/>
+                      <Component id="exitbtn" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -52,17 +51,17 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="textoBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buscarTF" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="Buscarbtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="239" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="bNuevo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="bSalir" alignment="3" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" max="-2" attributes="0">
+                  <Component id="Nuevobtn" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="Editarbtn" alignment="1" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="exitbtn" alignment="1" min="-2" pref="41" max="-2" attributes="0"/>
+                  <Component id="Bprrarbtn" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -70,21 +69,21 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JTextField" name="textoBuscar">
+    <Component class="javax.swing.JTextField" name="buscarTF">
       <Properties>
         <Property name="toolTipText" type="java.lang.String" value="Nombre del &#xe1;rea  geogr&#xe1;fica"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textoBuscarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buscarTFActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="bBuscar">
+    <Component class="javax.swing.JButton" name="Buscarbtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Buscar"/>
         <Property name="toolTipText" type="java.lang.String" value="Buscar &#xe1;rea geogr&#xe1;fica"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBuscarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BuscarbtnActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -104,40 +103,43 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="bNuevo">
+    <Component class="javax.swing.JButton" name="Nuevobtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nuevo"/>
         <Property name="toolTipText" type="java.lang.String" value="Crear nueva &#xe1;rea geogr&#xe1;fica"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bNuevoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NuevobtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="bEditar">
+    <Component class="javax.swing.JButton" name="Editarbtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Editar"/>
         <Property name="toolTipText" type="java.lang.String" value="Editar el &#xe1;rea seleccionada"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bEditarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EditarbtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="bBorrar">
+    <Component class="javax.swing.JButton" name="Bprrarbtn">
       <Properties>
         <Property name="text" type="java.lang.String" value="Borrar"/>
         <Property name="toolTipText" type="java.lang.String" value="Eliminar el &#xe1;rea seleccionada"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bBorrarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BprrarbtnActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="bSalir">
+    <Component class="javax.swing.JButton" name="exitbtn">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3c" green="4c" red="e7" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
         <Property name="toolTipText" type="java.lang.String" value="Cerrar esta ventana"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bSalirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitbtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

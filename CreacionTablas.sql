@@ -26,7 +26,7 @@ CREATE TABLE pais (
     area VARCHAR(100),
     PRIMARY KEY (nombre, area),
     FOREIGN KEY (area) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Tabla de especies

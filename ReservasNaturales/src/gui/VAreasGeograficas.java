@@ -27,30 +27,34 @@ public class VAreasGeograficas extends javax.swing.JDialog {
         this.fa = fa;
         initComponents();
         padre = (VPrincipal) parent;
-        bEditar.setEnabled(false);
-        bBorrar.setEnabled(false);
+        Editarbtn.setEnabled(false);
+        Bprrarbtn.setEnabled(false);
         
-        TableColumnModel columnModel = tablaAreas.getColumnModel();
-
-        columnModel.getColumn(0).setPreferredWidth(300); 
-
-        tablaAreas.getSelectionModel().addListSelectionListener(e -> {
-            if (!e.getValueIsAdjusting()) {  // This ensures we only handle the final event
-                int selectedRow = tablaAreas.getSelectedRow();
-                if (selectedRow >= 0) {
-                    ModeloTablaAreas modelo = (ModeloTablaAreas) tablaAreas.getModel();
-                    selectedArea = modelo.getFila(selectedRow);
-                    bEditar.setEnabled(true);
-                    bBorrar.setEnabled(true);
-                } else {
-                    selectedArea = null;
-                    bEditar.setEnabled(false);
-                    bBorrar.setEnabled(false);
-                }
-            }
-        });
+        configurarTablaAreas();
 
     }
+    
+    private void configurarTablaAreas() {
+    TableColumnModel columnModel = tablaAreas.getColumnModel();
+    columnModel.getColumn(0).setPreferredWidth(300); 
+
+    tablaAreas.getSelectionModel().addListSelectionListener(e -> {
+        if (!e.getValueIsAdjusting()) {
+            int selectedRow = tablaAreas.getSelectedRow();
+            if (selectedRow >= 0) {
+                ModeloTablaAreas modelo = (ModeloTablaAreas) tablaAreas.getModel();
+                selectedArea = modelo.getFila(selectedRow);
+                Editarbtn.setEnabled(true);
+                Bprrarbtn.setEnabled(true);
+            } else {
+                selectedArea = null;
+                Editarbtn.setEnabled(false);
+                Bprrarbtn.setEnabled(false);
+            }
+        }
+    });
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,29 +65,29 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textoBuscar = new javax.swing.JTextField();
-        bBuscar = new javax.swing.JButton();
+        buscarTF = new javax.swing.JTextField();
+        Buscarbtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaAreas = new javax.swing.JTable();
-        bNuevo = new javax.swing.JButton();
-        bEditar = new javax.swing.JButton();
-        bBorrar = new javax.swing.JButton();
-        bSalir = new javax.swing.JButton();
+        Nuevobtn = new javax.swing.JButton();
+        Editarbtn = new javax.swing.JButton();
+        Bprrarbtn = new javax.swing.JButton();
+        exitbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        textoBuscar.setToolTipText("Nombre del área  geográfica");
-        textoBuscar.addActionListener(new java.awt.event.ActionListener() {
+        buscarTF.setToolTipText("Nombre del área  geográfica");
+        buscarTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textoBuscarActionPerformed(evt);
+                buscarTFActionPerformed(evt);
             }
         });
 
-        bBuscar.setText("Buscar");
-        bBuscar.setToolTipText("Buscar área geográfica");
-        bBuscar.addActionListener(new java.awt.event.ActionListener() {
+        Buscarbtn.setText("Buscar");
+        Buscarbtn.setToolTipText("Buscar área geográfica");
+        Buscarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bBuscarActionPerformed(evt);
+                BuscarbtnActionPerformed(evt);
             }
         });
 
@@ -91,35 +95,36 @@ public class VAreasGeograficas extends javax.swing.JDialog {
         tablaAreas.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         jScrollPane1.setViewportView(tablaAreas);
 
-        bNuevo.setText("Nuevo");
-        bNuevo.setToolTipText("Crear nueva área geográfica");
-        bNuevo.addActionListener(new java.awt.event.ActionListener() {
+        Nuevobtn.setText("Nuevo");
+        Nuevobtn.setToolTipText("Crear nueva área geográfica");
+        Nuevobtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bNuevoActionPerformed(evt);
+                NuevobtnActionPerformed(evt);
             }
         });
 
-        bEditar.setText("Editar");
-        bEditar.setToolTipText("Editar el área seleccionada");
-        bEditar.addActionListener(new java.awt.event.ActionListener() {
+        Editarbtn.setText("Editar");
+        Editarbtn.setToolTipText("Editar el área seleccionada");
+        Editarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bEditarActionPerformed(evt);
+                EditarbtnActionPerformed(evt);
             }
         });
 
-        bBorrar.setText("Borrar");
-        bBorrar.setToolTipText("Eliminar el área seleccionada");
-        bBorrar.addActionListener(new java.awt.event.ActionListener() {
+        Bprrarbtn.setText("Borrar");
+        Bprrarbtn.setToolTipText("Eliminar el área seleccionada");
+        Bprrarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bBorrarActionPerformed(evt);
+                BprrarbtnActionPerformed(evt);
             }
         });
 
-        bSalir.setText("Salir");
-        bSalir.setToolTipText("Cerrar esta ventana");
-        bSalir.addActionListener(new java.awt.event.ActionListener() {
+        exitbtn.setBackground(new java.awt.Color(231, 76, 60));
+        exitbtn.setText("Salir");
+        exitbtn.setToolTipText("Cerrar esta ventana");
+        exitbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSalirActionPerformed(evt);
+                exitbtnActionPerformed(evt);
             }
         });
 
@@ -130,20 +135,19 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(75, 75, 75)
-                        .addComponent(bBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(buscarTF)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Buscarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(bNuevo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bEditar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bBorrar)
+                        .addComponent(Nuevobtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Editarbtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Bprrarbtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(bSalir)))
+                        .addComponent(exitbtn)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -151,67 +155,67 @@ public class VAreasGeograficas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bBuscar))
+                    .addComponent(buscarTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buscarbtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bNuevo)
-                    .addComponent(bEditar)
-                    .addComponent(bBorrar)
-                    .addComponent(bSalir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(Nuevobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Editarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exitbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Bprrarbtn, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textoBuscarActionPerformed
+    private void buscarTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTFActionPerformed
         buscarAreas();
-    }//GEN-LAST:event_textoBuscarActionPerformed
+    }//GEN-LAST:event_buscarTFActionPerformed
 
-    private void bBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBuscarActionPerformed
+    private void BuscarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarbtnActionPerformed
         buscarAreas();
-    }//GEN-LAST:event_bBuscarActionPerformed
+    }//GEN-LAST:event_BuscarbtnActionPerformed
 
-    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+    private void exitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbtnActionPerformed
         this.dispose();
-    }//GEN-LAST:event_bSalirActionPerformed
+    }//GEN-LAST:event_exitbtnActionPerformed
 
-    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+    private void BprrarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BprrarbtnActionPerformed
         borrarArea();
         buscarAreas();
-        bEditar.setEnabled(false);
-        bBorrar.setEnabled(false);
+        Editarbtn.setEnabled(false);
+        Bprrarbtn.setEnabled(false);
         if (tablaAreas.getRowCount() != 0) {
             tablaAreas.setRowSelectionInterval(0, 0);
         }
-    }//GEN-LAST:event_bBorrarActionPerformed
+    }//GEN-LAST:event_BprrarbtnActionPerformed
 
-    private void bEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bEditarActionPerformed
+    private void EditarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditarbtnActionPerformed
         new VAreasEditar(this.padre, true, fa, selectedArea).setVisible(true);
         buscarAreas();  
-    }//GEN-LAST:event_bEditarActionPerformed
+    }//GEN-LAST:event_EditarbtnActionPerformed
 
-    private void bNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bNuevoActionPerformed
+    private void NuevobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevobtnActionPerformed
         new VAreasNuevo(this.padre, true, fa).setVisible(true);
         buscarAreas();
-    }//GEN-LAST:event_bNuevoActionPerformed
+    }//GEN-LAST:event_NuevobtnActionPerformed
 
     private void buscarAreas() {
-        String textoBusqueda = textoBuscar.getText();
-        ArrayList<Area> areas = (ArrayList<Area>) fa.buscarAreas(textoBusqueda);
-        ModeloTablaAreas modeloTablaAreas = (ModeloTablaAreas) tablaAreas.getModel();
-        modeloTablaAreas.setFilas(areas);
+        String textoBusqueda = buscarTF.getText();
+        List<Area> areas = fa.buscarAreas(textoBusqueda);
 
-        if (modeloTablaAreas.getRowCount() > 0) {
+        ModeloTablaAreas modeloTabla = (ModeloTablaAreas) tablaAreas.getModel();
+        modeloTabla.setFilas((ArrayList<Area>) areas);
+
+        boolean hayResultados = !areas.isEmpty();
+        Editarbtn.setEnabled(hayResultados);
+        Bprrarbtn.setEnabled(hayResultados);
+
+        if (hayResultados) {
             tablaAreas.setRowSelectionInterval(0, 0);
-            bEditar.setEnabled(true);
-            bBorrar.setEnabled(true);
-        } else {
-            bEditar.setEnabled(false);
-            bBorrar.setEnabled(false);
         }
     }
 
@@ -220,13 +224,13 @@ public class VAreasGeograficas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bBorrar;
-    private javax.swing.JButton bBuscar;
-    private javax.swing.JButton bEditar;
-    private javax.swing.JButton bNuevo;
-    private javax.swing.JButton bSalir;
+    private javax.swing.JButton Bprrarbtn;
+    private javax.swing.JButton Buscarbtn;
+    private javax.swing.JButton Editarbtn;
+    private javax.swing.JButton Nuevobtn;
+    private javax.swing.JTextField buscarTF;
+    private javax.swing.JButton exitbtn;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaAreas;
-    private javax.swing.JTextField textoBuscar;
     // End of variables declaration//GEN-END:variables
 }

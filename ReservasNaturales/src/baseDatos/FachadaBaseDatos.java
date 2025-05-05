@@ -140,16 +140,16 @@ public class FachadaBaseDatos {
     }
 
     public List<Area> obtenerAreas() {
-        return daoAreas.obtenerAreas();
+        return daoAreas.obtenerAreasGeneric();
     }
 
-    public List<Area> buscarAreas(String textoBusqueda){ return daoAreas.buscarAreas(textoBusqueda); }
+    public List<Area> buscarAreas(String textoBusqueda){ return daoAreas.buscarAreasPorNombre(textoBusqueda); }
 
-    public boolean actualizarArea(Area area) { return daoAreas.actualizarArea(area); }
+    public boolean actualizarArea(Area area) { return daoAreas.modificarArea(area); }
 
-    public boolean eliminarArea(String nombreReserva) { return daoAreas.eliminarArea(nombreReserva); }
+    public boolean eliminarArea(String nombreReserva) { return daoAreas.deleteArea(nombreReserva); }
 
-    public boolean crearArea(Area area) { return daoAreas.crearArea(area); }
+    public boolean crearArea(Area area) { return daoAreas.NuevaArea(area); }
     public boolean actualizarAreaUsuario(Usuario trabajador, Area areaSeleccionada) {
         return daoUsuarios.actualizarAreaUsuario(trabajador,areaSeleccionada);
     }

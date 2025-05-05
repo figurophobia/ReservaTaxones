@@ -17,218 +17,251 @@ public class DAOAreas extends AbstractDAO {
         super.setFachadaAplicacion(fa);
     }
 
-    public List<Area> obtenerAreas() {
-        List<Area> resultado = new ArrayList<>();
-        Connection con = this.getConexion();
-        PreparedStatement stmArea = null;
-        ResultSet rsArea;
+    public List<Area> obtenerAreasGeneric() {
+        List<Area> areas = new ArrayList<>();
+        Connection conexion = this.getConexion();
+        PreparedStatement sentencia = null;
+        ResultSet resultadoConsulta = null;
 
         try {
-            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
-                              "FROM area_geografica";
-            stmArea = con.prepareStatement(consulta);
-            rsArea = stmArea.executeQuery();
+            String query = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
+                           "FROM area_geografica";
+            sentencia = conexion.prepareStatement(query);
+            resultadoConsulta = sentencia.executeQuery();
 
-            while (rsArea.next()) {
-                String nombreReserva = rsArea.getString("nombre_reserva");
-                double extension = rsArea.getDouble("extension");
-                Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : null;
-                Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : null;
-                Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : null;
-                boolean esAcuatica = rsArea.getBoolean("esacuatica");  // Corregir nombre de columna aquí
-                boolean esTerrestre = rsArea.getBoolean("esterrestre");
+            while (resultadoConsulta.next()) {
+                String reservaNombre = resultadoConsulta.getString("nombre_reserva");
+                double extension = resultadoConsulta.getDouble("extension");
 
-                Area area;
+                // Verificar si los valores de altitud y profundidad son nulos
+                Double altitudInferior = resultadoConsulta.getObject("altitud_nivel_bajo") != null ? resultadoConsulta.getDouble("altitud_nivel_bajo") : null;
+                Double altitudSuperior = resultadoConsulta.getObject("altitud_nivel_alto") != null ? resultadoConsulta.getDouble("altitud_nivel_alto") : null;
+                Double profundidad = resultadoConsulta.getObject("profundidad") != null ? resultadoConsulta.getDouble("profundidad") : null;
 
+                boolean esAcuatica = resultadoConsulta.getBoolean("esacuatica");
+                boolean esTerrestre = resultadoConsulta.getBoolean("esterrestre");
+
+                Area nuevaArea;
+
+                // Determinar el tipo de área según las condiciones
                 if (esAcuatica) {
-                    area = new Area(nombreReserva, extension, profundidad);  // Áreas acuáticas
+                    nuevaArea = new Area(reservaNombre, extension, profundidad);  // Áreas acuáticas
                 } else if (esTerrestre) {
-                    area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);  // Áreas terrestres
+                    nuevaArea = new Area(reservaNombre, extension, altitudInferior, altitudSuperior);  // Áreas terrestres
                 } else {
-                    // Si no es acuática ni terrestre, tratamos de devolverlo de forma general
-                    area = new Area(nombreReserva, extension, false, false);
+                    nuevaArea = new Area(reservaNombre, extension, false, false);  // Áreas sin tipo definido
                 }
 
-                resultado.add(area);
+                areas.add(nuevaArea);
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.err.println("Error al obtener las áreas: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al obtener las áreas: " + e.getMessage());
         } finally {
+            // Cerrar solo los recursos utilizados
             try {
-                if (stmArea != null) stmArea.close();
+                if (resultadoConsulta != null) {
+                    resultadoConsulta.close();
+                }
+                if (sentencia != null) {
+                    sentencia.close();
+                }
             } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
 
-        return resultado;
+        return areas;
     }
     
-    public List<Area> buscarAreas(String textoBusqueda) {
-        List<Area> resultado = new ArrayList<>();
-        Connection con = this.getConexion();
-        PreparedStatement stmArea = null;
-        ResultSet rsArea;
+    public List<Area> buscarAreasPorNombre(String textoBusqueda) {
+        List<Area> areasEncontradas = new ArrayList<>();
+        Connection conexion = this.getConexion();
+        PreparedStatement sentencia = null;
+        ResultSet resultadoConsulta = null;
 
         try {
-            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
-                              "FROM area_geografica " +
-                              "WHERE nombre_reserva ILIKE ?";
-            stmArea = con.prepareStatement(consulta);
-            stmArea.setString(1, "%" + textoBusqueda + "%"); // Búsqueda parcial
-            rsArea = stmArea.executeQuery();
+            String query = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
+                           "FROM area_geografica " +
+                           "WHERE nombre_reserva ILIKE ?";
+            sentencia = conexion.prepareStatement(query);
+            sentencia.setString(1, "%" + textoBusqueda + "%");  // Búsqueda parcial
+            resultadoConsulta = sentencia.executeQuery();
 
-            while (rsArea.next()) {
-                String nombreReserva = rsArea.getString("nombre_reserva");
-                double extension = rsArea.getDouble("extension");
-                Double altitudBaja = rsArea.getObject("altitud_nivel_bajo") != null ? rsArea.getDouble("altitud_nivel_bajo") : 0.0;
-                Double altitudAlta = rsArea.getObject("altitud_nivel_alto") != null ? rsArea.getDouble("altitud_nivel_alto") : 0.0;
-                Double profundidad = rsArea.getObject("profundidad") != null ? rsArea.getDouble("profundidad") : 0.0;
-                boolean esAcuatica = rsArea.getBoolean("esacuatica");
-                boolean esTerrestre = rsArea.getBoolean("esterrestre");
+            while (resultadoConsulta.next()) {
+                String nombreReserva = resultadoConsulta.getString("nombre_reserva");
+                double extension = resultadoConsulta.getDouble("extension");
 
-                Area area;
+                // Verificar si los valores de altitud y profundidad son nulos
+                Double altitudBaja = resultadoConsulta.getObject("altitud_nivel_bajo") != null ? resultadoConsulta.getDouble("altitud_nivel_bajo") : 0.0;
+                Double altitudAlta = resultadoConsulta.getObject("altitud_nivel_alto") != null ? resultadoConsulta.getDouble("altitud_nivel_alto") : 0.0;
+                Double profundidad = resultadoConsulta.getObject("profundidad") != null ? resultadoConsulta.getDouble("profundidad") : 0.0;
+
+                boolean esAcuatica = resultadoConsulta.getBoolean("esacuatica");
+                boolean esTerrestre = resultadoConsulta.getBoolean("esterrestre");
+
+                Area nuevaArea;
+
+                // Determinar el tipo de área según las condiciones
                 if (esAcuatica && esTerrestre) {
-                    area = new Area(nombreReserva, extension, profundidad, altitudAlta, altitudBaja, true, true);
+                    nuevaArea = new Area(nombreReserva, extension, profundidad, altitudAlta, altitudBaja, true, true);  // Áreas acuáticas y terrestres
                 } else if (esAcuatica) {
-                    area = new Area(nombreReserva, extension, profundidad);
+                    nuevaArea = new Area(nombreReserva, extension, profundidad);  // Áreas acuáticas
                 } else if (esTerrestre) {
-                    area = new Area(nombreReserva, extension, altitudBaja, altitudAlta);
+                    nuevaArea = new Area(nombreReserva, extension, altitudBaja, altitudAlta);  // Áreas terrestres
                 } else {
-                    area = new Area(nombreReserva, extension, false, false);
+                    nuevaArea = new Area(nombreReserva, extension, false, false);  // Áreas sin tipo definido
                 }
 
-                resultado.add(area);
+                areasEncontradas.add(nuevaArea);
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.err.println("Error al buscar áreas: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al buscar áreas: " + e.getMessage());
         } finally {
+            // Cerrar solo los recursos utilizados
             try {
-                if (stmArea != null) stmArea.close();
+                if (resultadoConsulta != null) {
+                    resultadoConsulta.close();
+                }
+                if (sentencia != null) {
+                    sentencia.close();
+                }
             } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
 
-        return resultado;
+        return areasEncontradas;
     }
 
-    public boolean actualizarArea(Area area) {
-        Connection con = this.getConexion();
-        PreparedStatement stmArea = null;
-        boolean actualizado = false;
+    public boolean modificarArea(Area area) {
+        Connection conexion = this.getConexion();
+        PreparedStatement sentencia = null;
+        boolean actualizada = false;
+
         try {
-            String consulta = "UPDATE area_geografica " +
-                              "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? " +
-                              "WHERE nombre_reserva = ?";
-            stmArea = con.prepareStatement(consulta);
-            stmArea.setDouble(1, area.getExtension());
-            stmArea.setObject(2, area.getAltitudBaja());
-            stmArea.setObject(3, area.getAltitudAlta());
-            stmArea.setObject(4, area.getProfundidad());
-            stmArea.setBoolean(5, area.isAcuatica());
-            stmArea.setBoolean(6, area.isTerrestre());
-            stmArea.setString(7, area.getNombreReserva());
+            String sql = "UPDATE area_geografica " +
+                         "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? " +
+                         "WHERE nombre_reserva = ?";
+            sentencia = conexion.prepareStatement(sql);
 
-            actualizado = stmArea.executeUpdate() > 0;
+            // Asignar los valores a los parámetros de la consulta
+            sentencia.setDouble(1, area.getExtension());
+            sentencia.setObject(2, area.getAltitudBaja());
+            sentencia.setObject(3, area.getAltitudAlta());
+            sentencia.setObject(4, area.getProfundidad());
+            sentencia.setBoolean(5, area.isAcuatica());
+            sentencia.setBoolean(6, area.isTerrestre());
+            sentencia.setString(7, area.getNombreReserva());
 
-            System.out.println("Area actualizada correctamente.");
+            // Ejecutar la actualización
+            actualizada = sentencia.executeUpdate() > 0;
+
+            if (actualizada) {
+                System.out.println("Área actualizada correctamente.");
+            }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.err.println("Error al actualizar área: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al actualizar área: " + e.getMessage());
         } finally {
+            // Cerrar recursos de manera segura
             try {
-                if (stmArea != null) stmArea.close();
-                System.out.println("hola");
+                if (sentencia != null) {
+                    sentencia.close();
+                }
             } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
 
-        return actualizado;
+        return actualizada;
     }
 
-    public boolean eliminarArea(String nombreReserva) {
-        Connection con = this.getConexion();
-        PreparedStatement stmArea = null;
-        boolean eliminado = false;
+    public boolean deleteArea(String nombreReserva) {
+        Connection conexion = this.getConexion();
+        PreparedStatement sentencia = null;
+        boolean eliminada = false;
 
         try {
-            String consulta = "DELETE FROM area_geografica WHERE nombre_reserva = ?";
-            stmArea = con.prepareStatement(consulta);
-            stmArea.setString(1, nombreReserva);
+            String sql = "DELETE FROM area_geografica WHERE nombre_reserva = ?";
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, nombreReserva);
 
-            eliminado = stmArea.executeUpdate() > 0;
+            // Ejecutar la eliminación
+            eliminada = sentencia.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.err.println("Error al eliminar área: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al eliminar área: " + e.getMessage());
         } finally {
+            // Cerrar la sentencia
             try {
-                if (stmArea != null) stmArea.close();
+                if (sentencia != null) {
+                    sentencia.close();
+                }
             } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
 
-        return eliminado;
+        return eliminada;
     }
 
-    public boolean crearArea(Area area) {
-        Connection con = this.getConexion();
-        PreparedStatement stmArea = null;
-        boolean creado = false;
+    public boolean NuevaArea(Area area) {
+        Connection conexion = this.getConexion();
+        PreparedStatement sentencia = null;
+        boolean creada = false;
 
         try {
-            String consulta = "INSERT INTO area_geografica " +
-                    "(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO area_geografica " +
+                         "(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre) " +
+                         "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-            stmArea = con.prepareStatement(consulta);
-            stmArea.setString(1, area.getNombreReserva());
-            stmArea.setDouble(2, area.getExtension());
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, area.getNombreReserva());
+            sentencia.setDouble(2, area.getExtension());
 
             // Establecer valores de altitud solo si son relevantes (área terrestre)
             if (area.isTerrestre()) {
-                stmArea.setObject(3, area.getAltitudBaja());
-                stmArea.setObject(4, area.getAltitudAlta());
+                sentencia.setObject(3, area.getAltitudBaja());
+                sentencia.setObject(4, area.getAltitudAlta());
             } else {
-                stmArea.setNull(3, java.sql.Types.DOUBLE);
-                stmArea.setNull(4, java.sql.Types.DOUBLE);
+                sentencia.setNull(3, java.sql.Types.DOUBLE);
+                sentencia.setNull(4, java.sql.Types.DOUBLE);
             }
 
             // Establecer profundidad solo si es relevante (área acuática)
             if (area.isAcuatica()) {
-                stmArea.setObject(5, area.getProfundidad());
+                sentencia.setObject(5, area.getProfundidad());
             } else {
-                stmArea.setNull(5, java.sql.Types.DOUBLE);
+                sentencia.setNull(5, java.sql.Types.DOUBLE);
             }
 
-            stmArea.setBoolean(6, area.isAcuatica());
-            stmArea.setBoolean(7, area.isTerrestre());
+            sentencia.setBoolean(6, area.isAcuatica());
+            sentencia.setBoolean(7, area.isTerrestre());
 
-            creado = stmArea.executeUpdate() > 0;
+            // Ejecutar la inserción
+            creada = sentencia.executeUpdate() > 0;
 
-            if (creado) {
+            if (creada) {
                 System.out.println("Área creada correctamente: " + area.getNombreReserva());
             }
 
         } catch (SQLException e) {
-            System.out.println("Error al crear área: " + e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.err.println("Error al crear área: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al crear área: " + e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
+                if (sentencia != null) sentencia.close();
             } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
+                System.err.println("Error al cerrar recursos: " + e.getMessage());
             }
         }
 
-        return creado;
+        return creada;
     }
 }

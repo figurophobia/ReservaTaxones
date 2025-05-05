@@ -6,6 +6,8 @@ package gui;
 
 import aplicacion.Area;
 import aplicacion.FachadaAplicacion;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -22,87 +24,81 @@ public class VAreasNuevo extends javax.swing.JDialog {
         initComponents();
         this.fa = fa;
         padre = (VPrincipal) parent;
-        bCrear.setEnabled(false);
 
-        javax.swing.event.DocumentListener documentListener = new javax.swing.event.DocumentListener() {
-            public void changedUpdate(javax.swing.event.DocumentEvent e) {
-                habilitarBotonCrear();
+        inicializarEstadoInicial();
+        inicializarListeners();
+
+    }
+    
+    private void inicializarEstadoInicial() {
+    Crearbtn.setEnabled(false);
+}
+
+    private void inicializarListeners() {
+        DocumentListener listenerNombre = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verificarCamposObligatorios();
             }
-            public void removeUpdate(javax.swing.event.DocumentEvent e) {
-                habilitarBotonCrear();
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verificarCamposObligatorios();
             }
-            public void insertUpdate(javax.swing.event.DocumentEvent e) {
-                habilitarBotonCrear();
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verificarCamposObligatorios();
             }
         };
 
-        textoNombre.getDocument().addDocumentListener(documentListener);
+        NombreTF.getDocument().addDocumentListener(listenerNombre);
+    }
+
+    private void verificarCamposObligatorios() {
+        Crearbtn.setEnabled(!NombreTF.getText().trim().isEmpty());
     }
 
     private void habilitarBotonCrear() {
-        bCrear.setEnabled(!textoNombre.getText().trim().isEmpty());
+        Crearbtn.setEnabled(!NombreTF.getText().trim().isEmpty());
     }
 
     Area crearArea() {
-        boolean acuatica = false;
-        boolean terrestre = false;
-        double altitudAlta = 0;
-        double altitudBaja = 0;
-        double extension = 0;
-        double profundidad = 0;
-        String nombre = "";
+        String nombre = NombreTF.getText().trim();
+        double altitudAlta = parseDouble(AltMaxTF.getText());
+        double altitudBaja = parseDouble(AltMinTF.getText());
+        double extension = parseDouble(Extensiontf.getText());
+        double profundidad = parseDouble(ProfundidadTF.getText());
+        boolean acuatica = checkAcuatica.isSelected();
+        boolean terrestre = checkTerrestre.isSelected();
+
+        if (nombre.isEmpty()) {
+            System.err.println("Es necesario poner un nombre.");
+        }
 
         Area area;
 
-        try {
-            nombre = textoNombre.getText();}
-        catch (Exception e) {
-            System.err.println("Es necesario poner un nombre: " + e.getMessage());
-        }
-        try {
-            altitudAlta = Double.parseDouble(textoAltMax.getText()!= null ? textoAltMax.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            altitudBaja = Double.parseDouble(textoAltMin.getText()!= null ? textoAltMin.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            altitudBaja = Double.parseDouble(textoAltMin.getText()!= null ? textoAltMin.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            altitudBaja = Double.parseDouble(textoAltMin.getText()!= null ? textoAltMin.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            extension = Double.parseDouble(textoExtension.getText()!= null ? textoExtension.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-        try {
-            profundidad = Double.parseDouble(textoProfundidad.getText()!= null ? textoProfundidad.getText() : "0");}
-        catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-
-        terrestre = checkTerrestre.isSelected();
-        acuatica = checkAcuatica.isSelected();
-
         if (acuatica && terrestre) {
-            area = new Area(nombre, extension, profundidad, altitudAlta, altitudBaja, acuatica, terrestre);
+            area = new Area(nombre, extension, profundidad, altitudAlta, altitudBaja, true, true);
         } else if (acuatica) {
             area = new Area(nombre, extension, profundidad);
         } else if (terrestre) {
             area = new Area(nombre, extension, altitudBaja, altitudAlta);
-        } else
-            area = new Area(nombre, extension, acuatica, terrestre);
+        } else {
+            area = new Area(nombre, extension, false, false);
+        }
 
         return area;
+    }
+
+    // Método auxiliar para evitar repetir parseos y capturar excepciones
+    private double parseDouble(String texto) {
+        try {
+            return Double.parseDouble(texto != null && !texto.isEmpty() ? texto : "0");
+        } catch (NumberFormatException e) {
+            System.err.println("Error al parsear número: " + e.getMessage());
+            return 0;
+        }
     }
 
 
@@ -111,19 +107,19 @@ public class VAreasNuevo extends javax.swing.JDialog {
     private void initComponents() {
 
         labNombre = new javax.swing.JLabel();
-        textoNombre = new javax.swing.JTextField();
+        NombreTF = new javax.swing.JTextField();
         labExtension = new javax.swing.JLabel();
         labProfundidad = new javax.swing.JLabel();
-        textoExtension = new javax.swing.JTextField();
-        textoProfundidad = new javax.swing.JTextField();
+        Extensiontf = new javax.swing.JTextField();
+        ProfundidadTF = new javax.swing.JTextField();
         labAltMax = new javax.swing.JLabel();
         labAltMin = new javax.swing.JLabel();
-        textoAltMax = new javax.swing.JTextField();
-        textoAltMin = new javax.swing.JTextField();
+        AltMaxTF = new javax.swing.JTextField();
+        AltMinTF = new javax.swing.JTextField();
         checkTerrestre = new javax.swing.JCheckBox();
         checkAcuatica = new javax.swing.JCheckBox();
-        bSalir = new javax.swing.JButton();
-        bCrear = new javax.swing.JButton();
+        Salirbtn = new javax.swing.JButton();
+        Crearbtn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -147,17 +143,18 @@ public class VAreasNuevo extends javax.swing.JDialog {
 
         checkAcuatica.setText("Acuática");
 
-        bSalir.setText("Salir");
-        bSalir.addActionListener(new java.awt.event.ActionListener() {
+        Salirbtn.setBackground(new java.awt.Color(231, 76, 60));
+        Salirbtn.setText("Salir");
+        Salirbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bSalirActionPerformed(evt);
+                SalirbtnActionPerformed(evt);
             }
         });
 
-        bCrear.setText("Crear");
-        bCrear.addActionListener(new java.awt.event.ActionListener() {
+        Crearbtn.setText("Crear");
+        Crearbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bCrearActionPerformed(evt);
+                CrearbtnActionPerformed(evt);
             }
         });
 
@@ -167,44 +164,35 @@ public class VAreasNuevo extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labExtension)
-                                .addComponent(labProfundidad))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(textoExtension, javax.swing.GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE)
-                                .addComponent(textoProfundidad)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(bCrear)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(bSalir)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(labAltMin)
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(textoAltMin)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(checkTerrestre)
-                                        .addComponent(checkAcuatica))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel1)
-                                    .addGap(0, 6, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(labNombre)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(labAltMax)
-                                .addGap(18, 18, 18)
-                                .addComponent(textoAltMax, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addComponent(labNombre)
+                            .addComponent(labExtension)
+                            .addComponent(labProfundidad)
+                            .addComponent(Crearbtn))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Salirbtn))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(checkTerrestre)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(checkAcuatica)
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel1))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(labAltMax)
+                            .addGap(28, 28, 28)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(Extensiontf, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                                .addComponent(ProfundidadTF, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                                .addComponent(NombreTF)
+                                .addComponent(AltMaxTF))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labAltMin)
+                        .addGap(31, 31, 31)
+                        .addComponent(AltMinTF)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -212,38 +200,34 @@ public class VAreasNuevo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labNombre))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoExtension, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Extensiontf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labExtension))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textoProfundidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ProfundidadTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labProfundidad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labAltMax)
-                    .addComponent(textoAltMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(AltMaxTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labAltMin)
-                    .addComponent(textoAltMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(checkTerrestre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(checkAcuatica)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bCrear)
-                    .addComponent(bSalir))
+                    .addComponent(labAltMin)
+                    .addComponent(AltMinTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(checkTerrestre)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(checkAcuatica)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Crearbtn)
+                    .addComponent(Salirbtn))
                 .addContainerGap())
         );
 
@@ -254,20 +238,25 @@ public class VAreasNuevo extends javax.swing.JDialog {
 
     }//GEN-LAST:event_checkTerrestreActionPerformed
 
-    private void bSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalirActionPerformed
+    private void SalirbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirbtnActionPerformed
         this.dispose();
-    }//GEN-LAST:event_bSalirActionPerformed
+    }//GEN-LAST:event_SalirbtnActionPerformed
 
-    private void bCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCrearActionPerformed
+    private void CrearbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CrearbtnActionPerformed
         Area area = crearArea();
         boolean resultado = fa.crearArea(area);
         if (resultado)
             this.dispose();
-    }//GEN-LAST:event_bCrearActionPerformed
+    }//GEN-LAST:event_CrearbtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bCrear;
-    private javax.swing.JButton bSalir;
+    private javax.swing.JTextField AltMaxTF;
+    private javax.swing.JTextField AltMinTF;
+    private javax.swing.JButton Crearbtn;
+    private javax.swing.JTextField Extensiontf;
+    private javax.swing.JTextField NombreTF;
+    private javax.swing.JTextField ProfundidadTF;
+    private javax.swing.JButton Salirbtn;
     private javax.swing.JCheckBox checkAcuatica;
     private javax.swing.JCheckBox checkTerrestre;
     private javax.swing.JLabel jLabel1;
@@ -276,10 +265,5 @@ public class VAreasNuevo extends javax.swing.JDialog {
     private javax.swing.JLabel labExtension;
     private javax.swing.JLabel labNombre;
     private javax.swing.JLabel labProfundidad;
-    private javax.swing.JTextField textoAltMax;
-    private javax.swing.JTextField textoAltMin;
-    private javax.swing.JTextField textoExtension;
-    private javax.swing.JTextField textoNombre;
-    private javax.swing.JTextField textoProfundidad;
     // End of variables declaration//GEN-END:variables
 }
