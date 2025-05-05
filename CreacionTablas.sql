@@ -26,7 +26,7 @@ CREATE TABLE pais (
     area VARCHAR(100),
     PRIMARY KEY (nombre, area),
     FOREIGN KEY (area) REFERENCES area_geografica(nombre_reserva)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Tabla de especies
@@ -74,9 +74,9 @@ CREATE TABLE misiones (
     descripcion TEXT,
     PRIMARY KEY (dni_trabajador, nombre_cientifico_especie, fecha_inicio),
     FOREIGN KEY (dni_trabajador) REFERENCES trabajadores(dni)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
+        ON UPDATE CASCADE ON DELETE CASCADE, -- Eliminación en cascada de misiones, no interesa seguir guardándolas
     FOREIGN KEY (nombre_cientifico_especie) REFERENCES especies(nombre_cientifico)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+        ON UPDATE CASCADE ON DELETE CASCADE -- Estas si porque hacemos estadísticas con las especies que más se han tratado
 );
 
 CREATE TABLE empresa_distribuidora (
@@ -101,7 +101,7 @@ CREATE TABLE consumirAlimentos (
 	frecuencia INTEGER,
 	PRIMARY KEY (id_especie , nombre_especie, id_alimento),
 	FOREIGN KEY (id_especie, nombre_especie) REFERENCES ejemplar(id, nombre_cientifico_especie)
-        ON UPDATE CASCADE ON DELETE RESTRICT,
+        ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (id_alimento) REFERENCES alimento(id)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
