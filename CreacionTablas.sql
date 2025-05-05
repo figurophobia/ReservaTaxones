@@ -123,6 +123,6 @@ CREATE TABLE revisar (
 	FOREIGN KEY (clinica) REFERENCES clinica_medica(nombre)
         ON UPDATE CASCADE ON DELETE RESTRICT,
 	FOREIGN KEY (ejemplar, especie_asociada) REFERENCES ejemplar(id, nombre_cientifico_especie)
-        ON UPDATE CASCADE ON DELETE RESTRICT
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
