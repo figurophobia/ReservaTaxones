@@ -207,9 +207,6 @@ public class FachadaAplicacion {
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return gm.actualizarMision(seleccionada, misionOriginal);    }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-        return  gm.obtenerTrabajadorMasExperimentado(especie);
-    }
 
     public Usuario obtenerTrabajadorMision() {
         return gm.obtenerTrabajadorMision();}

@@ -86,7 +86,7 @@ public class VMisones extends javax.swing.JDialog {
         TablaMisiones.setModel(new ModeloTablaMisiones());
         jScrollPane1.setViewportView(TablaMisiones);
 
-        NuevaMision.setText("Nueva Misión");
+        NuevaMision.setText("Nueva");
         NuevaMision.setToolTipText("");
         NuevaMision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -151,7 +151,6 @@ public class VMisones extends javax.swing.JDialog {
                                 .addComponent(updatebtn)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Completed))
-                            .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(buscarTF)
@@ -164,11 +163,12 @@ public class VMisones extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(0, 323, Short.MAX_VALUE)
+                                        .addGap(0, 410, Short.MAX_VALUE)
                                         .addComponent(masExperimentadobtn))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(buscarbtn)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING))))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
@@ -191,11 +191,12 @@ public class VMisones extends javax.swing.JDialog {
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(EliminarMision, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Completed, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(NuevaMision, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(updatebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(EliminarMision, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Completed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(NuevaMision, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(updatebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(77, 77, 77)
                 .addComponent(exitbtn)
                 .addGap(29, 29, 29))
@@ -223,156 +224,138 @@ public class VMisones extends javax.swing.JDialog {
     }//GEN-LAST:event_exitbtnActionPerformed
 
     private void EliminarMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarMisionActionPerformed
-        // TODO add your handling code here:
-        int selectedRow=TablaMisiones.getSelectedRow();
-        
-                
-                
-        if (selectedRow!=-1) {
-            ModeloTablaMisiones mm=(ModeloTablaMisiones) TablaMisiones.getModel();
-            Mision seleccionado=mm.getFila(selectedRow);
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "¿Estás seguro de que deseas eliminar esta mision?",
-            "Confirmar eliminación", 
-            javax.swing.JOptionPane.YES_NO_OPTION);
-
-            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-
-                fa.eliminarMision(seleccionado);
-                mm.setFilas(fa.obtenerMisiones());
-
-                VAviso aviso = new VAviso((Frame)getParent(), true, "Mision eliminada correctamente.");
-                aviso.setVisible(true);
-            }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                "Debes seleccionar un trabajador para eliminar.",
-                "Error", 
-                javax.swing.JOptionPane.ERROR_MESSAGE);
-        
-    }//GEN-LAST:event_EliminarMisionActionPerformed
-    }
-    private void CompletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompletedActionPerformed
         int filaSeleccionada = TablaMisiones.getSelectedRow();
 
         if (filaSeleccionada != -1) {
             ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
-            Mision misionSeleccionada = modelo.getMision(filaSeleccionada); // método que devuelve la misión de esa fila
+            Mision misionAEliminar = modelo.getFila(filaSeleccionada);
 
-            if (misionSeleccionada.getFechaFin() == null) {
-                fa.completarMision(misionSeleccionada);
-                JOptionPane.showMessageDialog(this, "Misión marcada como completada.");
-            } else {
-                JOptionPane.showMessageDialog(this, "La misión ya estaba completada.");
+            int opcion = JOptionPane.showConfirmDialog(
+                this,
+                "¿Deseas borrar esta misión?",
+                "Confirmación de borrado",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                // Eliminar misión a través del DAO
+                fa.eliminarMision(misionAEliminar);
+                List<Mision> nuevasMisiones = fa.obtenerMisiones();
+                modelo.setFilas(nuevasMisiones);
+
+                VAviso mensajeExito = new VAviso((Frame) getParent(), true, "La misión fue eliminada exitosamente.");
+                mensajeExito.setVisible(true);
             }
-
-            // Opcional: actualiza la vista si hace falta
-            modelo.fireTableRowsUpdated(filaSeleccionada, filaSeleccionada);
         } else {
-            JOptionPane.showMessageDialog(this, "Selecciona una misión para marcar como completada.");
+            JOptionPane.showMessageDialog(
+                this,
+                "Selecciona una misión para poder eliminarla.",
+                "Aviso",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
+    }//GEN-LAST:event_EliminarMisionActionPerformed
+    
+    private void CompletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompletedActionPerformed
+    int indexRow = TablaMisiones.getSelectedRow();
+
+    if (indexRow != -1) {
+        ModeloTablaMisiones modeloMisiones = (ModeloTablaMisiones) TablaMisiones.getModel();
+        Mision misionActual = modeloMisiones.getMision(indexRow); // Obtener la misión de la fila seleccionada
+
+        if (misionActual.getFechaFin() == null) {
+            // Completar misión a través del DAO
+            fa.completarMision(misionActual);
+            JOptionPane.showMessageDialog(this, "La misión ha sido completada con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Esta misión ya se encuentra completada.");
+        }
+
+        // Refrescar la fila modificada en la tabla
+        modeloMisiones.fireTableRowsUpdated(indexRow, indexRow);
+    } else {
+        JOptionPane.showMessageDialog(this, "Debes seleccionar una fila para completar una misión.");
+    }
     }//GEN-LAST:event_CompletedActionPerformed
 
     private void masExperimentadobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masExperimentadobtnActionPerformed
-        // TODO add your handling code here:
-        String especie = buscarTF.getText().trim(); 
-        if (!especie.isEmpty()) {
-            Usuario trabajador = fa.obtenerTrabajadorMasExperimentado(especie); // pasar la especie
-            if (trabajador != null && checkEspecie.isSelected()) {
-                VAviso aviso = new VAviso((Frame) getParent(), true, "El trabajador más experimentado para la especie '" + especie + "' es: " + trabajador);
-                aviso.setVisible(true);
-                
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(VMisones.this, 
-                    "No se pudo determinar el trabajador más experimentado para la especie '" + especie + "'.",
-                    "Aviso", 
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            }
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(VMisones.this, 
-                "Por favor, introduzca una especie.",
-                "Campo vacío", 
-                javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
+
     
     
     }//GEN-LAST:event_masExperimentadobtnActionPerformed
 
     private void NuevaMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaMisionActionPerformed
-        // TODO add your handling code here:
-        Usuario usuarioMision= fa.obtenerTrabajadorMision();
-        Mision nuevaMision = new Mision(
-            usuarioMision,
-            "", // especie
-            Date.valueOf(LocalDate.now()), // fechaInicio: hoy
-            null, // fechaFin: no completada
-            "" // descripción
+    // Obtener el trabajador que estará asignado a la misión
+    Usuario trabajadorAsignado = fa.obtenerTrabajadorMision();
+
+    if (trabajadorAsignado != null) {
+        // Crear una misión nueva con valores por defecto
+        Mision misionTemporal = new Mision(
+            trabajadorAsignado,
+            "",                         // Especie vacía inicialmente
+            Date.valueOf(LocalDate.now()), // Fecha de inicio actual
+            null,                       // Fecha de fin aún no asignada
+            ""                          // Descripción vacía
         );
-    // Obtener el modelo de la tabla
-     ModeloTablaMisiones mm = ( ModeloTablaMisiones) TablaMisiones.getModel();
 
-    mm.anhadeFila(nuevaMision);
+        // Obtener el modelo de la tabla y añadir la misión
+        ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
+        modelo.anhadeFila(misionTemporal);
 
-    int lastRow = mm.getRowCount() - 1;
-    TablaMisiones.setRowSelectionInterval(lastRow, lastRow);
-
-    TablaMisiones.editCellAt(lastRow, 0);
-
-   
-    TablaMisiones.requestFocusInWindow();
-    TablaMisiones.requestFocusInWindow();
-        
-       
+        // Seleccionar la nueva fila y activar edición
+        int filaInsertada = modelo.getRowCount() - 1;
+        TablaMisiones.setRowSelectionInterval(filaInsertada, filaInsertada);
+        TablaMisiones.editCellAt(filaInsertada, 0);
+        TablaMisiones.requestFocusInWindow();
+    } else {
+        JOptionPane.showMessageDialog(this, "No se pudo obtener un trabajador sin misiones activas.");
+    }
     }//GEN-LAST:event_NuevaMisionActionPerformed
 
     private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
-    // Obtener el modelo de la tabla
-    ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
+    // Obtener el modelo actual de la tabla
+    ModeloTablaMisiones datosTabla = (ModeloTablaMisiones) TablaMisiones.getModel();
 
-    // Recoger las misiones actuales y las originales
-    List<Mision> misionesActuales = modelo.getMisiones();
-    List<Mision> misionesOriginales = modelo.getMisionesOriginales(); // Obtienes las misiones originales
+    // Listas con los datos actuales y los originales
+    List<Mision> listaActual = datosTabla.getMisiones();
+    List<Mision> listaOriginal = datosTabla.getMisionesOriginales();
 
+    for (int indice = 0; indice < listaActual.size(); indice++) {
+        Mision nueva = listaActual.get(indice);
+        Mision previa = (indice < listaOriginal.size()) ? listaOriginal.get(indice) : null;
 
-
-
-    for (int i = 0; i < misionesActuales.size(); i++) {
-        Mision misionActual = misionesActuales.get(i);
-        Mision misionOriginal = (i < misionesOriginales.size()) ? misionesOriginales.get(i) : null;
-
-
-
-        // Si la misión original existe, compararla con la misión actual
-        if (misionOriginal != null) {
-            // Verificar si los campos clave han cambiado
-            if (hasMisionChanged(misionOriginal, misionActual)) {
-                // Si ha cambiado, actualizarla
-                fa.actualizarMision(misionActual, misionOriginal);
+        if (previa != null) {
+            // Si existen ambas, comparamos
+            if (misionModificada(previa, nueva)) {
+                fa.actualizarMision(nueva, previa);
             }
         } else {
-            // Si la misión original es null, significa que es una misión nueva, así que la agregamos
-            fa.agregarNuevaMision(misionActual);
+            // Si no hay misión previa, se trata de una nueva
+            fa.agregarNuevaMision(nueva);
         }
     }
 
-    // Mostrar mensaje de éxito
-    JOptionPane.showMessageDialog(this, "Misiones actualizadas correctamente.");
+    // Confirmar éxito al usuario
+    JOptionPane.showMessageDialog(this, "Las misiones han sido actualizadas correctamente.");
+
+
+
     }//GEN-LAST:event_updatebtnActionPerformed
 
-    private boolean hasMisionChanged(Mision misionOriginal, Mision misionActual) {
-        boolean nombresDistintos = !misionOriginal.getTrabajador().getNombre().equals(misionActual.getTrabajador().getNombre());
-        boolean especieDistinta = !misionOriginal.getEspecie().equals(misionActual.getEspecie());
-        boolean descripcionDistinta = !misionOriginal.getDescripcion().equals(misionActual.getDescripcion());
-        boolean fechaInicioDistinta = !misionOriginal.getFechaInicio().equals(misionActual.getFechaInicio());
+    private boolean misionModificada(Mision anterior, Mision actual) {
+        boolean trabajadorCambiado = !anterior.getTrabajador().getNombre().equals(actual.getTrabajador().getNombre());
+        boolean cambioEspecie = !anterior.getEspecie().equals(actual.getEspecie());
+        boolean cambioDescripcion = !anterior.getDescripcion().equals(actual.getDescripcion());
+        boolean inicioDistinto = !anterior.getFechaInicio().equals(actual.getFechaInicio());
 
-        boolean fechaFinDistinta = false;
-        if (misionOriginal.getFechaFin() == null && misionActual.getFechaFin() != null) {
-            fechaFinDistinta = true;
-        } else if (misionOriginal.getFechaFin() != null && !misionOriginal.getFechaFin().equals(misionActual.getFechaFin())) {
-            fechaFinDistinta = true;
+        boolean finDistinto = false;
+        if (anterior.getFechaFin() == null && actual.getFechaFin() != null) {
+            finDistinto = true;
+        } else if (anterior.getFechaFin() != null && !anterior.getFechaFin().equals(actual.getFechaFin())) {
+            finDistinto = true;
         }
 
-        return nombresDistintos || especieDistinta || descripcionDistinta || fechaInicioDistinta || fechaFinDistinta;
+        return trabajadorCambiado || cambioEspecie || cambioDescripcion || inicioDistinto || finDistinto;
     }
 
     

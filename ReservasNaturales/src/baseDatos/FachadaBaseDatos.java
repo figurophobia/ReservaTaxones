@@ -219,40 +219,38 @@ public class FachadaBaseDatos {
        
     }
     public List<Mision> obtenerMisiones() {
-        return daoMisiones.obtenerMisiones();
+        return daoMisiones.obtenerMisionesGeneral();
     }
 
     public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
-        return  daoMisiones.obtenerMisionesEstado(textoBusqueda);
+        return  daoMisiones.buscarMisionesPorEstado(textoBusqueda);
     }
 
     public List<Mision> obtenerMisionesTrabajador(String textoBusqueda) {
-         return daoMisiones.obtenerMisionesTrabajador(textoBusqueda);    }
+         return daoMisiones.buscarMisionesPorNombre(textoBusqueda);    }
 
     public List<Mision> obtenerMisionesEspecie(String textoBusqueda) {
-        return daoMisiones.obtenerMisionesEspecie(textoBusqueda);    }
+        return daoMisiones.buscarMisionesPorEspecie(textoBusqueda);    }
     public boolean eliminarMision(Mision trabajador) {
-        return daoMisiones.eliminarMision(trabajador);}
+        return daoMisiones.borrarMision(trabajador);}
 
     public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
-        return daoMisiones.actualizarMision(seleccionada,misionOriginal);    }
+        return daoMisiones.modificarMision(seleccionada,misionOriginal);    }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-        return daoMisiones.obtenerTrabajadorMasExperimentado(especie);    }
 
     public Usuario obtenerTrabajadorMision() {
         return  daoMisiones.obtenerTrabajadorMision();}
 
     public boolean verificarMisionExistente(Mision mision) {
-        return daoMisiones.verificarMisionExistente(mision);
+        return daoMisiones.comprobarMisionExiste(mision);
     }
 
     public void agregarNuevaMision(Mision misionActual) {
-        daoMisiones.agregarNuevaMision(misionActual);
+        daoMisiones.insertarMision(misionActual);
     }
 
     public void completarMision(Mision misionSeleccionada) {
-        daoMisiones.completarMision(misionSeleccionada);
+        daoMisiones.finalizarMision(misionSeleccionada);
     }
      public ClinicaMedica nuevaClinica(ClinicaMedica clinica) {
         return daoClinicas.nuevaClinica(clinica);

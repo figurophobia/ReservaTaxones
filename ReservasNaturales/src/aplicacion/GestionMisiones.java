@@ -41,9 +41,6 @@ public class GestionMisiones {
         return fbd.actualizarMision(seleccionada, misionOriginal);     
 }
 
-    public Usuario obtenerTrabajadorMasExperimentado(String especie) {
-            return fbd.obtenerTrabajadorMasExperimentado(especie);    }
-
     public Usuario obtenerTrabajadorMision() {
         return fbd.obtenerTrabajadorMision();    }
 
