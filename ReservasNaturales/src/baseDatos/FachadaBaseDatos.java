@@ -282,5 +282,21 @@ public class FachadaBaseDatos {
         daoUsuarios.reducirPersonal();
     }
 
+    public void buscarMaxRevisiones() {
+        daoRevisiones.buscarMaxRevisiones();
+    }
+
+    public List<Revision> obtenerRevisiones() {
+        return daoRevisiones.obtenerRevisiones();
+    }
+
+    public void bajarMitad() {
+        daoAlimentos.bajarMitad();
+    }
+
+    public void aumentarFrecuenciaAlimentos(String nombre, String area) {
+        daoAlimentos.aumentarFrecuenciaAlimentos(nombre,area);
+    }
+
     
 }

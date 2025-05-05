@@ -86,7 +86,6 @@ public class DAORevisiones extends AbstractDAO{
             stmInsert.setInt(2, ejemplarRevision.getId());
             stmInsert.setString(3, ejemplarRevision.getEspecie().getNombreCientifico());
 
-            // Fecha actual
             java.sql.Date fechaActual = new java.sql.Date(System.currentTimeMillis());
             stmInsert.setDate(4, fechaActual);
 
@@ -105,6 +104,106 @@ public class DAORevisiones extends AbstractDAO{
             }
         }
     }
+
+    public void buscarMaxRevisiones() {
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            con.setAutoCommit(false);
+
+            String sql =
+                "UPDATE clinica_medica " +
+                "SET num_empleados = num_empleados + 5 " +
+                "WHERE nombre IN ( " +
+                "    SELECT clinica " +
+                "    FROM revisar " +
+                "    GROUP BY clinica " +
+                "    HAVING COUNT(*) = ( " +
+                "        SELECT MAX(c) " +
+                "        FROM ( " +
+                "            SELECT COUNT(*) AS c " +
+                "            FROM revisar " +
+                "            GROUP BY clinica " +
+                "        ) AS sub " +
+                "    ) " +
+                ")";
+
+            stm = con.prepareStatement(sql);
+            int afectadas = stm.executeUpdate();
+
+           
+            con.commit();
+
+            
+            System.out.println("Clínicas actualizadas: " + afectadas);
+
+        } catch (SQLException e) {
+          
+            try {
+                con.rollback();
+            } catch (SQLException e2) {
+                System.out.println("No se pudo hacer rollback: " + e2.getMessage());
+            }
+            this.getFachadaAplicacion().muestraExcepcion("Error en buscarMaxRevisiones:\n" + e.getMessage());
+        } finally {
+ 
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar el statement: " + e.getMessage());
+            }
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.out.println("No se pudo reactivar auto-commit: " + e.getMessage());
+            }
+        }
+    }
+
+    public List<Revision> obtenerRevisiones() {
+        List<Revision> resultado = new ArrayList<>();
+        Connection con = this.getConexion();
+        PreparedStatement stmRevision = null;
+        ResultSet rsRevision;
+
+        try {
+               String consulta = 
+                "SELECT clinica, ejemplar, especie_asociada, fecha_revision, informe " +
+                "FROM revisar ";
+            stmRevision = con.prepareStatement(consulta);
+            
+            
+            rsRevision = stmRevision.executeQuery();
+
+            while (rsRevision.next()) {
+                String clinica = rsRevision.getString("clinica");
+                int ejemplar = rsRevision.getInt("ejemplar");
+                String especieAsociada = rsRevision.getString("especie_asociada");
+                Date fechaRevisionSQL = rsRevision.getDate("fecha_revision");
+                Date fechaRevision = fechaRevisionSQL;
+                String informe = rsRevision.getString("informe");
+
+                Revision r = new Revision(clinica, ejemplar, especieAsociada, fechaRevision, informe);
+                resultado.add(r);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } finally {
+            try {
+                if (stmRevision != null) stmRevision.close();
+            } catch (SQLException e) {
+                System.out.println("Imposible cerrar cursores");
+            }
+        }
+
+        return resultado;
+    }
+
+  
+
 
 
     

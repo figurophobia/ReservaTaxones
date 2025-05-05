@@ -29,5 +29,15 @@ public class GestionRevision {
     void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
         fbd.añadirRevsion(clinicaRevision,ejemplarRevision,text);
     }
+
+    void buscarMaxRevisiones() {
+        fbd.buscarMaxRevisiones();
+    }
+
+    List<Revision> obtenerRevisiones() {
+        return fbd.obtenerRevisiones();
+    }
+
+    
     
 }

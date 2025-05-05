@@ -5,6 +5,7 @@
 package gui;
 import aplicacion.ClinicaMedica;
 import aplicacion.Ejemplar;
+import aplicacion.FachadaAplicacion;
 import aplicacion.Revision;
 import java.awt.Frame;
 import java.awt.event.MouseEvent;
@@ -34,6 +35,18 @@ public class VClinicas extends javax.swing.JDialog {
         BorrarBoton.setEnabled(false);
        
     }
+    public VClinicas(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa) {
+        super(parent, modal);
+        
+        initComponents();
+        this.fa=fa;
+        TablaClinicas.setModel(new ModeloTablaClinicasMedicas());
+        
+        listenerSeleccionClinica();
+        BorrarBoton.setEnabled(false);
+        AñadirRevisionBoton.setEnabled(false);
+       
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,6 +71,7 @@ public class VClinicas extends javax.swing.JDialog {
         EjemplarField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         SalirBoton = new javax.swing.JButton();
+        MaxBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -126,6 +140,13 @@ public class VClinicas extends javax.swing.JDialog {
             }
         });
 
+        MaxBoton.setText("mas empleados a la mas solicitada");
+        MaxBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MaxBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,25 +156,26 @@ public class VClinicas extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(AñadirClinicaBoton)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BuscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SalirBoton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MaxBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                         .addComponent(BorrarBoton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(nombreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(32, 32, 32)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
                                 .addComponent(jLabel2)
-                                .addGap(50, 50, 50)
+                                .addGap(107, 107, 107)
                                 .addComponent(jLabel3))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
                                 .addComponent(ubicacionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(numField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -167,7 +189,7 @@ public class VClinicas extends javax.swing.JDialog {
                         .addComponent(AñadirRevisionBoton))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -188,7 +210,8 @@ public class VClinicas extends javax.swing.JDialog {
                     .addComponent(BuscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(AñadirClinicaBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(BorrarBoton)
-                    .addComponent(SalirBoton))
+                    .addComponent(SalirBoton)
+                    .addComponent(MaxBoton))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -278,12 +301,23 @@ private void buscarClinicas(){
         this.dispose();
     }//GEN-LAST:event_SalirBotonActionPerformed
 
+    private void MaxBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MaxBotonActionPerformed
+        fa.buscarMaxRevsiones();
+        ModeloTablaClinicasMedicas mt;
+        mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
+
+        String textoBusqueda= "";
+
+        mt.setFilas(fa.obtenerClinicas(textoBusqueda));
+    }//GEN-LAST:event_MaxBotonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AñadirClinicaBoton;
     private javax.swing.JButton AñadirRevisionBoton;
     private javax.swing.JButton BorrarBoton;
     private javax.swing.JButton BuscarBoton;
     private javax.swing.JTextField EjemplarField;
+    private javax.swing.JButton MaxBoton;
     private javax.swing.JButton SalirBoton;
     private javax.swing.JTable TablaClinicas;
     private javax.swing.JLabel jLabel1;

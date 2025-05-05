@@ -52,6 +52,8 @@ public class VPrincipal extends javax.swing.JFrame {
         menuItemMisiones = new javax.swing.JMenuItem();
         menuItemAreaGeo = new javax.swing.JMenuItem();
         menuItemAlimentos = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Reservas Naturales");
@@ -126,6 +128,22 @@ public class VPrincipal extends javax.swing.JFrame {
         });
         menuPrincipal.add(menuItemAlimentos);
 
+        jMenuItem1.setText("Revisiones (todas)");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(jMenuItem1);
+
+        jMenuItem2.setText("Clinicas (sin revisiones)");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        menuPrincipal.add(jMenuItem2);
+
         jMenuBar1.add(menuPrincipal);
 
         setJMenuBar(jMenuBar1);
@@ -142,18 +160,15 @@ public class VPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSalir)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                        .addComponent(btnSalir))
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
-                        .addComponent(jButtonBuscar)
-                        .addGap(62, 62, 62))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,6 +238,16 @@ public class VPrincipal extends javax.swing.JFrame {
         vag.setVisible(true);
     }//GEN-LAST:event_menuItemAreaGeoActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+       VRevisiones vr = new VRevisiones(this,true,fa);
+       vr.setVisible(true); 
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        VClinicas vc = new VClinicas(this,true,fa);
+        vc.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
     * @param args the command line arguments
     */
@@ -234,6 +259,8 @@ public class VPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JMenuItem menuItemAlimentos;

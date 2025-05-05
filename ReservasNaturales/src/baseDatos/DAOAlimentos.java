@@ -226,4 +226,100 @@ public class DAOAlimentos extends AbstractDAO {
     return resultado;  // Si se actualizó correctamente, `resultado` será > 0
 }
 
+    public void bajarMitad() {
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            con.setAutoCommit(false);
+
+            String sql =
+                "UPDATE consumirAlimentos ca " +
+                "SET cantidad = cantidad - 1 " +
+                "FROM ( " +
+                "  SELECT id_especie, nombre_especie, AVG(frecuencia) AS avg_freq " +
+                "  FROM consumirAlimentos " +
+                "  GROUP BY id_especie, nombre_especie " +
+                ") sub " +
+                "WHERE ca.id_especie     = sub.id_especie " +
+                "  AND ca.nombre_especie = sub.nombre_especie " +
+                "  AND ca.frecuencia     > sub.avg_freq";
+
+            stm = con.prepareStatement(sql);
+            int modificados = stm.executeUpdate();
+
+            con.commit();
+            System.out.println("Registros actualizados en bajarMitad: " + modificados);
+
+        } catch (SQLException e) {
+            try {
+                con.rollback();
+            } catch (SQLException ex2) {
+                System.out.println("No se pudo hacer rollback: " + ex2.getMessage());
+            }
+            this.getFachadaAplicacion().muestraExcepcion("Error en bajarMitad:\n" + e.getMessage());
+
+        } finally {
+            try {
+                if (stm != null) stm.close();
+            } catch (SQLException ex) {
+                System.out.println("Imposible cerrar el statement: " + ex.getMessage());
+            }
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                System.out.println("No se pudo reactivar auto-commit: " + ex.getMessage());
+            }
+        }
+    }
+
+    public void aumentarFrecuenciaAlimentos(String nombreEspecie, String nombreArea) {
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            // Transacción explícita
+            con.setAutoCommit(false);
+
+            String update =
+                "UPDATE consumirAlimentos ca " +
+                "SET frecuencia = frecuencia + 1 " +
+                "WHERE EXISTS ( " +
+                "    SELECT 1 " +
+                "    FROM ejemplar e " +
+                "    WHERE e.id = ca.id_especie " +
+                "      AND e.nombre_cientifico_especie = ca.nombre_especie " +
+                "      AND e.nombre_cientifico_especie = ? " +
+                "      AND e.area_geografica = ? " +
+                ")";
+
+            stm = con.prepareStatement(update);
+            stm.setString(1, nombreEspecie);
+            stm.setString(2, nombreArea);
+
+            int filasAfectadas = stm.executeUpdate();
+            con.commit();
+
+            System.out.println("Frecuencia aumentada en " + filasAfectadas + " registros.");
+
+        } catch (SQLException e) {
+            System.out.println("Error al aumentar frecuencia: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion("Error al aumentar frecuencia:\n" + e.getMessage());
+            try {
+                con.rollback();
+            } catch (SQLException ex) {
+                System.out.println("Error al hacer rollback: " + ex.getMessage());
+            }
+        } finally {
+            try {
+                if (stm != null) stm.close();
+                con.setAutoCommit(true);
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+
+
 }

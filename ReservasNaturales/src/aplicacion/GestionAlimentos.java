@@ -40,4 +40,12 @@ public class GestionAlimentos {
     int actualizarAlimento(String tipo, String nombre, String distribuidor) {
         return fbd.actualizarAlimento(tipo,nombre,distribuidor);
     }
+
+    void bajarMitad() {
+        fbd.bajarMitad();
+    }
+
+    void aumentarFrecuenciaAlimentos(String nombre, String area) {
+        fbd.aumentarFrecuenciaAlimentos(nombre,area);
+    }
 }

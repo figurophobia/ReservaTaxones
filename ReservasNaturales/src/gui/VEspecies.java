@@ -42,7 +42,7 @@ public class VEspecies extends javax.swing.JDialog {
         ClinicasBoton.setEnabled(false);
         // Cando creamos unha nova especie non podemos crear aínda un ejemplar de esta
         panelGeneral.setEnabledAt(panelGeneral.indexOfComponent(panelEjemplares), false);
-        
+        MasAlimentosBoton.setEnabled(false);
 
     }
     
@@ -66,6 +66,7 @@ public class VEspecies extends javax.swing.JDialog {
         cargarAreas();
         obterEjemplares();
         listenerSeleccionEjemplar();
+        MasAlimentosBoton.setEnabled(false);
 
     }
 
@@ -108,6 +109,7 @@ public class VEspecies extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         ClinicasBoton = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
+        MasAlimentosBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -179,7 +181,7 @@ public class VEspecies extends javax.swing.JDialog {
                         .addComponent(ActualizarButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(BorrarButton)
-                        .addGap(0, 274, Short.MAX_VALUE)))
+                        .addGap(0, 790, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelEspeciesLayout.setVerticalGroup(
@@ -201,7 +203,7 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(TaxonComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AnadirButton)
                     .addComponent(ActualizarButton)
@@ -263,25 +265,17 @@ public class VEspecies extends javax.swing.JDialog {
             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEjemplaresLayout.createSequentialGroup()
                                 .addComponent(jlabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(69, 427, Short.MAX_VALUE))
                             .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addComponent(btn_nuevoEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_borrarEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(ClinicasBoton))
                                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
                                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,16 +284,26 @@ public class VEspecies extends javax.swing.JDialog {
                                         .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(tf_fecNac, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(tf_moteEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                                        .addComponent(btn_nuevoEjemplar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_borrarEjemplar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(ClinicasBoton)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(0, 158, Short.MAX_VALUE))
+                        .addGap(89, 89, 89))
                     .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelEjemplaresLayout.setVerticalGroup(
             panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelEjemplaresLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -321,7 +325,7 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nuevoEjemplar)
                     .addComponent(btn_borrarEjemplar)
@@ -339,6 +343,13 @@ public class VEspecies extends javax.swing.JDialog {
             }
         });
 
+        MasAlimentosBoton.setText("Aumentar frecuencia aliemntos misma especie y area");
+        MasAlimentosBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MasAlimentosBotonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -347,7 +358,9 @@ public class VEspecies extends javax.swing.JDialog {
                 .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 63, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(MasAlimentosBoton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(buttonSalir)
                 .addContainerGap())
         );
@@ -356,8 +369,10 @@ public class VEspecies extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSalir)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buttonSalir)
+                    .addComponent(MasAlimentosBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         pack();
@@ -444,6 +459,18 @@ public class VEspecies extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_ClinicasBotonActionPerformed
 
+    private void MasAlimentosBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MasAlimentosBotonActionPerformed
+            int fila = tabla_ejemplares.getSelectedRow();
+        if(fila != -1){
+            ModeloTablaEjemplaresGeneral mteg = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar ejem = mteg.getFila(fila);
+            String nombre = ejem.getEspecie().getNombreCientifico();
+            String area = ejem.getArea().getNombreReserva();
+            fa.aumentarFrecuenciaAlimentos(nombre, area);
+        }
+       
+    }//GEN-LAST:event_MasAlimentosBotonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
@@ -451,6 +478,7 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JButton BorrarButton;
     private javax.swing.JButton ClinicasBoton;
     private javax.swing.JTextField DescripcionText;
+    private javax.swing.JButton MasAlimentosBoton;
     private javax.swing.JTextField NombreCientificoText;
     private javax.swing.JTextField NombreComunText;
     private javax.swing.JComboBox<String> TaxonComboBox;
@@ -539,6 +567,7 @@ public class VEspecies extends javax.swing.JDialog {
             public void mouseClicked(MouseEvent me) {
                 int fila = tabla_ejemplares.getSelectedRow();
                 if (fila != -1) {
+                    MasAlimentosBoton.setEnabled(true);
                     ClinicasBoton.setEnabled(true); //activar el botton menu de clinicas
                     String idEjemplar = tabla_ejemplares.getValueAt(fila, 0).toString();
                     String mote = tabla_ejemplares.getValueAt(fila, 2).toString();
@@ -559,6 +588,7 @@ public class VEspecies extends javax.swing.JDialog {
                     AreaComboBox.setSelectedIndex(indice);
                 }else{
                            ClinicasBoton.setEnabled(false);   
+                           MasAlimentosBoton.setEnabled(false);
                 }
             }
 

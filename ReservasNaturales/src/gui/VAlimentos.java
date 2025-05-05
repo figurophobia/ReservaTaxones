@@ -54,6 +54,7 @@ public class VAlimentos extends javax.swing.JDialog {
         btnNoConsumidos = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         tf_distribuidorAlimento = new javax.swing.JTextField();
+        bajarBoton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -100,7 +101,7 @@ public class VAlimentos extends javax.swing.JDialog {
             }
         });
 
-        btnNoConsumidos.setText("Deshechar no consumidos");
+        btnNoConsumidos.setText("Desechar no consumidos");
         btnNoConsumidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNoConsumidosActionPerformed(evt);
@@ -108,6 +109,15 @@ public class VAlimentos extends javax.swing.JDialog {
         });
 
         jLabel4.setText("Distribuidora");
+
+        bajarBoton.setBackground(new java.awt.Color(102, 102, 0));
+        bajarBoton.setForeground(new java.awt.Color(0, 255, 255));
+        bajarBoton.setText("Bajar Cantidad");
+        bajarBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bajarBotonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,7 +130,9 @@ public class VAlimentos extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bajarBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -175,9 +187,13 @@ public class VAlimentos extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btn_salir)
-                            .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                            .addComponent(btnNoConsumidos, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bajarBoton)
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -294,12 +310,22 @@ public class VAlimentos extends javax.swing.JDialog {
         
     }//GEN-LAST:event_btnNoConsumidosActionPerformed
 
+    private void bajarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bajarBotonActionPerformed
+        fa.bajarMitad();
+        ModeloTablaAlimentos mta;
+        
+        mta =(ModeloTablaAlimentos) tabla_alimentos.getModel();
+        mta.setFilas(fa.obtenerAlimentos());
+        
+    }//GEN-LAST:event_bajarBotonActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bajarBoton;
     private javax.swing.JButton btnNoConsumidos;
     private javax.swing.JButton btn_anadirAlimento;
     private javax.swing.JButton btn_asignarAlimento;

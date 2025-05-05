@@ -4,3 +4,4 @@ ReservasNaturales/build
 *.class
 *.xml
 *.properties
+/ReservasNaturales3/build/

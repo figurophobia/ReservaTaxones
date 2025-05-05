@@ -255,5 +255,21 @@ public class FachadaAplicacion {
         gu.reducirPersonal();
     }
 
+    public void buscarMaxRevsiones() {
+        gr.buscarMaxRevisiones();
+    }
+
+    public List<Revision> obtenerRevisiones() {
+        return gr.obtenerRevisiones();
+    }
+
+    public void bajarMitad() {
+        gal.bajarMitad();
+    }
+
+    public void aumentarFrecuenciaAlimentos(String nombre, String area) {
+        gal.aumentarFrecuenciaAlimentos(nombre,area);
+    }
+
     
 }
