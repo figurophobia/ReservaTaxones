@@ -24,14 +24,15 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <Component id="panelGeneral" min="-2" pref="535" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="189" max="32767" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="MasAlimentosBoton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="buttonSalir" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="MasAlimentosBoton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="buttonSalir" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="panelGeneric" alignment="0" max="32767" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -39,11 +40,14 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="panelGeneral" min="-2" pref="461" max="-2" attributes="0"/>
+              <Component id="panelGeneric" min="-2" pref="461" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="buttonSalir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="MasAlimentosBoton" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="MasAlimentosBoton" min="-2" pref="29" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="buttonSalir" max="32767" attributes="0"/>
+                      <EmptySpace min="2" pref="2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="0" pref="2" max="32767" attributes="0"/>
           </Group>
@@ -51,11 +55,11 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="panelGeneral">
+    <Container class="javax.swing.JTabbedPane" name="panelGeneric">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="panelEspecies">
+        <Container class="javax.swing.JPanel" name="panelEsp">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Especies">
@@ -70,31 +74,28 @@
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="AnadirButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="NombreCientificoText" max="32767" attributes="0"/>
+                              <Component id="ActualizarButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="BorrarButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="NombreComunText" max="32767" attributes="0"/>
-                                  <Component id="DescripcionText" max="32767" attributes="0"/>
-                                  <Component id="TaxonComboBox" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="EspecieNombreCientifico" max="32767" attributes="0"/>
+                                  <Component id="NombreComunEspecie" max="32767" attributes="0"/>
+                                  <Component id="TaxonesComboBox" alignment="0" pref="569" max="32767" attributes="0"/>
+                                  <Component id="textoDescripcion" alignment="0" max="32767" attributes="0"/>
                               </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="AnadirButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="ActualizarButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="BorrarButton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="790" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -106,29 +107,29 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="NombreCientificoText" min="-2" max="-2" attributes="0"/>
+                          <Component id="EspecieNombreCientifico" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="NombreComunText" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="NombreComunEspecie" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="DescripcionText" alignment="3" min="-2" pref="110" max="-2" attributes="0"/>
+                          <Component id="textoDescripcion" alignment="3" min="-2" pref="110" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="TaxonComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TaxonesComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="184" max="32767" attributes="0"/>
+                      <EmptySpace pref="124" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="AnadirButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ActualizarButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="BorrarButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="AnadirButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="ActualizarButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="BorrarButton" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -140,9 +141,9 @@
                 <Property name="text" type="java.lang.String" value="Nombre Cient&#xed;fico"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NombreCientificoText">
+            <Component class="javax.swing.JTextField" name="EspecieNombreCientifico">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NombreCientificoTextActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EspecieNombreCientificoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel2">
@@ -150,9 +151,9 @@
                 <Property name="text" type="java.lang.String" value="Nombre Com&#xfa;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="NombreComunText">
+            <Component class="javax.swing.JTextField" name="NombreComunEspecie">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NombreComunTextActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="NombreComunEspecieActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -160,19 +161,22 @@
                 <Property name="text" type="java.lang.String" value="Descripci&#xf3;n"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="DescripcionText">
+            <Component class="javax.swing.JTextField" name="textoDescripcion">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Tax&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Tax&#xf3;n de la especie"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="TaxonComboBox">
+            <Component class="javax.swing.JComboBox" name="TaxonesComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TaxonesComboBoxActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -203,7 +207,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelEjemplares">
+        <Container class="javax.swing.JPanel" name="panelEj">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Ejemplares">
@@ -215,56 +219,48 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="jlabel9" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="69" pref="427" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="tf_nomeCientEspecie" min="-2" pref="188" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel7" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
-                                                  <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="tf_fecNac" min="-2" pref="188" max="-2" attributes="0"/>
-                                                  <Component id="tf_moteEjemplar" min="-2" pref="188" max="-2" attributes="0"/>
-                                                  <Component id="AreaComboBox" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
-                                                  <Component id="tf_idEspecie" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="btn_nuevoEjemplar" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btn_borrarEjemplar" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="btn_Actualizar" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="ClinicasBoton" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                              <Component id="jlabel9" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="158" pref="617" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Component id="btn_nuevoEjemplar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_borrarEjemplar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="btn_ActualizarEjemplar" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Component id="MenuClinicasBoton" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel7" alignment="0" min="-2" pref="171" max="-2" attributes="0"/>
+                                          <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="AreaComboBox" max="32767" attributes="0"/>
+                                          <Component id="tf_fechaNacmiento" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="moteTF" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="idTF" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="nombreCientifTF" alignment="1" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -278,34 +274,34 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tf_nomeCientEspecie" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="nombreCientifTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jlabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tf_idEspecie" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="idTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tf_moteEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="moteTF" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="tf_fecNac" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tf_fechaNacmiento" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                           <Component id="AreaComboBox" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="19" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btn_nuevoEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_borrarEjemplar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btn_Actualizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ClinicasBoton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="btn_ActualizarEjemplar" pref="38" max="32767" attributes="0"/>
+                          <Component id="btn_borrarEjemplar" alignment="1" max="32767" attributes="0"/>
+                          <Component id="btn_nuevoEjemplar" max="32767" attributes="0"/>
+                          <Component id="MenuClinicasBoton" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -346,24 +342,24 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Nombre_cientifico_especie"/>
+                <Property name="text" type="java.lang.String" value="Nombre cientifico"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tf_nomeCientEspecie">
+            <Component class="javax.swing.JTextField" name="nombreCientifTF">
               <Properties>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Mote"/>
+                <Property name="text" type="java.lang.String" value="Mote del ejemplar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tf_moteEjemplar">
+            <Component class="javax.swing.JTextField" name="moteTF">
             </Component>
-            <Component class="javax.swing.JTextField" name="tf_fecNac">
+            <Component class="javax.swing.JTextField" name="tf_fechaNacmiento">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_fecNacActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tf_fechaNacmientoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -377,10 +373,10 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jlabel9">
               <Properties>
-                <Property name="text" type="java.lang.String" value="ID"/>
+                <Property name="text" type="java.lang.String" value="ID del ejemplar"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="tf_idEspecie">
+            <Component class="javax.swing.JTextField" name="idTF">
               <Properties>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
@@ -400,20 +396,20 @@
                 <Property name="text" type="java.lang.String" value="&#xc1;rea geogr&#xe1;fica"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_Actualizar">
+            <Component class="javax.swing.JButton" name="btn_ActualizarEjemplar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actualizar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ActualizarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_ActualizarEjemplarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="ClinicasBoton">
+            <Component class="javax.swing.JButton" name="MenuClinicasBoton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Men&#xfa; Clinicas/Revisiones"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ClinicasBotonActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MenuClinicasBotonActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -422,6 +418,12 @@
     </Container>
     <Component class="javax.swing.JButton" name="buttonSalir">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="3c" green="4c" red="e7" type="rgb"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
       <Events>
@@ -430,7 +432,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="MasAlimentosBoton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Aumentar frecuencia aliemntos misma especie y area"/>
+        <Property name="text" type="java.lang.String" value="Aumentar frecuencia alimentos misma especie y area"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MasAlimentosBotonActionPerformed"/>

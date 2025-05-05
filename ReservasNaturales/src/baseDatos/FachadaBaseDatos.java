@@ -188,11 +188,11 @@ public class FachadaBaseDatos {
     }
 
     public int novoEjemplar(Ejemplar ej) {
-        return daoEjemplares.novoEjemplar(ej);
+        return daoEjemplares.nuevoEjemplar(ej);
     }
 
     public int borrarEjemplar(int id, String nom_cient) {
-        return daoEjemplares.borrarEjemplar(id, nom_cient);
+        return daoEjemplares.eliminarEjemplar(id, nom_cient);
     }
 
     public List<ConsumirAlimento> obterConsumirAlimentos() {
@@ -299,7 +299,7 @@ public class FachadaBaseDatos {
     }
 
     public List<Ejemplar> obterEjemplares(Especie e) {
-        return daoEjemplares.obterEjemplares(e);
+        return daoEjemplares.ejemplaresPorEspecie(e);
     }
 
     public void actualizarEjemplar(Ejemplar viejoEjemplar, Ejemplar nuevoEjemplar) {

@@ -29,7 +29,7 @@ public class VMisones extends javax.swing.JDialog {
         this.fa=fa;
         initComponents();
         TablaMisiones.setModel(new ModeloTablaMisiones());
-        configurarComboBoxes();
+        refreshComboBoxes();
     }
 
     /**
@@ -41,91 +41,93 @@ public class VMisones extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buscarTextFieldConfig = new javax.swing.JTextField();
-        btnBuscar = new javax.swing.JButton();
-        checkBoxTrabajador = new javax.swing.JCheckBox();
-        checkBoxEspecie = new javax.swing.JCheckBox();
-        checkBoxEstado = new javax.swing.JCheckBox();
+        buscarTF = new javax.swing.JTextField();
+        buscarbtn = new javax.swing.JButton();
+        checkTrabajador = new javax.swing.JCheckBox();
+        checkEspecie = new javax.swing.JCheckBox();
+        checkEstado = new javax.swing.JCheckBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaMisiones = new javax.swing.JTable();
-        btnNueva = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnSarlir = new javax.swing.JButton();
-        btnCompletada = new javax.swing.JButton();
-        btnTrabajadorExperimentado = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
+        NuevaMision = new javax.swing.JButton();
+        EliminarMision = new javax.swing.JButton();
+        exitbtn = new javax.swing.JButton();
+        Completed = new javax.swing.JButton();
+        masExperimentadobtn = new javax.swing.JButton();
+        updatebtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Misiones");
 
-        buscarTextFieldConfig.addActionListener(new java.awt.event.ActionListener() {
+        buscarTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buscarTextFieldConfigActionPerformed(evt);
+                buscarTFActionPerformed(evt);
             }
         });
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        buscarbtn.setText("Buscar");
+        buscarbtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        buscarbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                buscarbtnActionPerformed(evt);
             }
         });
 
-        checkBoxTrabajador.setText("Trabajador");
-        checkBoxTrabajador.addActionListener(new java.awt.event.ActionListener() {
+        checkTrabajador.setText("Trabajador");
+        checkTrabajador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                checkBoxTrabajadorActionPerformed(evt);
+                checkTrabajadorActionPerformed(evt);
             }
         });
 
-        checkBoxEspecie.setText("Especie");
+        checkEspecie.setText("Especie");
 
-        checkBoxEstado.setText("Estado");
+        checkEstado.setText("Estado");
 
         TablaMisiones.setModel(new ModeloTablaMisiones());
         jScrollPane1.setViewportView(TablaMisiones);
 
-        btnNueva.setText("Nueva Misión");
-        btnNueva.setToolTipText("");
-        btnNueva.addActionListener(new java.awt.event.ActionListener() {
+        NuevaMision.setText("Nueva Misión");
+        NuevaMision.setToolTipText("");
+        NuevaMision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevaActionPerformed(evt);
+                NuevaMisionActionPerformed(evt);
             }
         });
 
-        btnEliminar.setText("Borrar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+        EliminarMision.setText("Borrar");
+        EliminarMision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
+                EliminarMisionActionPerformed(evt);
             }
         });
 
-        btnSarlir.setText("Salir");
-        btnSarlir.addActionListener(new java.awt.event.ActionListener() {
+        exitbtn.setBackground(new java.awt.Color(231, 76, 60));
+        exitbtn.setText("Salir");
+        exitbtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSarlirActionPerformed(evt);
+                exitbtnActionPerformed(evt);
             }
         });
 
-        btnCompletada.setText("Completada");
-        btnCompletada.addActionListener(new java.awt.event.ActionListener() {
+        Completed.setBackground(new java.awt.Color(30, 132, 73));
+        Completed.setText("Completada");
+        Completed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCompletadaActionPerformed(evt);
+                CompletedActionPerformed(evt);
             }
         });
 
-        btnTrabajadorExperimentado.setText("Escoger Trabajador Más Experimentado");
-        btnTrabajadorExperimentado.addActionListener(new java.awt.event.ActionListener() {
+        masExperimentadobtn.setText("Escoger Trabajador Más Experimentado");
+        masExperimentadobtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTrabajadorExperimentadoActionPerformed(evt);
+                masExperimentadobtnActionPerformed(evt);
             }
         });
 
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+        updatebtn.setText("Actualizar");
+        updatebtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
+                updatebtnActionPerformed(evt);
             }
         });
 
@@ -136,88 +138,91 @@ public class VMisones extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSarlir))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(btnNueva)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnActualizar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCompletada))
+                        .addComponent(exitbtn))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(NuevaMision)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(EliminarMision)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(updatebtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Completed))
                             .addComponent(jScrollPane1)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(checkBoxTrabajador)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(checkBoxEspecie)
-                                .addGap(18, 18, 18)
-                                .addComponent(checkBoxEstado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 329, Short.MAX_VALUE)
-                                .addComponent(btnTrabajadorExperimentado)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(buscarTF)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(checkTrabajador)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(checkEspecie)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(checkEstado)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(0, 323, Short.MAX_VALUE)
+                                        .addComponent(masExperimentadobtn))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(buscarbtn)
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(35, 35, 35))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(buscarTextFieldConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buscarTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarbtn))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(checkBoxTrabajador)
-                            .addComponent(checkBoxEspecie)
-                            .addComponent(checkBoxEstado)))
+                            .addComponent(checkTrabajador)
+                            .addComponent(checkEspecie)
+                            .addComponent(checkEstado)))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnTrabajadorExperimentado, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(masExperimentadobtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(11, 11, 11)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNueva)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnCompletada)
-                    .addComponent(btnActualizar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
-                .addComponent(btnSarlir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(EliminarMision, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Completed, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(NuevaMision, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(updatebtn, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(77, 77, 77)
+                .addComponent(exitbtn)
                 .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void buscarTextFieldConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTextFieldConfigActionPerformed
+    private void buscarTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarTFActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_buscarTextFieldConfigActionPerformed
+    }//GEN-LAST:event_buscarTFActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void buscarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarbtnActionPerformed
         // TODO add your handling code here:
         buscarMisiones();
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_buscarbtnActionPerformed
 
-    private void checkBoxTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkBoxTrabajadorActionPerformed
+    private void checkTrabajadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkTrabajadorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_checkBoxTrabajadorActionPerformed
+    }//GEN-LAST:event_checkTrabajadorActionPerformed
 
-    private void btnSarlirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSarlirActionPerformed
+    private void exitbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitbtnActionPerformed
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_btnSarlirActionPerformed
+    }//GEN-LAST:event_exitbtnActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+    private void EliminarMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarMisionActionPerformed
         // TODO add your handling code here:
         int selectedRow=TablaMisiones.getSelectedRow();
         
@@ -245,9 +250,9 @@ public class VMisones extends javax.swing.JDialog {
                 "Error", 
                 javax.swing.JOptionPane.ERROR_MESSAGE);
         
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }//GEN-LAST:event_EliminarMisionActionPerformed
     }
-    private void btnCompletadaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCompletadaActionPerformed
+    private void CompletedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CompletedActionPerformed
         int filaSeleccionada = TablaMisiones.getSelectedRow();
 
         if (filaSeleccionada != -1) {
@@ -266,14 +271,14 @@ public class VMisones extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Selecciona una misión para marcar como completada.");
         }
-    }//GEN-LAST:event_btnCompletadaActionPerformed
+    }//GEN-LAST:event_CompletedActionPerformed
 
-    private void btnTrabajadorExperimentadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrabajadorExperimentadoActionPerformed
+    private void masExperimentadobtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_masExperimentadobtnActionPerformed
         // TODO add your handling code here:
-        String especie = buscarTextFieldConfig.getText().trim(); 
+        String especie = buscarTF.getText().trim(); 
         if (!especie.isEmpty()) {
             Usuario trabajador = fa.obtenerTrabajadorMasExperimentado(especie); // pasar la especie
-            if (trabajador != null && checkBoxEspecie.isSelected()) {
+            if (trabajador != null && checkEspecie.isSelected()) {
                 VAviso aviso = new VAviso((Frame) getParent(), true, "El trabajador más experimentado para la especie '" + especie + "' es: " + trabajador);
                 aviso.setVisible(true);
                 
@@ -291,9 +296,9 @@ public class VMisones extends javax.swing.JDialog {
         }
     
     
-    }//GEN-LAST:event_btnTrabajadorExperimentadoActionPerformed
+    }//GEN-LAST:event_masExperimentadobtnActionPerformed
 
-    private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
+    private void NuevaMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevaMisionActionPerformed
         // TODO add your handling code here:
         Usuario usuarioMision= fa.obtenerTrabajadorMision();
         Mision nuevaMision = new Mision(
@@ -318,9 +323,9 @@ public class VMisones extends javax.swing.JDialog {
     TablaMisiones.requestFocusInWindow();
         
        
-    }//GEN-LAST:event_btnNuevaActionPerformed
+    }//GEN-LAST:event_NuevaMisionActionPerformed
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    private void updatebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatebtnActionPerformed
     // Obtener el modelo de la tabla
     ModeloTablaMisiones modelo = (ModeloTablaMisiones) TablaMisiones.getModel();
 
@@ -352,7 +357,7 @@ public class VMisones extends javax.swing.JDialog {
 
     // Mostrar mensaje de éxito
     JOptionPane.showMessageDialog(this, "Misiones actualizadas correctamente.");
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }//GEN-LAST:event_updatebtnActionPerformed
 
     private boolean hasMisionChanged(Mision misionOriginal, Mision misionActual) {
         boolean nombresDistintos = !misionOriginal.getTrabajador().getNombre().equals(misionActual.getTrabajador().getNombre());
@@ -374,67 +379,86 @@ public class VMisones extends javax.swing.JDialog {
         
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Completed;
+    private javax.swing.JButton EliminarMision;
+    private javax.swing.JButton NuevaMision;
     private javax.swing.JTable TablaMisiones;
-    private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnCompletada;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnNueva;
-    private javax.swing.JButton btnSarlir;
-    private javax.swing.JButton btnTrabajadorExperimentado;
-    private javax.swing.JTextField buscarTextFieldConfig;
-    private javax.swing.JCheckBox checkBoxEspecie;
-    private javax.swing.JCheckBox checkBoxEstado;
-    private javax.swing.JCheckBox checkBoxTrabajador;
+    private javax.swing.JTextField buscarTF;
+    private javax.swing.JButton buscarbtn;
+    private javax.swing.JCheckBox checkEspecie;
+    private javax.swing.JCheckBox checkEstado;
+    private javax.swing.JCheckBox checkTrabajador;
+    private javax.swing.JButton exitbtn;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton masExperimentadobtn;
+    private javax.swing.JButton updatebtn;
     // End of variables declaration//GEN-END:variables
 
     private void buscarMisiones() {
         ModeloTablaMisiones mm;
-        mm=(ModeloTablaMisiones) TablaMisiones.getModel();
-        String textoBusqueda=buscarTextFieldConfig.getText().trim();
-         if (textoBusqueda.isEmpty()) {
+        mm = (ModeloTablaMisiones) TablaMisiones.getModel();
+        String textoBusqueda = buscarTF.getText().trim();
+
+        if (textoBusqueda.isEmpty()) {
+            mm.setFilas(fa.obtenerMisiones());
+        } else {
+            boolean criterioSeleccionado = false;
+
+            switch (getSelectedCheckBox()) {
+                case "Trabajador":
+                    mm.setFilas(fa.obtenerMisionesTrabajador(textoBusqueda));
+                    criterioSeleccionado = true;
+                    break;
+                case "Estado":
+                    mm.setFilas(fa.obtenerMisonesEstado(textoBusqueda));
+                    criterioSeleccionado = true;
+                    break;
+                case "Especie":
+                    mm.setFilas(fa.obtenerMisionesEspecie(textoBusqueda));
+                    criterioSeleccionado = true;
+                    break;
+                default:
+                    break;
+            }
+
+            if (!criterioSeleccionado) {
+                VAviso va = new VAviso((Frame) getParent(), true, "Selecciona un criterio de búsqueda");
+                va.setVisible(true);
+            }
+        }
+    }
+
+    private String getSelectedCheckBox() {
+        if (checkTrabajador.isSelected()) {
+            return "Trabajador";
+        } else if (checkEstado.isSelected()) {
+            return "Estado";
+        } else if (checkEspecie.isSelected()) {
+            return "Especie";
+        }
+        return "";
+    }
+
+    public void refreshComboBoxes() {
         
-        mm.setFilas(fa.obtenerMisiones());
-       }
-       else if (checkBoxTrabajador.isSelected()) {
-           mm.setFilas(fa.obtenerMisionesTrabajador(textoBusqueda));
-           
+        // Suponiendo que ya tienes la lista de trabajadores y especies
+        List<Usuario> listaTrabajadores = fa.obtenerTodosLosTrabajadores(); // Obtener trabajadores
+        List<Especie> listaEspecies = fa.obtenerEspecies("");
 
-       }else if (checkBoxEstado.isSelected()) {
-           mm.setFilas(fa.obtenerMisonesEstado(textoBusqueda));
-           
+        // Crear los combo boxes
+        JComboBox<String> comboTrabajadores = new JComboBox<>();
+        for (Usuario u : listaTrabajadores) {
+            comboTrabajadores.addItem(u.getNombre());
+        }
 
-       }else if (checkBoxEspecie.isSelected()) {
-           mm.setFilas(fa.obtenerMisionesEspecie(textoBusqueda));
-           
+        JComboBox<String> comboEspecies = new JComboBox<>();
+        for (Especie especie : listaEspecies) {
+            comboEspecies.addItem(especie.getNombreCientifico());
+        }
 
-       }else{
-           VAviso va= new VAviso((Frame)getParent(), true, "Selecciona un criterio de búsqueda");
-           va.setVisible(true);
-
-       }
-    }
-    public void configurarComboBoxes(){
-        
-            // Suponiendo que ya tienes la lista de trabajadores y especies
-    List<Usuario> listaTrabajadores = fa.obtenerTodosLosTrabajadores(); // Obtener trabajadores
-    List<Especie> listaEspecies = fa.obtenerEspecies("");
-
-    // Crear los combo boxes
-    JComboBox<String> comboTrabajadores = new JComboBox<>();
-    for (Usuario u : listaTrabajadores) {
-        comboTrabajadores.addItem(u.getNombre());
-    }
-
-    JComboBox<String> comboEspecies = new JComboBox<>();
-    for (Especie especie : listaEspecies) {
-        comboEspecies.addItem(especie.getNombreCientifico());
-    }
-
-    // Asignar el editor del combo box a las columnas correspondientes
-    TablaMisiones.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboTrabajadores));
-    TablaMisiones.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboEspecies));
+        // Asignar el editor del combo box a las columnas correspondientes
+        TablaMisiones.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(comboTrabajadores));
+        TablaMisiones.getColumnModel().getColumn(1).setCellEditor(new DefaultCellEditor(comboEspecies));
 
     }
 }

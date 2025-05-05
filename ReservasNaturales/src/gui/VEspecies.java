@@ -11,6 +11,8 @@ import java.awt.event.MouseListener;
 import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
+
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -36,13 +38,13 @@ public class VEspecies extends javax.swing.JDialog {
         this.fa=fa;
         initComponents();
         padre=(VPrincipal) parent;
-        cargarTaxones();
+        VEspecies.this.refreshTaxones();
         nuevo=true;
         ActualizarButton.setEnabled(false);
         BorrarButton.setEnabled(false);
-        ClinicasBoton.setEnabled(false);
+        MenuClinicasBoton.setEnabled(false);
         // Cando creamos unha nova especie non podemos crear aínda un ejemplar de esta
-        panelGeneral.setEnabledAt(panelGeneral.indexOfComponent(panelEjemplares), false);
+        panelGeneric.setEnabledAt(panelGeneric.indexOfComponent(panelEj), false);
         MasAlimentosBoton.setEnabled(false);
 
     }
@@ -52,20 +54,20 @@ public class VEspecies extends javax.swing.JDialog {
         this.fa=fa;
         initComponents();
         padre=(VPrincipal) parent;
-        NombreCientificoText.setText(e.getNombreCientifico());
-        NombreComunText.setText(e.getNombreComun());
-        DescripcionText.setText(e.getDescripcion());
-        cargarTaxones(e);
+        EspecieNombreCientifico.setText(e.getNombreCientifico());
+        NombreComunEspecie.setText(e.getNombreComun());
+        textoDescripcion.setText(e.getDescripcion());
+        refreshTaxones(e);
         editar=true;
         this.e=e;
         AnadirButton.setEnabled(false);
-        ClinicasBoton.setEnabled(false);
+        MenuClinicasBoton.setEnabled(false);
         
         // Manexamos a tab de exemplares
         
-        tf_nomeCientEspecie.setText(e.getNombreCientifico());
-        cargarAreas();
-        obterEjemplares();
+        nombreCientifTF.setText(e.getNombreCientifico());
+        refreshAreas();
+        obtenerEjemplaresGeneric();
         listenerSeleccionEjemplar();
         MasAlimentosBoton.setEnabled(false);
 
@@ -80,36 +82,36 @@ public class VEspecies extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panelGeneral = new javax.swing.JTabbedPane();
-        panelEspecies = new javax.swing.JPanel();
+        panelGeneric = new javax.swing.JTabbedPane();
+        panelEsp = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        NombreCientificoText = new javax.swing.JTextField();
+        EspecieNombreCientifico = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        NombreComunText = new javax.swing.JTextField();
+        NombreComunEspecie = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        DescripcionText = new javax.swing.JTextField();
+        textoDescripcion = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        TaxonComboBox = new javax.swing.JComboBox<>();
+        TaxonesComboBox = new javax.swing.JComboBox<>();
         AnadirButton = new javax.swing.JButton();
         ActualizarButton = new javax.swing.JButton();
         BorrarButton = new javax.swing.JButton();
-        panelEjemplares = new javax.swing.JPanel();
+        panelEj = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabla_ejemplares = new javax.swing.JTable();
         btn_nuevoEjemplar = new javax.swing.JButton();
         btn_borrarEjemplar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        tf_nomeCientEspecie = new javax.swing.JTextField();
+        nombreCientifTF = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        tf_moteEjemplar = new javax.swing.JTextField();
-        tf_fecNac = new javax.swing.JTextField();
+        moteTF = new javax.swing.JTextField();
+        tf_fechaNacmiento = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jlabel9 = new javax.swing.JLabel();
-        tf_idEspecie = new javax.swing.JTextField();
+        idTF = new javax.swing.JTextField();
         AreaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        btn_Actualizar = new javax.swing.JButton();
-        ClinicasBoton = new javax.swing.JButton();
+        btn_ActualizarEjemplar = new javax.swing.JButton();
+        MenuClinicasBoton = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
         MasAlimentosBoton = new javax.swing.JButton();
 
@@ -117,23 +119,29 @@ public class VEspecies extends javax.swing.JDialog {
 
         jLabel1.setText("Nombre Científico");
 
-        NombreCientificoText.addActionListener(new java.awt.event.ActionListener() {
+        EspecieNombreCientifico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreCientificoTextActionPerformed(evt);
+                EspecieNombreCientificoActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Nombre Común");
 
-        NombreComunText.addActionListener(new java.awt.event.ActionListener() {
+        NombreComunEspecie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NombreComunTextActionPerformed(evt);
+                NombreComunEspecieActionPerformed(evt);
             }
         });
 
         jLabel3.setText("Descripción");
 
-        jLabel5.setText("Taxón");
+        jLabel5.setText("Taxón de la especie");
+
+        TaxonesComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TaxonesComboBoxActionPerformed(evt);
+            }
+        });
 
         AnadirButton.setText("Añadir");
         AnadirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -156,63 +164,61 @@ public class VEspecies extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout panelEspeciesLayout = new javax.swing.GroupLayout(panelEspecies);
-        panelEspecies.setLayout(panelEspeciesLayout);
-        panelEspeciesLayout.setHorizontalGroup(
-            panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEspeciesLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelEspLayout = new javax.swing.GroupLayout(panelEsp);
+        panelEsp.setLayout(panelEspLayout);
+        panelEspLayout.setHorizontalGroup(
+            panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEspLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelEspeciesLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(NombreCientificoText))
-                    .addGroup(panelEspeciesLayout.createSequentialGroup()
-                        .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5))
-                        .addGap(18, 18, 18)
-                        .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NombreComunText)
-                            .addComponent(DescripcionText)
-                            .addComponent(TaxonComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(panelEspeciesLayout.createSequentialGroup()
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEspLayout.createSequentialGroup()
                         .addComponent(AnadirButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ActualizarButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(BorrarButton)
-                        .addGap(0, 790, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelEspLayout.createSequentialGroup()
+                        .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(EspecieNombreCientifico)
+                            .addComponent(NombreComunEspecie)
+                            .addComponent(TaxonesComboBox, 0, 569, Short.MAX_VALUE)
+                            .addComponent(textoDescripcion))))
                 .addContainerGap())
         );
-        panelEspeciesLayout.setVerticalGroup(
-            panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEspeciesLayout.createSequentialGroup()
+        panelEspLayout.setVerticalGroup(
+            panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEspLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NombreCientificoText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EspecieNombreCientifico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(NombreComunText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(NombreComunEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(DescripcionText, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textoDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(TaxonComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
-                .addGroup(panelEspeciesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AnadirButton)
-                    .addComponent(ActualizarButton)
-                    .addComponent(BorrarButton)))
+                    .addComponent(TaxonesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                .addGroup(panelEspLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AnadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ActualizarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BorrarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        panelGeneral.addTab("Especies", panelEspecies);
+        panelGeneric.addTab("Especies", panelEsp);
 
         tabla_ejemplares.setModel(new ModeloTablaEjemplaresGeneral()
         );
@@ -232,122 +238,119 @@ public class VEspecies extends javax.swing.JDialog {
             }
         });
 
-        jLabel6.setText("Nombre_cientifico_especie");
+        jLabel6.setText("Nombre cientifico");
 
-        tf_nomeCientEspecie.setEnabled(false);
+        nombreCientifTF.setEnabled(false);
 
-        jLabel7.setText("Mote");
+        jLabel7.setText("Mote del ejemplar");
 
-        tf_fecNac.addActionListener(new java.awt.event.ActionListener() {
+        tf_fechaNacmiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tf_fecNacActionPerformed(evt);
+                tf_fechaNacmientoActionPerformed(evt);
             }
         });
 
         jLabel8.setText("Fecha nacimiento");
         jLabel8.setName(""); // NOI18N
 
-        jlabel9.setText("ID");
+        jlabel9.setText("ID del ejemplar");
 
-        tf_idEspecie.setEnabled(false);
+        idTF.setEnabled(false);
 
         jLabel9.setText("Área geográfica");
 
-        btn_Actualizar.setText("Actualizar");
-        btn_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+        btn_ActualizarEjemplar.setText("Actualizar");
+        btn_ActualizarEjemplar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_ActualizarActionPerformed(evt);
+                btn_ActualizarEjemplarActionPerformed(evt);
             }
         });
 
-        ClinicasBoton.setText("Menú Clinicas/Revisiones");
-        ClinicasBoton.addActionListener(new java.awt.event.ActionListener() {
+        MenuClinicasBoton.setText("Menú Clinicas/Revisiones");
+        MenuClinicasBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ClinicasBotonActionPerformed(evt);
+                MenuClinicasBotonActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelEjemplaresLayout = new javax.swing.GroupLayout(panelEjemplares);
-        panelEjemplares.setLayout(panelEjemplaresLayout);
-        panelEjemplaresLayout.setHorizontalGroup(
-            panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEjemplaresLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelEjLayout = new javax.swing.GroupLayout(panelEj);
+        panelEj.setLayout(panelEjLayout);
+        panelEjLayout.setHorizontalGroup(
+            panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEjLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelEjemplaresLayout.createSequentialGroup()
-                                .addComponent(jlabel9)
-                                .addGap(69, 427, Short.MAX_VALUE))
-                            .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel8))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(tf_fecNac, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tf_moteEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                                        .addComponent(btn_nuevoEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_borrarEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_Actualizar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(ClinicasBoton)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(89, 89, 89))
-                    .addGroup(panelEjemplaresLayout.createSequentialGroup()
-                        .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelEjLayout.createSequentialGroup()
+                        .addComponent(jlabel9)
+                        .addGap(158, 617, Short.MAX_VALUE))
+                    .addGroup(panelEjLayout.createSequentialGroup()
+                        .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(panelEjLayout.createSequentialGroup()
+                                .addComponent(btn_nuevoEjemplar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_borrarEjemplar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_ActualizarEjemplar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MenuClinicasBoton)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelEjLayout.createSequentialGroup()
+                        .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(panelEjLayout.createSequentialGroup()
+                                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(AreaComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tf_fechaNacmiento)
+                                    .addComponent(moteTF)
+                                    .addComponent(idTF)
+                                    .addComponent(nombreCientifTF, javax.swing.GroupLayout.Alignment.TRAILING))))
+                        .addContainerGap())))
         );
-        panelEjemplaresLayout.setVerticalGroup(
-            panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelEjemplaresLayout.createSequentialGroup()
+        panelEjLayout.setVerticalGroup(
+            panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEjLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(tf_nomeCientEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nombreCientifTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlabel9)
-                    .addComponent(tf_idEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(idTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(tf_moteEjemplar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(moteTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(tf_fecNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tf_fechaNacmiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_nuevoEjemplar)
-                    .addComponent(btn_borrarEjemplar)
-                    .addComponent(btn_Actualizar)
-                    .addComponent(ClinicasBoton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelEjLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_ActualizarEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(btn_borrarEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_nuevoEjemplar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(MenuClinicasBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         jLabel8.getAccessibleContext().setAccessibleName("Fecha Nacimiento");
 
-        panelGeneral.addTab("Ejemplares", panelEjemplares);
+        panelGeneric.addTab("Ejemplares", panelEj);
 
+        buttonSalir.setBackground(new java.awt.Color(231, 76, 60));
+        buttonSalir.setForeground(new java.awt.Color(255, 255, 255));
         buttonSalir.setText("Salir");
         buttonSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -355,7 +358,7 @@ public class VEspecies extends javax.swing.JDialog {
             }
         });
 
-        MasAlimentosBoton.setText("Aumentar frecuencia aliemntos misma especie y area");
+        MasAlimentosBoton.setText("Aumentar frecuencia alimentos misma especie y area");
         MasAlimentosBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MasAlimentosBotonActionPerformed(evt);
@@ -367,23 +370,25 @@ public class VEspecies extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 189, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(MasAlimentosBoton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(buttonSalir)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(MasAlimentosBoton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonSalir))
+                    .addComponent(panelGeneric))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelGeneric, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(buttonSalir)
-                    .addComponent(MasAlimentosBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(MasAlimentosBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(buttonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)))
                 .addGap(0, 2, Short.MAX_VALUE))
         );
 
@@ -395,20 +400,20 @@ public class VEspecies extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_buttonSalirActionPerformed
 
-    private void NombreCientificoTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreCientificoTextActionPerformed
+    private void EspecieNombreCientificoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EspecieNombreCientificoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreCientificoTextActionPerformed
+    }//GEN-LAST:event_EspecieNombreCientificoActionPerformed
 
-    private void NombreComunTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreComunTextActionPerformed
+    private void NombreComunEspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NombreComunEspecieActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_NombreComunTextActionPerformed
+    }//GEN-LAST:event_NombreComunEspecieActionPerformed
 
     private void AnadirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnadirButtonActionPerformed
-        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
+        Taxon t = new Taxon((String)TaxonesComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
-            NombreCientificoText.getText(),
-            NombreComunText.getText(),
-            DescripcionText.getText(),
+            EspecieNombreCientifico.getText(),
+            NombreComunEspecie.getText(),
+            textoDescripcion.getText(),
             t
         );
         fa.anhadirEspecie(eNueva);
@@ -416,11 +421,11 @@ public class VEspecies extends javax.swing.JDialog {
     }//GEN-LAST:event_AnadirButtonActionPerformed
 
     private void ActualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ActualizarButtonActionPerformed
-        Taxon t = new Taxon((String)TaxonComboBox.getSelectedItem(), null, null);
+        Taxon t = new Taxon((String)TaxonesComboBox.getSelectedItem(), null, null);
         Especie eNueva = new Especie(
-            NombreCientificoText.getText(),
-            NombreComunText.getText(),
-            DescripcionText.getText(),
+            EspecieNombreCientifico.getText(),
+            NombreComunEspecie.getText(),
+            textoDescripcion.getText(),
             t
         );
         fa.actualizarEspecie(e,eNueva);
@@ -432,50 +437,50 @@ public class VEspecies extends javax.swing.JDialog {
         fa.borrarEspecie(e);
     }//GEN-LAST:event_BorrarButtonActionPerformed
 
-    private void tf_fecNacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_fecNacActionPerformed
+    private void tf_fechaNacmientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_fechaNacmientoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tf_fecNacActionPerformed
+    }//GEN-LAST:event_tf_fechaNacmientoActionPerformed
 
     private void btn_nuevoEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_nuevoEjemplarActionPerformed
-        if (!tf_moteEjemplar.getText().isEmpty() && !tf_fecNac.getText().isEmpty()) {
-            Ejemplar novoEjemplar = new Ejemplar(new Especie(tf_nomeCientEspecie.getText()),
-                                                tf_moteEjemplar.getText(),
-                                                tf_fecNac.getText(),
+        if (!moteTF.getText().isEmpty() && !tf_fechaNacmiento.getText().isEmpty()) {
+            Ejemplar novoEjemplar = new Ejemplar(new Especie(nombreCientifTF.getText()),
+                                                moteTF.getText(),
+                                                tf_fechaNacmiento.getText(),
                                                 new Area(AreaComboBox.getSelectedItem().toString())
                                                 );
             if (fa.novoEjemplar(novoEjemplar) != -1) {
-                obterEjemplares();
+                obtenerEjemplaresGeneric();
             }
         }
     }//GEN-LAST:event_btn_nuevoEjemplarActionPerformed
 
     private void btn_borrarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_borrarEjemplarActionPerformed
-        if (!tf_idEspecie.getText().isEmpty()) {
+        if (!idTF.getText().isEmpty()) {
             
-            if (fa.borrarEjemplar(Integer.parseInt(tf_idEspecie.getText()),tf_nomeCientEspecie.getText()) != -1) {
-                tf_fecNac.setText("");
-                tf_idEspecie.setText("");
-                tf_moteEjemplar.setText("");
+            if (fa.borrarEjemplar(Integer.parseInt(idTF.getText()),nombreCientifTF.getText()) != -1) {
+                tf_fechaNacmiento.setText("");
+                idTF.setText("");
+                moteTF.setText("");
                 AreaComboBox.setSelectedIndex(-1);
-                obterEjemplares();
+                obtenerEjemplaresGeneric();
             }
         }
     }//GEN-LAST:event_btn_borrarEjemplarActionPerformed
 
-    private void ClinicasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClinicasBotonActionPerformed
-        int fila = tabla_ejemplares.getSelectedRow();
-        if(fila != -1){
-            ModeloTablaEjemplaresGeneral mteg = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
-            Ejemplar ejem = mteg.getFila(fila);
+    private void MenuClinicasBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuClinicasBotonActionPerformed
+        int row = tabla_ejemplares.getSelectedRow();
+        if(row != -1){
+            ModeloTablaEjemplaresGeneral modelEjemplaresGen = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar ejem = modelEjemplaresGen.getFila(row);
             fa.crearVClinica(ejem);
         }
-    }//GEN-LAST:event_ClinicasBotonActionPerformed
+    }//GEN-LAST:event_MenuClinicasBotonActionPerformed
 
     private void MasAlimentosBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MasAlimentosBotonActionPerformed
-            int fila = tabla_ejemplares.getSelectedRow();
-        if(fila != -1){
-            ModeloTablaEjemplaresGeneral mteg = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
-            Ejemplar ejem = mteg.getFila(fila);
+            int row = tabla_ejemplares.getSelectedRow();
+        if(row != -1){
+            ModeloTablaEjemplaresGeneral modelEjemplaresGen = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar ejem = modelEjemplaresGen.getFila(row);
             String nombre = ejem.getEspecie().getNombreCientifico();
             String area = ejem.getArea().getNombreReserva();
             fa.aumentarFrecuenciaAlimentos(nombre, area);
@@ -483,14 +488,14 @@ public class VEspecies extends javax.swing.JDialog {
        
     }//GEN-LAST:event_MasAlimentosBotonActionPerformed
 
-    private void btn_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ActualizarActionPerformed
+    private void btn_ActualizarEjemplarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ActualizarEjemplarActionPerformed
         int filaSeleccionada = tabla_ejemplares.getSelectedRow();
 
         if (filaSeleccionada != -1) {
             ModeloTablaEjemplaresGeneral modelo = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
             Ejemplar viejoEjemplar = modelo.obtenerEjemplar(filaSeleccionada);
-            String nuevoMote = tf_moteEjemplar.getText().trim();
-            String nuevaFecha = tf_fecNac.getText().trim();  // Formato: yyyy-MM-dd
+            String nuevoMote = moteTF.getText().trim();
+            String nuevaFecha = tf_fechaNacmiento.getText().trim();  // Formato: yyyy-MM-dd
             Area nuevaArea = new Area(AreaComboBox.getSelectedItem().toString());
 
             if (nuevoMote.isEmpty() || nuevaFecha.isEmpty() || nuevaArea == null) {
@@ -510,7 +515,7 @@ public class VEspecies extends javax.swing.JDialog {
 
                 // Llamar al método de la fachada con viejo y nuevo
                 fa.actualizarEjemplar(viejoEjemplar, nuevoEjemplar);
-                obterEjemplares();
+                obtenerEjemplaresGeneric();
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Error al actualizar el ejemplar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -519,23 +524,27 @@ public class VEspecies extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(this, "Debes seleccionar un ejemplar de la tabla.", "Aviso", JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_btn_ActualizarActionPerformed
+    }//GEN-LAST:event_btn_ActualizarEjemplarActionPerformed
+
+    private void TaxonesComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TaxonesComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TaxonesComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
     private javax.swing.JComboBox<String> AreaComboBox;
     private javax.swing.JButton BorrarButton;
-    private javax.swing.JButton ClinicasBoton;
-    private javax.swing.JTextField DescripcionText;
+    private javax.swing.JTextField EspecieNombreCientifico;
     private javax.swing.JButton MasAlimentosBoton;
-    private javax.swing.JTextField NombreCientificoText;
-    private javax.swing.JTextField NombreComunText;
-    private javax.swing.JComboBox<String> TaxonComboBox;
-    private javax.swing.JButton btn_Actualizar;
+    private javax.swing.JButton MenuClinicasBoton;
+    private javax.swing.JTextField NombreComunEspecie;
+    private javax.swing.JComboBox<String> TaxonesComboBox;
+    private javax.swing.JButton btn_ActualizarEjemplar;
     private javax.swing.JButton btn_borrarEjemplar;
     private javax.swing.JButton btn_nuevoEjemplar;
     private javax.swing.JButton buttonSalir;
+    private javax.swing.JTextField idTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -546,69 +555,72 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel jlabel9;
-    private javax.swing.JPanel panelEjemplares;
-    private javax.swing.JPanel panelEspecies;
-    private javax.swing.JTabbedPane panelGeneral;
+    private javax.swing.JTextField moteTF;
+    private javax.swing.JTextField nombreCientifTF;
+    private javax.swing.JPanel panelEj;
+    private javax.swing.JPanel panelEsp;
+    private javax.swing.JTabbedPane panelGeneric;
     private javax.swing.JTable tabla_ejemplares;
-    private javax.swing.JTextField tf_fecNac;
-    private javax.swing.JTextField tf_idEspecie;
-    private javax.swing.JTextField tf_moteEjemplar;
-    private javax.swing.JTextField tf_nomeCientEspecie;
+    private javax.swing.JTextField textoDescripcion;
+    private javax.swing.JTextField tf_fechaNacmiento;
     // End of variables declaration//GEN-END:variables
 
-    private void cargarAreas() {
-        
-        List<Area> areas = fa.obtenerAreas(); // obtener la lista de áreas
+    private void refreshAreas() {
+        List<Area> listaAreas = fa.obtenerAreas(); // obtener la lista de áreas desde la fachada
 
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> modeloComboBox = new DefaultComboBoxModel<>();
 
-        for (Area area : areas) {
-            modelo.addElement(area.getNombreReserva()); // suponiendo que el área tiene un método getNombre()
+        for (Area areaActual : listaAreas) {
+            modeloComboBox.addElement(areaActual.getNombreReserva()); // agregar el nombre de cada área al modelo
         }
 
-        AreaComboBox.setModel(modelo); // asignar el modelo al ComboBox
+        AreaComboBox.setModel(modeloComboBox); // establecer el modelo en el ComboBox
     }
     
-    private void cargarTaxones() {
-        List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
+    private void refreshTaxones() {
+        List<Taxon> taxoneslista = fa.obtenerTaxones(); // obtener la lista de taxones
 
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
-        for (Taxon taxon : taxones) {
-            modelo.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
+        Iterator<Taxon> iterator = taxoneslista.iterator();
+        while (iterator.hasNext()) {
+            Taxon taxon = iterator.next();
+            model.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
         }
 
-        TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
+        TaxonesComboBox.setModel(model); // asignar el modelo al ComboBox
     }
 
     
-    private void cargarTaxones(Especie e) {
-        List<Taxon> taxones = fa.obtenerTaxones(); // obtener la lista de taxones
+    private void refreshTaxones(Especie e) {
+        List<Taxon> taxoneslista = fa.obtenerTaxones(); // obtener la lista de taxones
 
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
 
-        for (Taxon taxon : taxones) {
-            modelo.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
+        Iterator<Taxon> iterator = taxoneslista.iterator();
+        while (iterator.hasNext()) {
+            Taxon taxon = iterator.next();
+            model.addElement(taxon.getNombre()); // suponiendo que el taxon tiene un método getNombre()
         }
 
-        TaxonComboBox.setModel(modelo); // asignar el modelo al ComboBox
-        TaxonComboBox.setSelectedItem(e.getTaxon().getNombre());
+        TaxonesComboBox.setModel(model); // asignar el modelo al ComboBox
+        TaxonesComboBox.setSelectedItem(e.getTaxon().getNombre());
     }
 
     private void refreshVentana() {
-        NombreCientificoText.setText(e.getNombreCientifico());
-        NombreComunText.setText(e.getNombreComun());
-        DescripcionText.setText(e.getDescripcion());
-        cargarAreas();
-        cargarTaxones(e);
+        EspecieNombreCientifico.setText(e.getNombreCientifico());
+        NombreComunEspecie.setText(e.getNombreComun());
+        textoDescripcion.setText(e.getDescripcion());
+        refreshAreas();
+        refreshTaxones(e);
     }
 
 
-    private void obterEjemplares() {
-        ModeloTablaEjemplaresGeneral mteg;
+    private void obtenerEjemplaresGeneric() {
+        ModeloTablaEjemplaresGeneral modelEjemplaresGen;
         
-        mteg =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
-        mteg.setFilas(fa.obterEjemplares(e));
+        modelEjemplaresGen =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+        modelEjemplaresGen.setFilas(fa.obterEjemplares(e));
     
     }
     
@@ -616,29 +628,29 @@ public class VEspecies extends javax.swing.JDialog {
         tabla_ejemplares.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent me) {
-                int fila = tabla_ejemplares.getSelectedRow();
-                if (fila != -1) {
+                int row = tabla_ejemplares.getSelectedRow();
+                if (row != -1) {
                     MasAlimentosBoton.setEnabled(true);
-                    ClinicasBoton.setEnabled(true); //activar el botton menu de clinicas
-                    String idEjemplar = tabla_ejemplares.getValueAt(fila, 0).toString();
-                    String mote = tabla_ejemplares.getValueAt(fila, 2).toString();
-                    String fec_nac = tabla_ejemplares.getValueAt(fila, 3).toString();
-                    String area_g = tabla_ejemplares.getValueAt(fila, 4).toString();
-                    int indice = -1;
+                    MenuClinicasBoton.setEnabled(true); //activar el botton menu de clinicas
+                    String idEjemplar = tabla_ejemplares.getValueAt(row, 0).toString();
+                    String mote = tabla_ejemplares.getValueAt(row, 2).toString();
+                    String fec_nac = tabla_ejemplares.getValueAt(row, 3).toString();
+                    String area_g = tabla_ejemplares.getValueAt(row, 4).toString();
+                    int indiceTabla = -1;
                     
                     for (int i = 0; i < AreaComboBox.getItemCount(); i++) {
                         if (AreaComboBox.getItemAt(i).toString().equals(area_g)) {
-                            indice = i;
+                            indiceTabla = i;
                             break;
                         }
                     }
                    
-                    tf_idEspecie.setText(idEjemplar);
-                    tf_moteEjemplar.setText(mote);
-                    tf_fecNac.setText(fec_nac);
-                    AreaComboBox.setSelectedIndex(indice);
+                    idTF.setText(idEjemplar);
+                    moteTF.setText(mote);
+                    tf_fechaNacmiento.setText(fec_nac);
+                    AreaComboBox.setSelectedIndex(indiceTabla);
                 }else{
-                           ClinicasBoton.setEnabled(false);   
+                           MenuClinicasBoton.setEnabled(false);   
                            MasAlimentosBoton.setEnabled(false);
                 }
             }

@@ -23,189 +23,191 @@ public class DAOEjemplares extends AbstractDAO {
     }
 
     public List<Ejemplar> obtenerEjemplares() {
-        List<Ejemplar> resultado = new ArrayList<>();
-        Connection con = this.getConexion();
-        PreparedStatement stmEjemplar = null, stmEspecie = null, stmArea = null;
-        ResultSet rsEjemplar, rsEspecie, rsArea;
-        Area area = null;
-        Especie especie = null;
-
+        List<Ejemplar> listaEjemplares = new ArrayList<>();
+        Connection conexion = this.getConexion();
+        PreparedStatement psEjemplar = null, psEspecie = null, psZona = null;
+        ResultSet rsEjemplar = null, rsEspecie = null, rsZona = null;
+    
         try {
-            String consulta = "SELECT id, nombre_cientifico_especie, mote, fec_nac, area_geografica FROM ejemplar";
-            String consultaEspecie = "SELECT nombre_cientifico, nombre_comun, descripcion, nombre_taxon from especies where nombre_cientifico = ?";
-            String consultaArea = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esAcuatica, esTerrestre from area_geografica where nombre_reserva = ?";
-            stmEjemplar = con.prepareStatement(consulta);
-            stmEspecie = con.prepareStatement(consultaEspecie);
-            stmArea = con.prepareStatement(consultaArea);
-            rsEjemplar = stmEjemplar.executeQuery();
-
+            String sqlEjemplares = "SELECT id, nombre_cientifico_especie, mote, fec_nac, area_geografica FROM ejemplar";
+            String sqlEspecie = "SELECT nombre_cientifico, nombre_comun, descripcion, nombre_taxon FROM especies WHERE nombre_cientifico = ?";
+            String sqlArea = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esAcuatica, esTerrestre FROM area_geografica WHERE nombre_reserva = ?";
+    
+            psEjemplar = conexion.prepareStatement(sqlEjemplares);
+            psEspecie = conexion.prepareStatement(sqlEspecie);
+            psZona = conexion.prepareStatement(sqlArea);
+    
+            rsEjemplar = psEjemplar.executeQuery();
+    
             while (rsEjemplar.next()) {
-                int id = rsEjemplar.getInt("id");
-                String nombre = rsEjemplar.getString("nombre_cientifico_especie");
-                String mote = rsEjemplar.getString("mote");
-                Date fec = rsEjemplar.getDate("fec_nac");
-                String fec_nac = fec.toString();
-                String nom_area = rsEjemplar.getString("area_geografica");
-                
-                
-                
-                stmEspecie.setString(1, nombre);
-                rsEspecie = stmEspecie.executeQuery();
-                
-                while(rsEspecie.next()) {
-                    String nombreCienEspecie = rsEspecie.getString("nombre_cientifico");
-                    String nombreComunEspecie = rsEspecie.getString("nombre_comun");
-                    String descripcion = rsEspecie.getString("descripcion");
-                    String nombre_taxon = rsEspecie.getString("nombre_taxon");
-                    
-                   
-                    
-                    especie = new Especie(nombreCienEspecie, nombreComunEspecie, descripcion, new Taxon(nombre_taxon));
+                int identificador = rsEjemplar.getInt("id");
+                String nombreCientifico = rsEjemplar.getString("nombre_cientifico_especie");
+                String apodo = rsEjemplar.getString("mote");
+                Date fechaNacimiento = rsEjemplar.getDate("fec_nac");
+                String fechaFormateada = fechaNacimiento.toString();
+                String nombreArea = rsEjemplar.getString("area_geografica");
+    
+                // Recuperar especie
+                Especie especieAsociada = null;
+                psEspecie.setString(1, nombreCientifico);
+                rsEspecie = psEspecie.executeQuery();
+    
+                if (rsEspecie.next()) {
+                    String nombreCient = rsEspecie.getString("nombre_cientifico");
+                    String nombrePopular = rsEspecie.getString("nombre_comun");
+                    String desc = rsEspecie.getString("descripcion");
+                    String taxon = rsEspecie.getString("nombre_taxon");
+    
+                    especieAsociada = new Especie(nombreCient, nombrePopular, desc, new Taxon(taxon));
                 }
-                
-                 stmArea.setString(1, nom_area);
-                 rsArea = stmArea.executeQuery();
-                 while (rsArea.next()) {
-                    area = null;
-                    String nombre_reserva = rsArea.getString("nombre_reserva");
-                    int extension = rsArea.getInt("extension");
-                    boolean acuatica = rsArea.getBoolean("esAcuatica");
-                    if (acuatica) {
-                        Double profundidad = rsArea.getDouble("profundidad");
-                        area = new Area(nombre_reserva, extension, profundidad);
+    
+                // Recuperar área
+                Area zona = null;
+                psZona.setString(1, nombreArea);
+                rsZona = psZona.executeQuery();
+    
+                if (rsZona.next()) {
+                    String reserva = rsZona.getString("nombre_reserva");
+                    int tamano = rsZona.getInt("extension");
+                    boolean esAcuatica = rsZona.getBoolean("esAcuatica");
+    
+                    if (esAcuatica) {
+                        double prof = rsZona.getDouble("profundidad");
+                        zona = new Area(reserva, tamano, prof);
                     } else {
-                        Double altitud_nivel_bajo = rsArea.getDouble("altitud_nivel_bajo");
-                        Double altitud_nivel_alto = rsArea.getDouble("altitud_nivel_alto");
-                        area = new Area(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto);
+                        double altBaja = rsZona.getDouble("altitud_nivel_bajo");
+                        double altAlta = rsZona.getDouble("altitud_nivel_alto");
+                        zona = new Area(reserva, tamano, altBaja, altAlta);
                     }
                 }
-                
-                
-                Ejemplar ejem = new Ejemplar(id, especie, mote, fec_nac, area);
-                resultado.add(ejem);
+    
+                Ejemplar ejemplar = new Ejemplar(identificador, especieAsociada, apodo, fechaFormateada, zona);
+                listaEjemplares.add(ejemplar);
             }
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-        } finally {
-            try {
-                if (stmEjemplar != null) stmEjemplar.close();
-            } catch (SQLException e) {
-                System.out.println("Imposible cerrar cursores");
-            }
-        }
-
-        return resultado;
-    }
-
-
-    int novoEjemplar(Ejemplar ej) {
-        Connection con;
-        PreparedStatement stmEjemplar = null;
-        int resultado = -1;
-        con = super.getConexion();
-
-        try {
-            
-            stmEjemplar = con.prepareStatement("insert into ejemplar(nombre_cientifico_especie, mote, fec_nac, area_geografica) "
-                    + "values (?,?,?,?)");
-
-            stmEjemplar.setString(1, ej.getEspecie().getNombreCientifico());
-            stmEjemplar.setString(2, ej.getMote());
-            Date fecha = Date.valueOf(ej.getFec_nac());
-            stmEjemplar.setDate(3, fecha);
-            stmEjemplar.setString(4, ej.getArea().getNombreReserva());
-            resultado = stmEjemplar.executeUpdate();
-            
+    
         } catch (SQLException ex) {
-            this.getFachadaAplicacion().muestraExcepcion(ex.getMessage());
-        }
-        return resultado;
-    }
-
-    int borrarEjemplar(int id, String nom_cient) {
-        Connection con;
-        PreparedStatement stmEjemplar=null;
-        int res = -1;
-        con=super.getConexion();
-
-        try {
-        stmEjemplar=con.prepareStatement("delete from ejemplar where id = ? and nombre_cientifico_especie = ?");
-        stmEjemplar.setInt(1, id);
-        stmEjemplar.setString(2, nom_cient);
-        res = stmEjemplar.executeUpdate();
-
-        } catch (SQLException e){
-          System.out.println(e.getMessage());
-          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-        }
-        
-        return res;
-    }
-
-    List<Ejemplar> obterEjemplares(Especie e) {
-        List<Ejemplar> resultado = new ArrayList<>();
-        Connection con = this.getConexion();
-        PreparedStatement stmEjemplar = null, stmArea = null;
-        ResultSet rsEjemplar, rsArea;
-        Area area = null;
-
-        try {
-            String consulta = "SELECT id, mote, fec_nac, area_geografica FROM ejemplar WHERE nombre_cientifico_especie = ?";
-            String consultaArea = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esAcuatica, esTerrestre FROM area_geografica WHERE nombre_reserva = ?";
-
-            stmEjemplar = con.prepareStatement(consulta);
-            stmEjemplar.setString(1, e.getNombreCientifico());
-            rsEjemplar = stmEjemplar.executeQuery();
-
-            stmArea = con.prepareStatement(consultaArea);
-
-            while (rsEjemplar.next()) {
-                int id = rsEjemplar.getInt("id");
-                String mote = rsEjemplar.getString("mote");
-                Date fec = rsEjemplar.getDate("fec_nac");
-                String fec_nac = fec.toString();
-                String nom_area = rsEjemplar.getString("area_geografica");
-
-                stmArea.setString(1, nom_area);
-                rsArea = stmArea.executeQuery();
-
-                while (rsArea.next()) {
-                    area = null;
-                    String nombre_reserva = rsArea.getString("nombre_reserva");
-                    int extension = rsArea.getInt("extension");
-                    boolean acuatica = rsArea.getBoolean("esAcuatica");
-
-                    if (acuatica) {
-                        Double profundidad = rsArea.getDouble("profundidad");
-                        area = new Area(nombre_reserva, extension, profundidad);
-                    } else {
-                        Double altitud_nivel_bajo = rsArea.getDouble("altitud_nivel_bajo");
-                        Double altitud_nivel_alto = rsArea.getDouble("altitud_nivel_alto");
-                        area = new Area(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto);
-                    }
-                }
-
-                Ejemplar ejem = new Ejemplar(id, e, mote, fec_nac, area);
-                resultado.add(ejem);
-            }
-
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("Error al obtener ejemplares: " + ex.getMessage());
             this.getFachadaAplicacion().muestraExcepcion(ex.getMessage());
         } finally {
             try {
-                if (stmEjemplar != null) stmEjemplar.close();
-                if (stmArea != null) stmArea.close();
+                if (psEjemplar != null) psEjemplar.close();
+                if (psEspecie != null) psEspecie.close();
+                if (psZona != null) psZona.close();
             } catch (SQLException ex) {
-                System.out.println("Imposible cerrar cursores");
+                System.out.println("Error cerrando recursos: " + ex.getMessage());
             }
+        }
+    
+        return listaEjemplares;
+    }
+
+    int nuevoEjemplar(Ejemplar ejemplar) {
+        Connection conexion;
+        PreparedStatement psInsertar = null;
+        int filasAfectadas = -1;
+        conexion = this.getConexion();
+
+        try {
+            String sql = "INSERT INTO ejemplar(nombre_cientifico_especie, mote, fec_nac, area_geografica) VALUES (?, ?, ?, ?)";
+            psInsertar = conexion.prepareStatement(sql);
+
+            psInsertar.setString(1, ejemplar.getEspecie().getNombreCientifico());
+            psInsertar.setString(2, ejemplar.getMote());
+            psInsertar.setDate(3, Date.valueOf(ejemplar.getFec_nac()));
+            psInsertar.setString(4, ejemplar.getArea().getNombreReserva());
+
+            filasAfectadas = psInsertar.executeUpdate();
+
+        } catch (SQLException ex) {
+            this.getFachadaAplicacion().muestraExcepcion(ex.getMessage());
+        }
+
+        return filasAfectadas;
+    }
+
+    int eliminarEjemplar(int identificador, String especieNombre) {
+        Connection conexion;
+        PreparedStatement psEliminar = null;
+        int resultado = -1;
+        conexion = super.getConexion();
+
+        try {
+            String sql = "DELETE FROM ejemplar WHERE id = ? AND nombre_cientifico_especie = ?";
+            psEliminar = conexion.prepareStatement(sql);
+
+            psEliminar.setInt(1, identificador);
+            psEliminar.setString(2, especieNombre);
+
+            resultado = psEliminar.executeUpdate();
+
+        } catch (SQLException ex) {
+            System.out.println("Error al eliminar ejemplar: " + ex.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(ex.getMessage());
         }
 
         return resultado;
-    }
+}
 
+    List<Ejemplar> ejemplaresPorEspecie(Especie especieSeleccionada) {
+        List<Ejemplar> ejemplares = new ArrayList<>();
+        Connection conexion = this.getConexion();
+        PreparedStatement psEjemplar = null;
+        PreparedStatement psArea = null;
+        ResultSet resultadoEjemplar = null;
+        ResultSet resultadoArea = null;
+        Area zonaGeografica = null;
+
+        try {
+            String sqlEjemplar = "SELECT id, mote, fec_nac, area_geografica FROM ejemplar WHERE nombre_cientifico_especie = ?";
+            String sqlArea = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esAcuatica, esTerrestre FROM area_geografica WHERE nombre_reserva = ?";
+
+            psEjemplar = conexion.prepareStatement(sqlEjemplar);
+            psEjemplar.setString(1, especieSeleccionada.getNombreCientifico());
+            resultadoEjemplar = psEjemplar.executeQuery();
+
+            psArea = conexion.prepareStatement(sqlArea);
+
+            while (resultadoEjemplar.next()) {
+                int codigoEjemplar = resultadoEjemplar.getInt("id");
+                String apodo = resultadoEjemplar.getString("mote");
+                String fechaNacimiento = resultadoEjemplar.getDate("fec_nac").toString();
+                String nombreZona = resultadoEjemplar.getString("area_geografica");
+
+                psArea.setString(1, nombreZona);
+                resultadoArea = psArea.executeQuery();
+
+                if (resultadoArea.next()) {
+                    zonaGeografica = null;
+                    String nombreReserva = resultadoArea.getString("nombre_reserva");
+                    int tamanyo = resultadoArea.getInt("extension");
+
+                    if (resultadoArea.getBoolean("esAcuatica")) {
+                        double prof = resultadoArea.getDouble("profundidad");
+                        zonaGeografica = new Area(nombreReserva, tamanyo, prof);
+                    } else {
+                        double altMin = resultadoArea.getDouble("altitud_nivel_bajo");
+                        double altMax = resultadoArea.getDouble("altitud_nivel_alto");
+                        zonaGeografica = new Area(nombreReserva, tamanyo, altMin, altMax);
+                    }
+                }
+
+                ejemplares.add(new Ejemplar(codigoEjemplar, especieSeleccionada, apodo, fechaNacimiento, zonaGeografica));
+            }
+
+        } catch (SQLException error) {
+            System.out.println(error.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(error.getMessage());
+        } finally {
+            try {
+                if (psEjemplar != null) psEjemplar.close();
+                if (psArea != null) psArea.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar recursos");
+            }
+        }
+
+        return ejemplares;
+    }
     void actualizarEjemplar(Ejemplar ejemplarSeleccionado, Ejemplar nuevoEjemplar) {
         String sql = "UPDATE ejemplar SET mote = ?, fec_nac = ?, area_geografica = ? WHERE id = ?";
 
