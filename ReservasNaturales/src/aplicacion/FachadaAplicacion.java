@@ -271,5 +271,13 @@ public class FachadaAplicacion {
         gal.aumentarFrecuenciaAlimentos(nombre,area);
     }
 
+    public List<Ejemplar> obterEjemplares(Especie e) {
+        return gej.obterEjemplares(e);
+    }
+
+    public void actualizarEjemplar(Ejemplar viejoEjemplar, Ejemplar nuevoEjemplar) {
+        gej.actualizarEjemplar(viejoEjemplar,nuevoEjemplar);
+    }
+
     
 }

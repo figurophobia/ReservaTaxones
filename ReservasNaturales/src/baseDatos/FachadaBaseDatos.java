@@ -298,5 +298,13 @@ public class FachadaBaseDatos {
         daoAlimentos.aumentarFrecuenciaAlimentos(nombre,area);
     }
 
+    public List<Ejemplar> obterEjemplares(Especie e) {
+        return daoEjemplares.obterEjemplares(e);
+    }
+
+    public void actualizarEjemplar(Ejemplar viejoEjemplar, Ejemplar nuevoEjemplar) {
+        daoEjemplares.actualizarEjemplar(nuevoEjemplar, nuevoEjemplar);
+    }
+
     
 }

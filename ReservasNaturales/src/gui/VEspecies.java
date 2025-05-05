@@ -13,6 +13,7 @@ import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -107,6 +108,7 @@ public class VEspecies extends javax.swing.JDialog {
         tf_idEspecie = new javax.swing.JTextField();
         AreaComboBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        btn_Actualizar = new javax.swing.JButton();
         ClinicasBoton = new javax.swing.JButton();
         buttonSalir = new javax.swing.JButton();
         MasAlimentosBoton = new javax.swing.JButton();
@@ -251,6 +253,13 @@ public class VEspecies extends javax.swing.JDialog {
 
         jLabel9.setText("Área geográfica");
 
+        btn_Actualizar.setText("Actualizar");
+        btn_Actualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ActualizarActionPerformed(evt);
+            }
+        });
+
         ClinicasBoton.setText("Menú Clinicas/Revisiones");
         ClinicasBoton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -290,7 +299,9 @@ public class VEspecies extends javax.swing.JDialog {
                                         .addComponent(btn_nuevoEjemplar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btn_borrarEjemplar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btn_Actualizar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ClinicasBoton)))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(89, 89, 89))
@@ -325,10 +336,11 @@ public class VEspecies extends javax.swing.JDialog {
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addComponent(AreaComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addGroup(panelEjemplaresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_nuevoEjemplar)
                     .addComponent(btn_borrarEjemplar)
+                    .addComponent(btn_Actualizar)
                     .addComponent(ClinicasBoton)))
         );
 
@@ -356,7 +368,7 @@ public class VEspecies extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(panelGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 63, Short.MAX_VALUE))
+                .addGap(0, 189, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(MasAlimentosBoton)
@@ -471,6 +483,44 @@ public class VEspecies extends javax.swing.JDialog {
        
     }//GEN-LAST:event_MasAlimentosBotonActionPerformed
 
+    private void btn_ActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ActualizarActionPerformed
+        int filaSeleccionada = tabla_ejemplares.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            ModeloTablaEjemplaresGeneral modelo = (ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
+            Ejemplar viejoEjemplar = modelo.obtenerEjemplar(filaSeleccionada);
+            String nuevoMote = tf_moteEjemplar.getText().trim();
+            String nuevaFecha = tf_fecNac.getText().trim();  // Formato: yyyy-MM-dd
+            Area nuevaArea = new Area(AreaComboBox.getSelectedItem().toString());
+
+            if (nuevoMote.isEmpty() || nuevaFecha.isEmpty() || nuevaArea == null) {
+                JOptionPane.showMessageDialog(this, "Completa todos los campos antes de actualizar.", "Campos incompletos", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            try {
+                // Crear un nuevo objeto Ejemplar con los datos actualizados
+                Ejemplar nuevoEjemplar = new Ejemplar(
+                    viejoEjemplar.getId(), 
+                    viejoEjemplar.getEspecie(), 
+                    nuevoMote, 
+                    nuevaFecha, 
+                    nuevaArea
+                );
+
+                // Llamar al método de la fachada con viejo y nuevo
+                fa.actualizarEjemplar(viejoEjemplar, nuevoEjemplar);
+                obterEjemplares();
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error al actualizar el ejemplar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar un ejemplar de la tabla.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btn_ActualizarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ActualizarButton;
     private javax.swing.JButton AnadirButton;
@@ -482,6 +532,7 @@ public class VEspecies extends javax.swing.JDialog {
     private javax.swing.JTextField NombreCientificoText;
     private javax.swing.JTextField NombreComunText;
     private javax.swing.JComboBox<String> TaxonComboBox;
+    private javax.swing.JButton btn_Actualizar;
     private javax.swing.JButton btn_borrarEjemplar;
     private javax.swing.JButton btn_nuevoEjemplar;
     private javax.swing.JButton buttonSalir;
@@ -557,7 +608,7 @@ public class VEspecies extends javax.swing.JDialog {
         ModeloTablaEjemplaresGeneral mteg;
         
         mteg =(ModeloTablaEjemplaresGeneral) tabla_ejemplares.getModel();
-        mteg.setFilas(fa.obterEjemplares());
+        mteg.setFilas(fa.obterEjemplares(e));
     
     }
     
