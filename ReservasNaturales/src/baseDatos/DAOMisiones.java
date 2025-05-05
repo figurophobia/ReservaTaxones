@@ -4,7 +4,6 @@
  */
 package baseDatos;
 
-
 import aplicacion.Area;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Mision;
@@ -12,57 +11,53 @@ import aplicacion.Usuario;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 /**
  *
  * @author alumnogreibd
  */
-public class DAOMisiones extends AbstractDAO{
-    
-    public DAOMisiones(Connection conexion, FachadaAplicacion fa){
+public class DAOMisiones extends AbstractDAO {
+
+    public DAOMisiones(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
         super.setFachadaAplicacion(fa);
     }
- 
+
     public List<Mision> obtenerMisiones() {
-    List<Mision> resultado = new ArrayList<>();
-    String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie FROM misiones";
-    Connection con;
-    con=this.getConexion();
-    // Usar la conexión obtenida desde el constructor
-    try ( 
-         PreparedStatement stmMision = con.prepareStatement(sql);
-         ResultSet rsMision = stmMision.executeQuery()) {
+        List<Mision> resultado = new ArrayList<>();
+        String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie FROM misiones";
+        Connection con;
+        con = this.getConexion();
+        // Usar la conexión obtenida desde el constructor
+        try (
+                PreparedStatement stmMision = con.prepareStatement(sql); ResultSet rsMision = stmMision.executeQuery()) {
 
-        while (rsMision.next()) {
-            String dni = rsMision.getString("dni_trabajador");
-            Usuario trabajador = obtenerUsuarioDni(dni);
+            while (rsMision.next()) {
+                String dni = rsMision.getString("dni_trabajador");
+                Usuario trabajador = obtenerUsuarioDni(dni);
 
-            if (trabajador != null) {
-                Mision m = new Mision(
-                    trabajador,
-                    rsMision.getString("nombre_cientifico_especie"),
-                    rsMision.getDate("fecha_inicio"),
-                    rsMision.getDate("fecha_fin"),
-                    rsMision.getString("descripcion")
-                );
-                resultado.add(m);
+                if (trabajador != null) {
+                    Mision m = new Mision(
+                            trabajador,
+                            rsMision.getString("nombre_cientifico_especie"),
+                            rsMision.getDate("fecha_inicio"),
+                            rsMision.getDate("fecha_fin"),
+                            rsMision.getString("descripcion")
+                    );
+                    resultado.add(m);
+                }
+
             }
 
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las misiones: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error al obtener las misiones: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        return resultado;
     }
-
-    return resultado;
-}
-
 
     private Usuario obtenerUsuarioDni(String dni) {
         Usuario resultado = null;
@@ -76,11 +71,11 @@ public class DAOMisiones extends AbstractDAO{
                     String nombreReserva = rsUsuario.getString("nombre_reserva");
                     Area area = new Area(nombreReserva);
                     resultado = new Usuario(
-                        rsUsuario.getString("dni"),
-                        rsUsuario.getString("nombre"),
-                        rsUsuario.getFloat("sueldo"),
-                        rsUsuario.getInt("horas"),
-                        area);
+                            rsUsuario.getString("dni"),
+                            rsUsuario.getString("nombre"),
+                            rsUsuario.getFloat("sueldo"),
+                            rsUsuario.getInt("horas"),
+                            area);
                 }
             }
 
@@ -92,54 +87,51 @@ public class DAOMisiones extends AbstractDAO{
         return resultado;
     }
 
-public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
-    List<Mision> resultado = new ArrayList<>();
-    String sql;
+    public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
+        List<Mision> resultado = new ArrayList<>();
+        String sql;
 
-    // Determinar la consulta según el texto de búsqueda
-    if ("completada".equalsIgnoreCase(textoBusqueda)) {
-        sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-              "FROM misiones WHERE fecha_fin IS NOT NULL";
-    } else if ("incompleta".equalsIgnoreCase(textoBusqueda)) {
-        sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-              "FROM misiones WHERE fecha_fin IS NULL";
-    } else {
-        // Si el texto no es válido, devolver lista vacía
+        if ("completada".equalsIgnoreCase(textoBusqueda)) {
+            sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie "
+                    + "FROM misiones WHERE fecha_fin IS NOT NULL";
+        } else if ("incompleta".equalsIgnoreCase(textoBusqueda)) {
+            sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie "
+                    + "FROM misiones WHERE fecha_fin IS NULL";
+        } else {
+            return resultado;
+        }
+
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sql); ResultSet rs = stm.executeQuery()) {
+
+            while (rs.next()) {
+                String dni = rs.getString("dni_trabajador");
+                Usuario trabajador = obtenerUsuarioDni(dni);
+
+                if (trabajador != null) {
+                    Mision m = new Mision(
+                            trabajador,
+                            rs.getString("nombre_cientifico_especie"),
+                            rs.getDate("fecha_inicio"),
+                            rs.getDate("fecha_fin"),
+                            rs.getString("descripcion")
+                    );
+                    resultado.add(m);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al obtener misiones por estado: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+
         return resultado;
     }
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql);
-         ResultSet rs = stm.executeQuery()) {
-
-        while (rs.next()) {
-            String dni = rs.getString("dni_trabajador");
-            Usuario trabajador = obtenerUsuarioDni(dni);
-
-            if (trabajador != null) {
-                Mision m = new Mision(
-                    trabajador,
-                    rs.getString("nombre_cientifico_especie"),
-                    rs.getDate("fecha_inicio"),
-                    rs.getDate("fecha_fin"),
-                    rs.getString("descripcion")
-                );
-                resultado.add(m);
-            }
-        }
-
-    } catch (SQLException e) {
-        System.out.println("Error al obtener misiones por estado: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    }
-
-    return resultado;
-}
-
     public List<Mision> obtenerMisionesTrabajador(String textoBusqueda) {
         List<Mision> resultado = new ArrayList<>();
-        String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-                     "FROM misiones m JOIN trabajadores u ON m.dni_trabajador = u.dni " +
-                     "WHERE u.nombre ILIKE ?";
+        String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie "
+                + "FROM misiones m JOIN trabajadores u ON m.dni_trabajador = u.dni "
+                + "WHERE u.nombre ILIKE ?";
 
         try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
             stm.setString(1, "%" + textoBusqueda + "%");
@@ -151,11 +143,11 @@ public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
 
                     if (trabajador != null) {
                         Mision m = new Mision(
-                            trabajador,
-                            rs.getString("nombre_cientifico_especie"),
-                            rs.getDate("fecha_inicio"),
-                            rs.getDate("fecha_fin"),
-                            rs.getString("descripcion")
+                                trabajador,
+                                rs.getString("nombre_cientifico_especie"),
+                                rs.getDate("fecha_inicio"),
+                                rs.getDate("fecha_fin"),
+                                rs.getString("descripcion")
                         );
                         resultado.add(m);
                     }
@@ -172,8 +164,8 @@ public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
 
     public List<Mision> obtenerMisionesEspecie(String textoBusqueda) {
         List<Mision> resultado = new ArrayList<>();
-        String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-                     "FROM misiones WHERE nombre_cientifico_especie ILIKE ?";
+        String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie "
+                + "FROM misiones WHERE nombre_cientifico_especie ILIKE ?";
 
         try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
             stm.setString(1, "%" + textoBusqueda + "%");
@@ -185,11 +177,11 @@ public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
 
                     if (trabajador != null) {
                         Mision m = new Mision(
-                            trabajador,
-                            rs.getString("nombre_cientifico_especie"),
-                            rs.getDate("fecha_inicio"),
-                            rs.getDate("fecha_fin"),
-                            rs.getString("descripcion")
+                                trabajador,
+                                rs.getString("nombre_cientifico_especie"),
+                                rs.getDate("fecha_inicio"),
+                                rs.getDate("fecha_fin"),
+                                rs.getString("descripcion")
                         );
                         resultado.add(m);
                     }
@@ -204,66 +196,66 @@ public List<Mision> obtenerMisionesEstado(String textoBusqueda) {
         return resultado;
     }
 
-public boolean eliminarMision(Mision mision) {
-    String sql = "DELETE FROM misiones WHERE dni_trabajador = ? AND fecha_inicio = ? AND nombre_cientifico_especie = ?";
-    boolean exito = false;
+    public boolean eliminarMision(Mision mision) {
+        String sql = "DELETE FROM misiones WHERE dni_trabajador = ? AND fecha_inicio = ? AND nombre_cientifico_especie = ?";
+        boolean exito = false;
 
-    try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
-        // Obtener el dni, fecha de inicio y especie de la misión
-        stm.setString(1, mision.getTrabajador().getDni());
-        stm.setDate(2, new java.sql.Date(mision.getFechaInicio().getTime()));  // Convertir a java.sql.Date
-        stm.setString(3, mision.getEspecie());
+        try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
+            // Obtener el dni, fecha de inicio y especie de la misión
+            stm.setString(1, mision.getTrabajador().getDni());
+            stm.setDate(2, new java.sql.Date(mision.getFechaInicio().getTime()));  // Convertir a java.sql.Date
+            stm.setString(3, mision.getEspecie());
 
-        int filasAfectadas = stm.executeUpdate();
-        exito = filasAfectadas > 0;
+            int filasAfectadas = stm.executeUpdate();
+            exito = filasAfectadas > 0;
 
-    } catch (SQLException e) {
-        System.out.println("Error al eliminar la misión: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-    }
-
-    return exito;
-}
-
-public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
-    String sql = "UPDATE misiones SET " +
-                 "dni_trabajador = ?, nombre_cientifico_especie = ?, fecha_inicio = ?, fecha_fin = NOW(), descripcion = ? " +
-                 "WHERE dni_trabajador = ? AND nombre_cientifico_especie = ? AND fecha_inicio = ?";
-    boolean exito = false;
-    Connection con = this.getConexion();
-    PreparedStatement stm = null;
-
-    try {
-        stm = con.prepareStatement(sql);
-
-        // Nuevos valores
-        stm.setString(1, seleccionada.getTrabajador().getDni());
-        stm.setString(2, seleccionada.getEspecie());
-        stm.setDate(3, seleccionada.getFechaInicio());
-        stm.setString(4, seleccionada.getDescripcion());
-
-        // Clave primaria para identificar la misión original
-        stm.setString(5, misionOriginal.getTrabajador().getDni());
-        stm.setString(6, misionOriginal.getEspecie());
-        stm.setDate(7, misionOriginal.getFechaInicio());
-
-        int filasAfectadas = stm.executeUpdate();
-        exito = filasAfectadas > 0;
-
-        if (!exito) {
-            System.out.println("No se actualizó ninguna misión. Verifica los datos:");
-            System.out.println("DNI original: " + misionOriginal.getTrabajador().getDni());
-            System.out.println("Fecha inicio original: " + misionOriginal.getFechaInicio());
-            System.out.println("Especie original: " + misionOriginal.getEspecie());
+        } catch (SQLException e) {
+            System.out.println("Error al eliminar la misión: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error al actualizar la misión: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        return exito;
     }
 
-    return exito;
-}
+    public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
+        String sql = "UPDATE misiones SET "
+                + "dni_trabajador = ?, nombre_cientifico_especie = ?, fecha_inicio = ?, fecha_fin = NOW(), descripcion = ? "
+                + "WHERE dni_trabajador = ? AND nombre_cientifico_especie = ? AND fecha_inicio = ?";
+        boolean exito = false;
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
+
+        try {
+            stm = con.prepareStatement(sql);
+
+            // Nuevos valores
+            stm.setString(1, seleccionada.getTrabajador().getDni());
+            stm.setString(2, seleccionada.getEspecie());
+            stm.setDate(3, seleccionada.getFechaInicio());
+            stm.setString(4, seleccionada.getDescripcion());
+
+            // Clave primaria para identificar la misión original
+            stm.setString(5, misionOriginal.getTrabajador().getDni());
+            stm.setString(6, misionOriginal.getEspecie());
+            stm.setDate(7, misionOriginal.getFechaInicio());
+
+            int filasAfectadas = stm.executeUpdate();
+            exito = filasAfectadas > 0;
+
+            if (!exito) {
+                System.out.println("No se actualizó ninguna misión. Verifica los datos:");
+                System.out.println("DNI original: " + misionOriginal.getTrabajador().getDni());
+                System.out.println("Fecha inicio original: " + misionOriginal.getFechaInicio());
+                System.out.println("Especie original: " + misionOriginal.getEspecie());
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error al actualizar la misión: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
+
+        return exito;
+    }
 
     public Usuario obtenerTrabajadorMasExperimentado(List<Usuario> trabajadoresDisponibles, String especie) {
         if (trabajadoresDisponibles == null || trabajadoresDisponibles.isEmpty() || especie == null) {
@@ -279,10 +271,10 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             // Construimos una consulta parametrizada con los DNIs disponibles
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.append(
-                    "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva, COUNT(*) as experiencia " +
-                            "FROM trabajadores t " +
-                            "JOIN misiones m ON t.dni = m.dni_trabajador " +
-                            "WHERE t.dni IN (");
+                    "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva, COUNT(*) as experiencia "
+                    + "FROM trabajadores t "
+                    + "JOIN misiones m ON t.dni = m.dni_trabajador "
+                    + "WHERE t.dni IN (");
 
             // Añadimos un placeholder ? por cada trabajador disponible
             String placeholders = trabajadoresDisponibles.stream()
@@ -291,10 +283,11 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
                     .orElse("");
 
             sqlBuilder.append(placeholders);
-            sqlBuilder.append(") AND m.nombre_cientifico_especie = ? " + // Filtrar por especie
-                    "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-                    "ORDER BY experiencia DESC " +
-                    "LIMIT 1");
+            sqlBuilder.append(") AND m.nombre_cientifico_especie = ? "
+                    + // Filtrar por especie
+                    "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva "
+                    + "ORDER BY experiencia DESC "
+                    + "LIMIT 1");
 
             stmTrabajador = con.prepareStatement(sqlBuilder.toString());
 
@@ -329,8 +322,12 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (rsTrabajador != null) rsTrabajador.close();
-                if (stmTrabajador != null) stmTrabajador.close();
+                if (rsTrabajador != null) {
+                    rsTrabajador.close();
+                }
+                if (stmTrabajador != null) {
+                    stmTrabajador.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -338,17 +335,17 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
 
         return resultado;
     }
-    
+
     public Usuario obtenerTrabajadorMision() {
         Usuario resultado = null;
-        String sql = 
-            "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-            "FROM trabajadores t " +
-            "LEFT JOIN misiones m ON t.dni = m.dni_trabajador " +
-            "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva " +
-            "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 " +
-            "ORDER BY COUNT(m.dni_trabajador) ASC " +
-            "LIMIT 1";
+        String sql
+                = "SELECT t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva "
+                + "FROM trabajadores t "
+                + "LEFT JOIN misiones m ON t.dni = m.dni_trabajador "
+                + "GROUP BY t.dni, t.nombre, t.sueldo, t.horas, t.nombre_reserva "
+                + "HAVING COUNT(CASE WHEN m.fecha_fin > CURRENT_DATE THEN 1 ELSE NULL END) = 0 "
+                + "ORDER BY COUNT(m.dni_trabajador) ASC "
+                + "LIMIT 1";
 
         try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
             try (ResultSet rs = stm.executeQuery()) {
@@ -356,11 +353,11 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
                 Area area = new Area(nombreReserva);
                 if (rs.next()) {
                     resultado = new Usuario(
-                        rs.getString("dni"),
-                        rs.getString("nombre"),
-                        rs.getFloat("sueldo"),
-                        rs.getInt("horas"),
-                        area
+                            rs.getString("dni"),
+                            rs.getString("nombre"),
+                            rs.getFloat("sueldo"),
+                            rs.getInt("horas"),
+                            area
                     );
                 }
             }
@@ -369,7 +366,7 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
 
-    return resultado;
+        return resultado;
     }
 
     boolean verificarMisionExistente(Mision mision) {
@@ -390,8 +387,12 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
             System.out.println(e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stm != null) stm.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -400,32 +401,32 @@ public boolean actualizarMision(Mision seleccionada, Mision misionOriginal) {
         return existe;
     }
 
-void agregarNuevaMision(Mision misionActual) {
-    String sql = "INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, fecha_fin, descripcion) " +
-                 "VALUES (?, ?, ?, ?, ?)";
-    Connection con = this.getConexion();
-    PreparedStatement stm = null;
+    void agregarNuevaMision(Mision misionActual) {
+        String sql = "INSERT INTO misiones (dni_trabajador, nombre_cientifico_especie, fecha_inicio, fecha_fin, descripcion) "
+                + "VALUES (?, ?, ?, ?, ?)";
+        Connection con = this.getConexion();
+        PreparedStatement stm = null;
 
-    try {
-        stm = con.prepareStatement(sql);
+        try {
+            stm = con.prepareStatement(sql);
 
-        stm.setString(1, misionActual.getTrabajador().getDni());
-        stm.setString(2, misionActual.getEspecie());
-        stm.setDate(3, misionActual.getFechaInicio());
-        stm.setDate(4, misionActual.getFechaFin());
-        stm.setString(5, misionActual.getDescripcion());
+            stm.setString(1, misionActual.getTrabajador().getDni());
+            stm.setString(2, misionActual.getEspecie());
+            stm.setDate(3, misionActual.getFechaInicio());
+            stm.setDate(4, misionActual.getFechaFin());
+            stm.setString(5, misionActual.getDescripcion());
 
-        stm.executeUpdate();
+            stm.executeUpdate();
 
-    } catch (SQLException e) {
-        System.out.println("Error al insertar la misión: " + e.getMessage());
-        this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error al insertar la misión: " + e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        }
     }
-}
 
     void completarMision(Mision misionSeleccionada) {
-        String sql = "UPDATE misiones SET fecha_fin = CURRENT_DATE " +
-                     "WHERE dni_trabajador = ? AND nombre_cientifico_especie = ? AND fecha_inicio = ?";
+        String sql = "UPDATE misiones SET fecha_fin = CURRENT_DATE "
+                + "WHERE dni_trabajador = ? AND nombre_cientifico_especie = ? AND fecha_inicio = ?";
 
         try (PreparedStatement stm = this.getConexion().prepareStatement(sql)) {
             stm.setString(1, misionSeleccionada.getTrabajador().getDni());
@@ -541,8 +542,12 @@ void agregarNuevaMision(Mision misionActual) {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stm != null) stm.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -558,10 +563,10 @@ void agregarNuevaMision(Mision misionActual) {
         ResultSet rs = null;
 
         try {
-            String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie " +
-                    "FROM misiones WHERE fecha_fin IS NULL and dni_trabajador = ?" +
-                    "ORDER BY fecha_inicio ASC " +
-                    "LIMIT 1";
+            String sql = "SELECT dni_trabajador, fecha_inicio, fecha_fin, descripcion, nombre_cientifico_especie "
+                    + "FROM misiones WHERE fecha_fin IS NULL and dni_trabajador = ?"
+                    + "ORDER BY fecha_inicio ASC "
+                    + "LIMIT 1";
 
             stm = con.prepareStatement(sql);
             stm.setString(1, dniBuscar);
@@ -586,8 +591,12 @@ void agregarNuevaMision(Mision misionActual) {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stm != null) stm.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -596,7 +605,4 @@ void agregarNuevaMision(Mision misionActual) {
         return resultado;
     }
 
-
-
-    
 }

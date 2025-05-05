@@ -161,14 +161,13 @@ public class VMoverArea extends javax.swing.JDialog {
         ModeloListaStrings modeloSeleccionada = (ModeloListaStrings) lstAreaSeleccionada.getModel();
         ModeloListaStrings modeloDisponibles = (ModeloListaStrings) lstAreasDisponibles.getModel();
 
-        // Si ya hay una área seleccionada, la devolvemos a la lista de disponibles
+
         if (modeloSeleccionada.getSize() > 0) {
             Area anterior = modeloSeleccionada.getElementAt(0);
             modeloDisponibles.addElement(anterior);
             modeloSeleccionada.removeElement(anterior);
         }
 
-        // Mover la nueva área seleccionada
         modeloSeleccionada.addElement(nuevaSeleccion);
         modeloDisponibles.removeElement(nuevaSeleccion);
     }
@@ -180,23 +179,20 @@ public class VMoverArea extends javax.swing.JDialog {
      // Obtener el área seleccionada de la lista de áreas seleccionadas
     Area areaSeleccionada = lstAreaSeleccionada.getSelectedValue();
 
-    // Verificar si hay un área seleccionada
     if (areaSeleccionada != null) {
         ModeloListaStrings modeloSeleccionada = (ModeloListaStrings) lstAreaSeleccionada.getModel();
         ModeloListaStrings modeloDisponibles = (ModeloListaStrings) lstAreasDisponibles.getModel();
 
-        // Mover el área seleccionada de la lista de seleccionadas a la lista de disponibles
         modeloSeleccionada.removeElement(areaSeleccionada);
         modeloDisponibles.addElement(areaSeleccionada);
 
-        // Actualizar el área del trabajador a null, ya que no tiene área seleccionada
+      
         fa.actualizarAreaUsuario(trabajador, null);
 
-        // Actualizar la lista de áreas disponibles y seleccionadas
+        
         lstAreasDisponibles.setModel(modeloDisponibles);
         lstAreaSeleccionada.setModel(modeloSeleccionada);
     } else {
-        // Si no hay área seleccionada, puedes mostrar un mensaje informativo (opcional)
         javax.swing.JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna área.", "Información", javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
     }//GEN-LAST:event_btnIzquierdaActionPerformed

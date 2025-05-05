@@ -44,10 +44,10 @@ public class DAOEspecies extends AbstractDAO {
                 taxon.setNombre(rsEspecie.getString("nombre_taxon"));
 
                 Especie especie = new Especie(
-                    rsEspecie.getString("nombre_cientifico"),
-                    rsEspecie.getString("nombre_comun"),
-                    rsEspecie.getString("descripcion"),
-                    taxon
+                        rsEspecie.getString("nombre_cientifico"),
+                        rsEspecie.getString("nombre_comun"),
+                        rsEspecie.getString("descripcion"),
+                        taxon
                 );
 
                 resultado.add(especie);
@@ -58,7 +58,9 @@ public class DAOEspecies extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmEspecie != null) stmEspecie.close();
+                if (stmEspecie != null) {
+                    stmEspecie.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -87,7 +89,9 @@ public class DAOEspecies extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion("Error al insertar especie: " + ex.getMessage());
         } finally {
             try {
-                if (stmEspecie != null) stmEspecie.close();
+                if (stmEspecie != null) {
+                    stmEspecie.close();
+                }
             } catch (SQLException ex) {
                 System.out.println("Imposible cerrar cursores: " + ex.getMessage());
             }
@@ -115,7 +119,9 @@ public class DAOEspecies extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion("Error al actualizar especie: " + ex.getMessage());
         } finally {
             try {
-                if (stmEspecie != null) stmEspecie.close();
+                if (stmEspecie != null) {
+                    stmEspecie.close();
+                }
             } catch (SQLException ex) {
                 System.out.println("Imposible cerrar cursores: " + ex.getMessage());
             }
@@ -144,13 +150,13 @@ public class DAOEspecies extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion("Error al borrar especie");
         } finally {
             try {
-                if (stmEspecie != null) stmEspecie.close();
+                if (stmEspecie != null) {
+                    stmEspecie.close();
+                }
             } catch (SQLException ex) {
                 System.out.println("Imposible cerrar cursores: " + ex.getMessage());
             }
         }
     }
-
-
 
 }

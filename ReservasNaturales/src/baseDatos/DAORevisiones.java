@@ -16,19 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Date; // Ojo: java.sql.Date, no java.util.Date
 
-
 /**
  *
  * @author alumnogreibd
  */
-public class DAORevisiones extends AbstractDAO{
+public class DAORevisiones extends AbstractDAO {
 
     public DAORevisiones(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
-        super.setFachadaAplicacion(fa); 
+        super.setFachadaAplicacion(fa);
     }
-    
- 
 
     public List<Revision> obtenerRevisiones(String nClinica, int idEspecie) {
         List<Revision> resultado = new ArrayList<>();
@@ -37,10 +34,10 @@ public class DAORevisiones extends AbstractDAO{
         ResultSet rsRevision;
 
         try {
-               String consulta = 
-                "SELECT clinica, ejemplar, especie_asociada, fecha_revision, informe " +
-                "FROM revisar " +
-                "WHERE clinica = ? AND ejemplar = ?";
+            String consulta
+                    = "SELECT clinica, ejemplar, especie_asociada, fecha_revision, informe "
+                    + "FROM revisar "
+                    + "WHERE clinica = ? AND ejemplar = ?";
             stmRevision = con.prepareStatement(consulta);
             stmRevision.setString(1, nClinica);
             stmRevision.setInt(2, idEspecie);
@@ -63,23 +60,24 @@ public class DAORevisiones extends AbstractDAO{
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmRevision != null) stmRevision.close();
+                if (stmRevision != null) {
+                    stmRevision.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
         }
 
         return resultado;
-}
+    }
 
-   
-    void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+    void añadirRevision(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
         Connection con = this.getConexion();
         PreparedStatement stmInsert = null;
 
         try {
-            String consulta = "INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) " +
-                              "VALUES (?, ?, ?, ?, ?)";
+            String consulta = "INSERT INTO revisar (clinica, ejemplar, especie_asociada, fecha_revision, informe) "
+                    + "VALUES (?, ?, ?, ?, ?)";
 
             stmInsert = con.prepareStatement(consulta);
             stmInsert.setString(1, clinicaRevision.getNombre());
@@ -99,13 +97,13 @@ public class DAORevisiones extends AbstractDAO{
             this.getFachadaAplicacion().muestraExcepcion("Error insertando revisión:\n" + e.getMessage());
         } finally {
             try {
-                if (stmInsert != null) stmInsert.close();
+                if (stmInsert != null) {
+                    stmInsert.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar el statement: " + e.getMessage());
             }
         }
     }
 
-
-    
 }

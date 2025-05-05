@@ -11,8 +11,6 @@ import aplicacion.Especie;
 import aplicacion.FachadaAplicacion;
 import aplicacion.Taxon;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -49,26 +47,22 @@ public class DAOEjemplares extends AbstractDAO {
                 Date fec = rsEjemplar.getDate("fec_nac");
                 String fec_nac = fec.toString();
                 String nom_area = rsEjemplar.getString("area_geografica");
-                
-                
-                
+
                 stmEspecie.setString(1, nombre);
                 rsEspecie = stmEspecie.executeQuery();
-                
-                while(rsEspecie.next()) {
+
+                while (rsEspecie.next()) {
                     String nombreCienEspecie = rsEspecie.getString("nombre_cientifico");
                     String nombreComunEspecie = rsEspecie.getString("nombre_comun");
                     String descripcion = rsEspecie.getString("descripcion");
                     String nombre_taxon = rsEspecie.getString("nombre_taxon");
-                    
-                   
-                    
+
                     especie = new Especie(nombreCienEspecie, nombreComunEspecie, descripcion, new Taxon(nombre_taxon));
                 }
-                
-                 stmArea.setString(1, nom_area);
-                 rsArea = stmArea.executeQuery();
-                 while (rsArea.next()) {
+
+                stmArea.setString(1, nom_area);
+                rsArea = stmArea.executeQuery();
+                while (rsArea.next()) {
                     area = null;
                     String nombre_reserva = rsArea.getString("nombre_reserva");
                     int extension = rsArea.getInt("extension");
@@ -82,8 +76,7 @@ public class DAOEjemplares extends AbstractDAO {
                         area = new Area(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto);
                     }
                 }
-                
-                
+
                 Ejemplar ejem = new Ejemplar(id, especie, mote, fec_nac, area);
                 resultado.add(ejem);
             }
@@ -93,7 +86,9 @@ public class DAOEjemplares extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmEjemplar != null) stmEjemplar.close();
+                if (stmEjemplar != null) {
+                    stmEjemplar.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -102,7 +97,6 @@ public class DAOEjemplares extends AbstractDAO {
         return resultado;
     }
 
-
     int novoEjemplar(Ejemplar ej) {
         Connection con;
         PreparedStatement stmEjemplar = null;
@@ -110,7 +104,7 @@ public class DAOEjemplares extends AbstractDAO {
         con = super.getConexion();
 
         try {
-            
+
             stmEjemplar = con.prepareStatement("insert into ejemplar(nombre_cientifico_especie, mote, fec_nac, area_geografica) "
                     + "values (?,?,?,?)");
 
@@ -120,7 +114,7 @@ public class DAOEjemplares extends AbstractDAO {
             stmEjemplar.setDate(3, fecha);
             stmEjemplar.setString(4, ej.getArea().getNombreReserva());
             resultado = stmEjemplar.executeUpdate();
-            
+
         } catch (SQLException ex) {
             this.getFachadaAplicacion().muestraExcepcion(ex.getMessage());
         }
@@ -129,96 +123,95 @@ public class DAOEjemplares extends AbstractDAO {
 
     int borrarEjemplar(int id, String nom_cient) {
         Connection con;
-        PreparedStatement stmEjemplar=null;
+        PreparedStatement stmEjemplar = null;
         int res = -1;
-        con=super.getConexion();
+        con = super.getConexion();
 
         try {
-        stmEjemplar=con.prepareStatement("delete from ejemplar where id = ? and nombre_cientifico_especie = ?");
-        stmEjemplar.setInt(1, id);
-        stmEjemplar.setString(2, nom_cient);
-        res = stmEjemplar.executeUpdate();
+            stmEjemplar = con.prepareStatement("delete from ejemplar where id = ? and nombre_cientifico_especie = ?");
+            stmEjemplar.setInt(1, id);
+            stmEjemplar.setString(2, nom_cient);
+            res = stmEjemplar.executeUpdate();
 
-        } catch (SQLException e){
-          System.out.println(e.getMessage());
-          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-        
+
         return res;
     }
 
     int modificarEjemplar_cambioAlimentoPorArea(Ejemplar ejemplarModificar, Alimento al, int idAlimentoVello) {
         Connection con;
-        PreparedStatement stmEjemplar=null, stmUpdateConsAlimentos = null;
+        PreparedStatement stmEjemplar = null, stmUpdateConsAlimentos = null;
         int resEj = -1, resConsAl = -1;
-        con=super.getConexion();
+        con = super.getConexion();
 
         try {
-        con.setAutoCommit(false); 
-            
-        stmEjemplar=con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
-        stmEjemplar.setString(1, ejemplarModificar.getMote());
-        Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
-        stmEjemplar.setDate(2, fecha);
-        stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
-        stmEjemplar.setInt(4, ejemplarModificar.getId());
-        stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
-        resEj = stmEjemplar.executeUpdate();
-        
-        stmUpdateConsAlimentos = con.prepareStatement("update consumirAlimentos set id_alimento = ? where id_especie = ? and nombre_especie = ? and id_alimento = ?");
-        stmUpdateConsAlimentos.setInt(1, al.getId());
-        stmUpdateConsAlimentos.setInt(2, ejemplarModificar.getId());
-        stmUpdateConsAlimentos.setString(3, ejemplarModificar.getEspecie().getNombreCientifico());
-        stmUpdateConsAlimentos.setInt(4, idAlimentoVello);
-        
-        resConsAl = stmUpdateConsAlimentos.executeUpdate();
-        
-        
-        con.setAutoCommit(true);
-        } catch (SQLException e){
+            con.setAutoCommit(false);
+
+            stmEjemplar = con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
+            stmEjemplar.setString(1, ejemplarModificar.getMote());
+            Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
+            stmEjemplar.setDate(2, fecha);
+            stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
+            stmEjemplar.setInt(4, ejemplarModificar.getId());
+            stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
+            resEj = stmEjemplar.executeUpdate();
+
+            stmUpdateConsAlimentos = con.prepareStatement("update consumirAlimentos set id_alimento = ? where id_especie = ? and nombre_especie = ? and id_alimento = ?");
+            stmUpdateConsAlimentos.setInt(1, al.getId());
+            stmUpdateConsAlimentos.setInt(2, ejemplarModificar.getId());
+            stmUpdateConsAlimentos.setString(3, ejemplarModificar.getEspecie().getNombreCientifico());
+            stmUpdateConsAlimentos.setInt(4, idAlimentoVello);
+
+            resConsAl = stmUpdateConsAlimentos.executeUpdate();
+
+            con.setAutoCommit(true);
+        } catch (SQLException e) {
             try {
                 con.rollback();
                 con.setAutoCommit(true);
             } catch (SQLException ex) {
                 Logger.getLogger(DAOEjemplares.class.getName()).log(Level.SEVERE, null, ex);
             }
-          System.out.println(e.getMessage());
-          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-        
+
         if (resEj != -1 && resConsAl != -1) {
             return 1;
         }
-        
+
         return -1;
     }
 
     int modificarEjemplar(Ejemplar ejemplarModificar) {
         Connection con;
-        PreparedStatement stmEjemplar=null;
+        PreparedStatement stmEjemplar = null;
         int res = -1;
-        con=super.getConexion();
+        con = super.getConexion();
 
         try {
-        stmEjemplar=con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
-        stmEjemplar.setString(1, ejemplarModificar.getMote());
-        Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
-        stmEjemplar.setDate(2, fecha);
-        stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
-        stmEjemplar.setInt(4, ejemplarModificar.getId());
-        stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
-        res = stmEjemplar.executeUpdate();
+            stmEjemplar = con.prepareStatement("update ejemplar set mote = ?, fec_nac = ?, area_geografica = ? where id = ? and nombre_cientifico_especie = ?");
+            stmEjemplar.setString(1, ejemplarModificar.getMote());
+            Date fecha = Date.valueOf(ejemplarModificar.getFec_nac());
+            stmEjemplar.setDate(2, fecha);
+            stmEjemplar.setString(3, ejemplarModificar.getArea().getNombreReserva());
+            stmEjemplar.setInt(4, ejemplarModificar.getId());
+            stmEjemplar.setString(5, ejemplarModificar.getEspecie().getNombreCientifico());
+            res = stmEjemplar.executeUpdate();
 
-        } catch (SQLException e){
-          System.out.println(e.getMessage());
-          this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         }
-        
+
         return res;
     }
 
     List<Ejemplar> obtenerEjemplares(String nomCient) {
-          List<Ejemplar> resultado = new ArrayList<>();
+        List<Ejemplar> resultado = new ArrayList<>();
         Connection con = this.getConexion();
         PreparedStatement stmEjemplar = null, stmEspecie = null, stmArea = null;
         ResultSet rsEjemplar, rsEspecie, rsArea;
@@ -242,26 +235,22 @@ public class DAOEjemplares extends AbstractDAO {
                 Date fec = rsEjemplar.getDate("fec_nac");
                 String fec_nac = fec.toString();
                 String nom_area = rsEjemplar.getString("area_geografica");
-                
-                
-                
+
                 stmEspecie.setString(1, nombre);
                 rsEspecie = stmEspecie.executeQuery();
-                
-                while(rsEspecie.next()) {
+
+                while (rsEspecie.next()) {
                     String nombreCienEspecie = rsEspecie.getString("nombre_cientifico");
                     String nombreComunEspecie = rsEspecie.getString("nombre_comun");
                     String descripcion = rsEspecie.getString("descripcion");
                     String nombre_taxon = rsEspecie.getString("nombre_taxon");
-                    
-                   
-                    
+
                     especie = new Especie(nombreCienEspecie, nombreComunEspecie, descripcion, new Taxon(nombre_taxon));
                 }
-                
-                 stmArea.setString(1, nom_area);
-                 rsArea = stmArea.executeQuery();
-                 while (rsArea.next()) {
+
+                stmArea.setString(1, nom_area);
+                rsArea = stmArea.executeQuery();
+                while (rsArea.next()) {
                     area = null;
                     String nombre_reserva = rsArea.getString("nombre_reserva");
                     int extension = rsArea.getInt("extension");
@@ -275,8 +264,7 @@ public class DAOEjemplares extends AbstractDAO {
                         area = new Area(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto);
                     }
                 }
-                
-                
+
                 Ejemplar ejem = new Ejemplar(id, especie, mote, fec_nac, area);
                 resultado.add(ejem);
             }
@@ -286,7 +274,9 @@ public class DAOEjemplares extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmEjemplar != null) stmEjemplar.close();
+                if (stmEjemplar != null) {
+                    stmEjemplar.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }

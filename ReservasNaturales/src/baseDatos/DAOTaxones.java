@@ -51,7 +51,9 @@ public class DAOTaxones extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmTaxon != null) stmTaxon.close();
+                if (stmTaxon != null) {
+                    stmTaxon.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }

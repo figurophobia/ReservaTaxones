@@ -83,14 +83,11 @@ public class DAOAlimentos extends AbstractDAO {
         PreparedStatement stmAlimento = null;
 
         try {
-            // Obtener la conexión (asegúrate de que esta conexión sea válida)
             con = super.getConexion();
 
-            // Sentencia SQL para eliminar el alimento basado en nombre, tipo y distribuidor
-            String sql = "DELETE FROM alimento WHERE nombre = ? AND tipo = ? AND distribuidor = ?";
-            stmAlimento = con.prepareStatement(sql);
+            String consulta = "DELETE FROM alimento WHERE nombre = ? AND tipo = ? AND distribuidor = ?";
+            stmAlimento = con.prepareStatement(consulta);
 
-            // Establecer los parámetros en la sentencia SQL
             stmAlimento.setString(1, nome);
             stmAlimento.setString(2, tipo);
             stmAlimento.setString(3, distribuidor);
@@ -98,7 +95,7 @@ public class DAOAlimentos extends AbstractDAO {
             // Ejecutar la sentencia
             res = stmAlimento.executeUpdate();
 
-            // Verifica cuántas filas fueron afectadas
+
             if (res > 0) {
                 System.out.println("Alimento eliminado correctamente.");
             } else {
@@ -109,7 +106,7 @@ public class DAOAlimentos extends AbstractDAO {
             System.out.println("Error al eliminar alimento: " + e.getMessage());
         } finally {
             try {
-                // Cerrar los recursos después de usarlos
+
                 if (stmAlimento != null) {
                     stmAlimento.close();
                 }
@@ -123,77 +120,7 @@ public class DAOAlimentos extends AbstractDAO {
 
         return res;
     }
-
-    public boolean eliminarNoConsumidos() {
-        Connection con = this.getConexion();
-        PreparedStatement stmAlimento = null;
-        ResultSet rsAlimento = null;
-        int filasEliminadas = 0;
-
-        try {
-            
-            String sqlSelect
-                    = "SELECT a.id, a.nombre, a.tipo, a.distribuidor "
-                    + "FROM alimento a "
-                    + "LEFT JOIN consumirAlimentos ca ON a.id = ca.id_alimento "
-                    + "WHERE ca.id_alimento IS NULL "
-                    + "AND a.distribuidor IN ( "
-                    + "SELECT distribuidor "
-                    + "FROM alimento "
-                    + "GROUP BY distribuidor "
-                    + "HAVING COUNT(*) <= 2 "
-                    + ") "
-                    + "ORDER BY a.distribuidor, a.tipo";
-
-       
-            stmAlimento = con.prepareStatement(sqlSelect);
-            rsAlimento = stmAlimento.executeQuery();
-
-
-            System.out.println("Alimentos que serán eliminados:");
-
-            while (rsAlimento.next()) {
-                int id = rsAlimento.getInt("id");
-                String nombre = rsAlimento.getString("nombre");
-                String tipo = rsAlimento.getString("tipo");
-                String distribuidor = rsAlimento.getString("distribuidor");
-
-        
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Tipo: " + tipo + ", Distribuidor: " + distribuidor);
-
-
-                String sqlDelete = "DELETE FROM alimento WHERE id = ?";
-                PreparedStatement stmDelete = con.prepareStatement(sqlDelete);
-                stmDelete.setInt(1, id);
-                filasEliminadas += stmDelete.executeUpdate();
-            }
-
-            if (filasEliminadas > 0) {
-                System.out.println(filasEliminadas + " alimentos no consumidos han sido eliminados.");
-                return true;
-            } else {
-                System.out.println("No se encontraron alimentos no consumidos para eliminar.");
-                return false;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Error al eliminar alimentos no consumidos: " + e.getMessage());
-            this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
-            return false;
-        } finally {
-            try {
-                if (rsAlimento != null) {
-                    rsAlimento.close();
-                }
-                if (stmAlimento != null) {
-                    stmAlimento.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar los recursos: " + e.getMessage());
-            }
-        }
-    }
-
+    
     public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
         Connection con = this.getConexion();
         PreparedStatement stmAlimento = null;

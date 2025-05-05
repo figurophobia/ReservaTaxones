@@ -24,8 +24,8 @@ public class DAOAreas extends AbstractDAO {
         ResultSet rsArea;
 
         try {
-            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
-                              "FROM area_geografica";
+            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre "
+                    + "FROM area_geografica";
             stmArea = con.prepareStatement(consulta);
             rsArea = stmArea.executeQuery();
 
@@ -57,7 +57,9 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
+                if (stmArea != null) {
+                    stmArea.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -65,7 +67,7 @@ public class DAOAreas extends AbstractDAO {
 
         return resultado;
     }
-    
+
     public List<Area> buscarAreas(String textoBusqueda) {
         List<Area> resultado = new ArrayList<>();
         Connection con = this.getConexion();
@@ -73,9 +75,9 @@ public class DAOAreas extends AbstractDAO {
         ResultSet rsArea;
 
         try {
-            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre " +
-                              "FROM area_geografica " +
-                              "WHERE nombre_reserva ILIKE ?";
+            String consulta = "SELECT nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre "
+                    + "FROM area_geografica "
+                    + "WHERE nombre_reserva ILIKE ?";
             stmArea = con.prepareStatement(consulta);
             stmArea.setString(1, "%" + textoBusqueda + "%"); // Búsqueda parcial
             rsArea = stmArea.executeQuery();
@@ -108,7 +110,9 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
+                if (stmArea != null) {
+                    stmArea.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -122,9 +126,9 @@ public class DAOAreas extends AbstractDAO {
         PreparedStatement stmArea = null;
         boolean actualizado = false;
         try {
-            String consulta = "UPDATE area_geografica " +
-                              "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? " +
-                              "WHERE nombre_reserva = ?";
+            String consulta = "UPDATE area_geografica "
+                    + "SET extension = ?, altitud_nivel_bajo = ?, altitud_nivel_alto = ?, profundidad = ?, esacuatica = ?, esterrestre = ? "
+                    + "WHERE nombre_reserva = ?";
             stmArea = con.prepareStatement(consulta);
             stmArea.setDouble(1, area.getExtension());
             stmArea.setObject(2, area.getAltitudBaja());
@@ -143,8 +147,9 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
-                System.out.println("hola");
+                if (stmArea != null) {
+                    stmArea.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -170,7 +175,9 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
+                if (stmArea != null) {
+                    stmArea.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -185,9 +192,9 @@ public class DAOAreas extends AbstractDAO {
         boolean creado = false;
 
         try {
-            String consulta = "INSERT INTO area_geografica " +
-                    "(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String consulta = "INSERT INTO area_geografica "
+                    + "(nombre_reserva, extension, altitud_nivel_bajo, altitud_nivel_alto, profundidad, esacuatica, esterrestre) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             stmArea = con.prepareStatement(consulta);
             stmArea.setString(1, area.getNombreReserva());
@@ -223,7 +230,9 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmArea != null) stmArea.close();
+                if (stmArea != null) {
+                    stmArea.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -240,10 +249,10 @@ public class DAOAreas extends AbstractDAO {
 
         try {
             // Consulta SQL para obtener áreas con ejemplares de la especie especificada
-            String consulta = "SELECT DISTINCT area_geografica " +
-                    "FROM ejemplar " +
-                    "WHERE nombre_cientifico_especie = ? " +
-                    "ORDER BY area_geografica";
+            String consulta = "SELECT DISTINCT area_geografica "
+                    + "FROM ejemplar "
+                    + "WHERE nombre_cientifico_especie = ? "
+                    + "ORDER BY area_geografica";
 
             stmAreas = con.prepareStatement(consulta);
             stmAreas.setString(1, nombreCientifico);
@@ -259,8 +268,12 @@ public class DAOAreas extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (rsAreas != null) rsAreas.close();
-                if (stmAreas != null) stmAreas.close();
+                if (rsAreas != null) {
+                    rsAreas.close();
+                }
+                if (stmAreas != null) {
+                    stmAreas.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -268,7 +281,5 @@ public class DAOAreas extends AbstractDAO {
 
         return resultado;
     }
-
-
 
 }

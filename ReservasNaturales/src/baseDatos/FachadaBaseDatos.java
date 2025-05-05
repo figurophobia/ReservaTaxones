@@ -7,11 +7,10 @@ package baseDatos;
 
 
 import aplicacion.Alimento;
-import aplicacion.Area;
 import aplicacion.ClinicaMedica;
 import aplicacion.Revision;
 import aplicacion.Ejemplar;
-import aplicacion.Area;
+
 import aplicacion.ConsumirAlimento;
 import aplicacion.Area;
 import aplicacion.Distribuidor;
@@ -265,13 +264,10 @@ public class FachadaBaseDatos {
         daoClinicas.borrarClinica(clinicaSeleccionada);
     }
 
-    public void añadirRevsion(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
-        daoRevisiones.añadirRevsion(clinicaRevision,ejemplarRevision,text);
+    public void añadirRevision(ClinicaMedica clinicaRevision, Ejemplar ejemplarRevision, String text) {
+        daoRevisiones.añadirRevision(clinicaRevision,ejemplarRevision,text);
     }
 
-    public boolean eliminarNoConsumidos() {
-        return daoAlimentos.eliminarNoConsumidos();
-    }
 
     public int actualizarAlimento(String tipo, String nombre, String distribuidor) {
         return daoAlimentos.actualizarAlimento(tipo,nombre,distribuidor);

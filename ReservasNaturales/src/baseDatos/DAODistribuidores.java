@@ -17,7 +17,6 @@ import java.util.List;
 
 public class DAODistribuidores extends AbstractDAO {
 
-   
     public DAODistribuidores(Connection conexion, FachadaAplicacion fa) {
         super.setConexion(conexion);
         super.setFachadaAplicacion(fa);
@@ -27,19 +26,17 @@ public class DAODistribuidores extends AbstractDAO {
         List<Distribuidor> resultado = new ArrayList<>();
         Connection con = this.getConexion();
         PreparedStatement stmDistr = null;
-        
-        ResultSet rsDistr;
-        
 
-        
+        ResultSet rsDistr;
+
         try {
             String consulta = "SELECT nombre FROM empresa_distribuidora";
-           
+
             stmDistr = con.prepareStatement(consulta);
-            rsDistr =  stmDistr.executeQuery();
+            rsDistr = stmDistr.executeQuery();
 
             while (rsDistr.next()) {
-                
+
                 String nombre = rsDistr.getString("nombre");
                 Distribuidor distribuidor = new Distribuidor(nombre);
                 resultado.add(distribuidor);
@@ -50,7 +47,9 @@ public class DAODistribuidores extends AbstractDAO {
             this.getFachadaAplicacion().muestraExcepcion(e.getMessage());
         } finally {
             try {
-                if (stmDistr != null) stmDistr.close();
+                if (stmDistr != null) {
+                    stmDistr.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Imposible cerrar cursores");
             }
@@ -59,10 +58,4 @@ public class DAODistribuidores extends AbstractDAO {
         return resultado;
     }
 
-    
 }
-
-
-   
-   
-

@@ -29,7 +29,7 @@ public class VClinicas extends javax.swing.JDialog {
         this.fa=fa;
         TablaClinicas.setModel(new ModeloTablaClinicasMedicas());
         Integer id = ejemplarRevisado.getId();
-        EjemplarField.setText(id.toString());
+        tf_ejemplarRevision.setText(id.toString());
         listenerSeleccionClinica();
         BorrarBoton.setEnabled(false);
        
@@ -45,47 +45,47 @@ public class VClinicas extends javax.swing.JDialog {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaClinicas = new javax.swing.JTable();
-        nombreField = new javax.swing.JTextField();
-        ubicacionField = new javax.swing.JTextField();
-        numField = new javax.swing.JTextField();
+        tf_nomeRevision = new javax.swing.JTextField();
+        tf_ubicacion = new javax.swing.JTextField();
+        tf_numTraballadores = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        AñadirClinicaBoton = new javax.swing.JButton();
+        btn_engadirClinica = new javax.swing.JButton();
         BorrarBoton = new javax.swing.JButton();
-        AñadirRevisionBoton = new javax.swing.JButton();
-        BuscarBoton = new javax.swing.JButton();
-        EjemplarField = new javax.swing.JTextField();
+        btn_engadirRevision = new javax.swing.JButton();
+        btn_buscar = new javax.swing.JButton();
+        tf_ejemplarRevision = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        SalirBoton = new javax.swing.JButton();
+        btn_salir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         TablaClinicas.setModel(new ModeloTablaClinicasMedicas());
         jScrollPane2.setViewportView(TablaClinicas);
 
-        nombreField.setPreferredSize(new java.awt.Dimension(100, 30));
-        nombreField.addActionListener(new java.awt.event.ActionListener() {
+        tf_nomeRevision.setPreferredSize(new java.awt.Dimension(100, 30));
+        tf_nomeRevision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nombreFieldActionPerformed(evt);
+                tf_nomeRevisionActionPerformed(evt);
             }
         });
 
-        ubicacionField.setPreferredSize(new java.awt.Dimension(100, 30));
+        tf_ubicacion.setPreferredSize(new java.awt.Dimension(100, 30));
 
-        numField.setPreferredSize(new java.awt.Dimension(100, 30));
+        tf_numTraballadores.setPreferredSize(new java.awt.Dimension(100, 30));
 
         jLabel1.setText("Nombre");
 
-        jLabel2.setText("ubicación");
+        jLabel2.setText("Ubicación");
 
         jLabel3.setText("Nº Trabajadores");
 
-        AñadirClinicaBoton.setText("Añadir Clinica");
-        AñadirClinicaBoton.setActionCommand(" Añadir Clinica");
-        AñadirClinicaBoton.addActionListener(new java.awt.event.ActionListener() {
+        btn_engadirClinica.setText("Añadir Clinica");
+        btn_engadirClinica.setActionCommand(" Añadir Clinica");
+        btn_engadirClinica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AñadirClinicaBotonActionPerformed(evt);
+                btn_engadirClinicaActionPerformed(evt);
             }
         });
 
@@ -96,33 +96,33 @@ public class VClinicas extends javax.swing.JDialog {
             }
         });
 
-        AñadirRevisionBoton.setText("Añadir Revision");
-        AñadirRevisionBoton.addActionListener(new java.awt.event.ActionListener() {
+        btn_engadirRevision.setText("Añadir Revision");
+        btn_engadirRevision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                AñadirRevisionBotonActionPerformed(evt);
+                btn_engadirRevisionActionPerformed(evt);
             }
         });
 
-        BuscarBoton.setText("Buscar");
-        BuscarBoton.addActionListener(new java.awt.event.ActionListener() {
+        btn_buscar.setText("Buscar");
+        btn_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BuscarBotonActionPerformed(evt);
+                btn_buscarActionPerformed(evt);
             }
         });
 
-        EjemplarField.setEditable(false);
-        EjemplarField.addActionListener(new java.awt.event.ActionListener() {
+        tf_ejemplarRevision.setEditable(false);
+        tf_ejemplarRevision.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EjemplarFieldActionPerformed(evt);
+                tf_ejemplarRevisionActionPerformed(evt);
             }
         });
 
-        jLabel4.setText("ejemplar para revisión ->");
+        jLabel4.setText("Ejemplar para revisión ->");
 
-        SalirBoton.setText("salir");
-        SalirBoton.addActionListener(new java.awt.event.ActionListener() {
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SalirBotonActionPerformed(evt);
+                btn_salirActionPerformed(evt);
             }
         });
 
@@ -131,87 +131,89 @@ public class VClinicas extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(AñadirClinicaBoton)
-                        .addGap(18, 18, 18)
-                        .addComponent(BuscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(SalirBoton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BorrarBoton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(nombreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(jLabel2)
-                                .addGap(50, 50, 50)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(67, 67, 67)
-                                .addComponent(ubicacionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(numField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(EjemplarField)
-                        .addGap(18, 18, 18)
-                        .addComponent(AñadirRevisionBoton))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(tf_ejemplarRevision)
+                        .addGap(151, 151, 151))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_engadirRevision)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_salir)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jScrollPane2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btn_engadirClinica, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BorrarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 489, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_nomeRevision, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tf_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(tf_numTraballadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(tf_nomeRevision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tf_ubicacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
+                        .addComponent(tf_numTraballadores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3))
-                .addGap(18, 18, 18)
+                    .addComponent(btn_engadirClinica)
+                    .addComponent(BorrarBoton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(nombreField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ubicacionField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(numField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                    .addComponent(jLabel4)
+                    .addComponent(tf_ejemplarRevision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BuscarBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(AñadirClinicaBoton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BorrarBoton)
-                    .addComponent(SalirBoton))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(AñadirRevisionBoton)
-                    .addComponent(EjemplarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap())
+                    .addComponent(btn_engadirRevision)
+                    .addComponent(btn_salir)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nombreFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreFieldActionPerformed
+    private void tf_nomeRevisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_nomeRevisionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_nombreFieldActionPerformed
+    }//GEN-LAST:event_tf_nomeRevisionActionPerformed
 
-    private void AñadirClinicaBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirClinicaBotonActionPerformed
-          if (!nombreField.getText().isEmpty() && !ubicacionField.getText().isEmpty()
-                 &&!numField.getText().isEmpty()) {
-            String numS = numField.getText();
+    private void btn_engadirClinicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_engadirClinicaActionPerformed
+          if (!tf_nomeRevision.getText().isEmpty() && !tf_ubicacion.getText().isEmpty()
+                 &&!tf_numTraballadores.getText().isEmpty()) {
+            String numS = tf_numTraballadores.getText();
             Integer num = Integer.parseInt(numS);
-            ClinicaMedica clinica = new ClinicaMedica(nombreField.getText(),ubicacionField.getText(),num);
+            ClinicaMedica clinica = new ClinicaMedica(tf_nomeRevision.getText(),tf_ubicacion.getText(),num);
             fa.nuevaClinica(clinica);
             ModeloTablaClinicasMedicas mt;
             mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
@@ -223,7 +225,7 @@ public class VClinicas extends javax.swing.JDialog {
         }
         
             
-    }//GEN-LAST:event_AñadirClinicaBotonActionPerformed
+    }//GEN-LAST:event_btn_engadirClinicaActionPerformed
 
     private void BorrarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BorrarBotonActionPerformed
             ModeloTablaClinicasMedicas modelo = (ModeloTablaClinicasMedicas) TablaClinicas.getModel();
@@ -232,20 +234,20 @@ public class VClinicas extends javax.swing.JDialog {
                 //falta transaccion de añadir xd pero esta es la idea
                 ClinicaMedica clinicaSeleccionada = modelo.getFila(seleccionada);
                 fa.borrarClinica(clinicaSeleccionada);
-                numField.setText("");
-                nombreField.setText("");
-                ubicacionField.setText("");
+                tf_numTraballadores.setText("");
+                tf_nomeRevision.setText("");
+                tf_ubicacion.setText("");
                 ModeloTablaClinicasMedicas mt;
                 mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
 
-                String textoBusqueda= nombreField.getText().trim();
+                String textoBusqueda= tf_nomeRevision.getText().trim();
 
                 mt.setFilas(fa.obtenerClinicas(textoBusqueda));
                 
             }
     }//GEN-LAST:event_BorrarBotonActionPerformed
 
-    private void AñadirRevisionBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AñadirRevisionBotonActionPerformed
+    private void btn_engadirRevisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_engadirRevisionActionPerformed
             ModeloTablaClinicasMedicas modelo = (ModeloTablaClinicasMedicas) TablaClinicas.getModel();
             int seleccionada = TablaClinicas.getSelectedRow();
             if(seleccionada != -1){
@@ -256,44 +258,44 @@ public class VClinicas extends javax.swing.JDialog {
                 
             }
             
-    }//GEN-LAST:event_AñadirRevisionBotonActionPerformed
+    }//GEN-LAST:event_btn_engadirRevisionActionPerformed
 private void buscarClinicas(){
     ModeloTablaClinicasMedicas mt;
     mt=(ModeloTablaClinicasMedicas) TablaClinicas.getModel();
  
-    String textoBusqueda= nombreField.getText().trim();
+    String textoBusqueda= tf_nomeRevision.getText().trim();
    
     mt.setFilas(fa.obtenerClinicas(textoBusqueda));
         
     }
-    private void BuscarBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BuscarBotonActionPerformed
+    private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
         buscarClinicas();
-    }//GEN-LAST:event_BuscarBotonActionPerformed
+    }//GEN-LAST:event_btn_buscarActionPerformed
 
-    private void EjemplarFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EjemplarFieldActionPerformed
+    private void tf_ejemplarRevisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tf_ejemplarRevisionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_EjemplarFieldActionPerformed
+    }//GEN-LAST:event_tf_ejemplarRevisionActionPerformed
 
-    private void SalirBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalirBotonActionPerformed
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
         this.dispose();
-    }//GEN-LAST:event_SalirBotonActionPerformed
+    }//GEN-LAST:event_btn_salirActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton AñadirClinicaBoton;
-    private javax.swing.JButton AñadirRevisionBoton;
     private javax.swing.JButton BorrarBoton;
-    private javax.swing.JButton BuscarBoton;
-    private javax.swing.JTextField EjemplarField;
-    private javax.swing.JButton SalirBoton;
     private javax.swing.JTable TablaClinicas;
+    private javax.swing.JButton btn_buscar;
+    private javax.swing.JButton btn_engadirClinica;
+    private javax.swing.JButton btn_engadirRevision;
+    private javax.swing.JButton btn_salir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField nombreField;
-    private javax.swing.JTextField numField;
-    javax.swing.JTextField ubicacionField;
+    private javax.swing.JTextField tf_ejemplarRevision;
+    private javax.swing.JTextField tf_nomeRevision;
+    private javax.swing.JTextField tf_numTraballadores;
+    javax.swing.JTextField tf_ubicacion;
     // End of variables declaration//GEN-END:variables
 /*
 private void buscarUsuarios(){
@@ -331,11 +333,11 @@ private void buscarUsuarios(){
                     ModeloTablaClinicasMedicas mt;
                     mt=(ModeloTablaClinicasMedicas)TablaClinicas.getModel();
                     ClinicaMedica clini = mt.getFila(fila);
-                    nombreField.setText(clini.getNombre());
-                    ubicacionField.setText(clini.getUbicacion());
+                    tf_nomeRevision.setText(clini.getNombre());
+                    tf_ubicacion.setText(clini.getUbicacion());
                     Integer numero;
                     numero = clini.getNumEmpleados();
-                    numField.setText(numero.toString());
+                    tf_numTraballadores.setText(numero.toString());
                     
                     
                     

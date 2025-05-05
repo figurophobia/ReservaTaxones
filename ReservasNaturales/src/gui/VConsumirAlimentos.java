@@ -10,7 +10,6 @@ import aplicacion.Ejemplar;
 import aplicacion.Especie;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
 
 /**
  *
@@ -19,9 +18,7 @@ import java.util.List;
 public class VConsumirAlimentos extends javax.swing.JDialog {
 
     aplicacion.FachadaAplicacion fa;
-    /**
-     * Creates new form VALimentos
-     */
+
     Alimento alimento;
 
     public VConsumirAlimentos(java.awt.Frame parent, boolean modal, aplicacion.FachadaAplicacion fa, Alimento alimento) {
@@ -33,7 +30,7 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
         tf_idAlimento.setText(String.valueOf(alimento.getId()));
         
         obterEjemplares();
-        obterConsumirAlimentos(alimento.getId());
+        obterConsumirAlimentosAlimentoEspecifico(alimento.getId());
         listenerEjemplares();
         listenerConsumirAlimentos();
     }
@@ -141,26 +138,8 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(15, 15, 15))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btn_anadirConsAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_borrarConsAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(tf_idAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(tf_frecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -173,7 +152,25 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_salir)
-                        .addContainerGap())))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_idAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_cantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(tf_frecuencia, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(btn_anadirConsAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_borrarConsAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,7 +219,7 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
 
         
         if (fa.borrarConsumirAlimento(Integer.parseInt(tf_idEjemplar.getText()), tf_nomCientificoEjemplar.getText(), Integer.parseInt(tf_idAlimento.getText())) != -1) {
-            obterConsumirAlimentos( Integer.parseInt(tf_idEjemplar.getText()));
+            obterConsumirAlimentosAlimentoEspecifico(Integer.parseInt(tf_idEjemplar.getText()));
             
             tf_idEjemplar.setText("");
             tf_nomCientificoEjemplar.setText("");
@@ -236,13 +233,13 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
     private void btn_anadirConsAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_anadirConsAlimentoActionPerformed
         if (!tf_cantidad.getText().isEmpty() && !tf_frecuencia.getText().isEmpty()) {
 
-            Ejemplar ej = new Ejemplar(Integer.parseInt(tf_idEjemplar.getText()),
+            Ejemplar ejemplar = new Ejemplar(Integer.parseInt(tf_idEjemplar.getText()),
                     new Especie(tf_nomCientificoEjemplar.getText())
             );
-            Alimento al = new Alimento(Integer.parseInt(tf_idAlimento.getText()));
+            Alimento alimento = new Alimento(Integer.parseInt(tf_idAlimento.getText()));
 
-            if (fa.anadirConsumirAlimentos(new ConsumirAlimento(ej, al, Integer.parseInt(tf_cantidad.getText()), Integer.parseInt(tf_frecuencia.getText()))) != -1) {
-                obterConsumirAlimentos(al.getId());
+            if (fa.anadirConsumirAlimentos(new ConsumirAlimento(ejemplar, alimento, Integer.parseInt(tf_cantidad.getText()), Integer.parseInt(tf_frecuencia.getText()))) != -1) {
+                obterConsumirAlimentosAlimentoEspecifico(alimento.getId());
             }
 
         }
@@ -278,16 +275,9 @@ public class VConsumirAlimentos extends javax.swing.JDialog {
     private javax.swing.JTextField tf_idEjemplar;
     private javax.swing.JTextField tf_nomCientificoEjemplar;
     // End of variables declaration//GEN-END:variables
-
-    private void obterConsumirAlimentos() {
-        ModeloTablaConsumirAlimentos mtca;
-
-        mtca = (ModeloTablaConsumirAlimentos) tabla_consAlimentos.getModel();
-        mtca.setFilas(fa.obterConsumirAlimentos());
-    }
-    
+  
     //Solo buscamos os consumidos de un certo alimento
-     private void obterConsumirAlimentos(int idAlimento) {
+     private void obterConsumirAlimentosAlimentoEspecifico(int idAlimento) {
         ModeloTablaConsumirAlimentos mtca;
 
         mtca = (ModeloTablaConsumirAlimentos) tabla_consAlimentos.getModel();

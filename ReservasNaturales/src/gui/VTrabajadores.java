@@ -6,9 +6,7 @@ package gui;
 
 import aplicacion.Usuario;
 import java.awt.Frame;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 
@@ -25,7 +23,7 @@ public class VTrabajadores extends javax.swing.JDialog {
         super(parent, modal);
         this.fa=fa;
         initComponents();
-        TablaTrabajadores.setModel(new ModeloTablaTrabajadores());
+        tabla_traballadores.setModel(new ModeloTablaTrabajadores());
         asignarModeloSpinner();
     }
 
@@ -42,8 +40,8 @@ public class VTrabajadores extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
         dniCheck = new javax.swing.JCheckBox();
         nombreCheck = new javax.swing.JCheckBox();
-        ScrollPaneTrabajadores = new javax.swing.JScrollPane();
-        TablaTrabajadores = new javax.swing.JTable();
+        sp_traballadores = new javax.swing.JScrollPane();
+        tabla_traballadores = new javax.swing.JTable();
         bntNuevo = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         bntMoverArea = new javax.swing.JButton();
@@ -79,13 +77,13 @@ public class VTrabajadores extends javax.swing.JDialog {
 
         nombreCheck.setText("Nombre");
 
-        TablaTrabajadores.setModel(new ModeloTablaTrabajadores());
-        TablaTrabajadores.addMouseListener(new java.awt.event.MouseAdapter() {
+        tabla_traballadores.setModel(new ModeloTablaTrabajadores());
+        tabla_traballadores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                TablaTrabajadoresMouseClicked(evt);
+                tabla_traballadoresMouseClicked(evt);
             }
         });
-        ScrollPaneTrabajadores.setViewportView(TablaTrabajadores);
+        sp_traballadores.setViewportView(tabla_traballadores);
 
         bntNuevo.setText("Nuevo");
         bntNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +144,7 @@ public class VTrabajadores extends javax.swing.JDialog {
                         .addComponent(btnEliminar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bntMoverArea)
-                        .addGap(200, 200, 200)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnActualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnSalir))
@@ -163,14 +161,16 @@ public class VTrabajadores extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnBuscar))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(ScrollPaneTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(sp_traballadores, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnReducirJornada)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel1)))
-                        .addGap(0, 45, Short.MAX_VALUE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(76, 76, 76)
+                                        .addComponent(jLabel1))
+                                    .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 33, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -188,14 +188,14 @@ public class VTrabajadores extends javax.swing.JDialog {
                     .addComponent(dniCheck)
                     .addComponent(nombreCheck))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnReducirJornada)
-                            .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1)))
-                    .addComponent(ScrollPaneTrabajadores, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(80, 80, 80)
+                        .addComponent(jLabel1))
+                    .addComponent(sp_traballadores, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnReducirJornada, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(spinner_porcentaxeReducir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bntNuevo)
@@ -218,28 +218,28 @@ public class VTrabajadores extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_formMouseClicked
 
-    private void TablaTrabajadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TablaTrabajadoresMouseClicked
+    private void tabla_traballadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabla_traballadoresMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_TablaTrabajadoresMouseClicked
+    }//GEN-LAST:event_tabla_traballadoresMouseClicked
 
     private void bntNuevoActionPerformed(java.awt.event.ActionEvent evt) {                                         
 
-        Usuario nuevoUsuario = new Usuario("", "", 0.0f, 0, null);
+        Usuario novoUsr = new Usuario("", "", 0.0f, 0, null);
 
-        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
+        ModeloTablaTrabajadores mtt = (ModeloTablaTrabajadores) tabla_traballadores.getModel();
 
-        mt.anhadeFila(nuevoUsuario);
+        mtt.anhadeFila(novoUsr);
 
-        int lastRow = mt.getRowCount() - 1;
-        TablaTrabajadores.setRowSelectionInterval(lastRow, lastRow);
-        TablaTrabajadores.editCellAt(lastRow, 0);
-        TablaTrabajadores.requestFocusInWindow();
-        mt.setCrearTrabajador(true);
+        int ultFila = mtt.getRowCount() - 1;
+        tabla_traballadores.setRowSelectionInterval(ultFila, ultFila);
+        tabla_traballadores.editCellAt(ultFila, 0);
+        tabla_traballadores.requestFocusInWindow();
+        mtt.setCrearTrabajador(true);
     }
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
         
-        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
+        ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) tabla_traballadores.getModel();
 
         
         List<Usuario> trabajadores = mt.getFilas();
@@ -278,14 +278,14 @@ public class VTrabajadores extends javax.swing.JDialog {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void bntMoverAreaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntMoverAreaActionPerformed
-        int selectedRow = TablaTrabajadores.getSelectedRow();
+        int fila = tabla_traballadores.getSelectedRow();
 
-        if (selectedRow != -1) {
-            ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-            Usuario seleccionado = mt.getFila(selectedRow);
+        if (fila != -1) {
+            ModeloTablaTrabajadores mt = (ModeloTablaTrabajadores) tabla_traballadores.getModel();
+            Usuario seleccionado = mt.getFila(fila);
 
-            VMoverArea area = new VMoverArea((Frame) getParent(), true, fa, seleccionado);
-            area.setVisible(true);
+            VMoverArea vMA = new VMoverArea((Frame) getParent(), true, fa, seleccionado);
+            vMA.setVisible(true);
         } else {
             javax.swing.JOptionPane.showMessageDialog(this,
                     "Debes seleccionar un trabajador para mover de área.",
@@ -296,13 +296,13 @@ public class VTrabajadores extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int selectedRow=TablaTrabajadores.getSelectedRow();
+        int fila =tabla_traballadores.getSelectedRow();
         
                 
                 
-        if (selectedRow!=-1) {
-            ModeloTablaTrabajadores mt=(ModeloTablaTrabajadores) TablaTrabajadores.getModel();
-            Usuario seleccionado=mt.getFila(selectedRow);
+        if (fila!=-1) {
+            ModeloTablaTrabajadores mtt =(ModeloTablaTrabajadores) tabla_traballadores.getModel();
+            Usuario seleccionado= mtt.getFila(fila);
             int confirm = javax.swing.JOptionPane.showConfirmDialog(this, 
             "¿Estás seguro de que deseas eliminar al trabajador con DNI: " + seleccionado.getDni() + "?",
             "Confirmar eliminación", 
@@ -311,7 +311,7 @@ public class VTrabajadores extends javax.swing.JDialog {
             if (confirm == javax.swing.JOptionPane.YES_OPTION) {
 
                 fa.eliminarTrabajador(seleccionado.getDni());
-                mt.setFilas(fa.obtenerTodosLosTrabajadores());
+                mtt.setFilas(fa.obtenerTodosLosTrabajadores());
 
                 VAviso aviso = new VAviso((Frame)getParent(), true, "Trabajador eliminado correctamente.");
                 aviso.setVisible(true);
@@ -335,7 +335,7 @@ public class VTrabajadores extends javax.swing.JDialog {
         if (res != -1) {
             buscarUsuarios();
         } else {
-            System.out.println("HOLLLAAAA ???");
+
         }
     }//GEN-LAST:event_btnReducirJornadaActionPerformed
 
@@ -345,8 +345,6 @@ public class VTrabajadores extends javax.swing.JDialog {
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane ScrollPaneTrabajadores;
-    private javax.swing.JTable TablaTrabajadores;
     private javax.swing.JTextField TextFileBuscarTrabajadores;
     private javax.swing.JButton bntMoverArea;
     private javax.swing.JButton bntNuevo;
@@ -358,12 +356,14 @@ public class VTrabajadores extends javax.swing.JDialog {
     private javax.swing.JCheckBox dniCheck;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JCheckBox nombreCheck;
+    private javax.swing.JScrollPane sp_traballadores;
     private javax.swing.JSpinner spinner_porcentaxeReducir;
+    private javax.swing.JTable tabla_traballadores;
     // End of variables declaration//GEN-END:variables
 
 private void buscarUsuarios(){
     ModeloTablaTrabajadores mt;
-    mt=(ModeloTablaTrabajadores) TablaTrabajadores.getModel();
+    mt=(ModeloTablaTrabajadores) tabla_traballadores.getModel();
  
     String textoBusqueda=TextFileBuscarTrabajadores.getText().trim();
     
